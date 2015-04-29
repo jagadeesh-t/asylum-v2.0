@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!--Hotel Bed View-->
+    <record id="hotel_bed_tree" model="ir.ui.view">
+        <field name="name">hotel.bed.tree</field>
+        <field name="model">hotel.bed.type</field>
+        <field name="arch" type="xml">
+            <tree string="Hotel Bed">
+                <field name="name"/>
+                <field name="total_stock"/>
+                <!--<field name="available_stock"/>
+                <field name="used_stock"/>-->
+            </tree>
+        </field>
+    </record>
+
+        <!-- Hotel Bed Form-->
+    <record id="hotel_bedform" model="ir.ui.view">
+        <field name="name">hotel.bed.form.view</field>
+        <field name="model">hotel.bed.type</field>
+        <field name="arch" type="xml">
+            <form string="Hotel Bed" version="7.0">
+                <sheet>
+                    <group col="4">
+		                <field name="name"/>
+		                <field name="value"/>
+                    </group>
+                    <group col="4">
+		                <field name="total_stock"/>
+		                <!--<field name="available_stock"/>
+		                <field name="used_stock"/>-->
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+        <!--Hotel BedSearch Creation-->
+    <record id="hotel_bed_search" model="ir.ui.view">
+        <field name="name">hotel.bed.form.search</field>
+        <field name="model">hotel.bed.type</field>
+        <field name="arch" type="xml">
+            <search string="Beds">
+                <field name="name"/>
+            </search>
+         </field>
+     </record>
+
+
+    <!-- Hotel Bed Action-->
+    <record id="hotel_bed_action" model="ir.actions.act_window">
+        <field name="name">Beds</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hotel.bed.type</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id"  eval="False"/>
+        <field name="context">{}</field>
+        <field name="help">Create new beds for the hotel.</field>
+    </record>
+
+
+    <!--Hotel Bed Menu Creation-->
+    <menuitem action="hotel_bed_action"
+        id="menu_hotel_bed_creation_action"
+        parent="submenu_hotel_config" sequence="1"/>
+
+    </data>
+</openerp>

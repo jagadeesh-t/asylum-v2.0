@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+<data>
+<!--Form  -->
+            <record model="ir.ui.view" id="guest_creation_form">
+                <field name="name">Guest Form</field>
+                <field name="model">hotel.guest.type</field>
+                <field name="type">form</field>
+                <field name="arch" type="xml">
+                    <form string="Guest Form" version="7.0">
+                    	 <sheet>
+                    	 <group col="4">
+                        <field name="name"/>
+                        </group>
+                        </sheet>
+                    </form>
+                </field>
+            </record>
+<!--Tree  -->
+            <record model="ir.ui.view" id="guest_creation_tree">
+                <field name="name">Guest Tree</field>
+                <field name="model">hotel.guest.type</field>
+                <field name="type">tree</field>
+                <field name="arch" type="xml">
+                    <tree string="Guest Tree" version="7.0">
+                        <field name="name" />
+                    </tree>
+                </field>
+            </record>
+    <!--Search -->
+       <record id="guest_creation_search" model="ir.ui.view">
+            <field name="name">Guest Search</field>
+            <field name="model">hotel.guest.type</field>
+            <field name="arch" type="xml">
+                <search string="Tenant">
+                    <field name="name" string="Guest Name"/>
+                </search>
+            </field>
+        </record>
+
+<record model="ir.actions.act_window" id="guest_creation_action">
+                <field name="name">Guest Type</field>
+                <field name="type">ir.actions.act_window</field>
+                <field name="res_model">hotel.guest.type</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+            </record>
+            
+ <!--Menu Creation  -->
+   		 <menuitem id="menu_guest_creation_creation" parent="submenu_hotel_config" action="guest_creation_action" />
+
+</data>
+</openerp>

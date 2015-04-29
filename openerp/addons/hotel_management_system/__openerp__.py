@@ -17,11 +17,11 @@
     'depends': ['base'],
     'data': [
              'hotel_menu.xml',
-             # 'hotel_room_type_view.xml',
-             # 'hotel_guest_type_view.xml',
+             'configurations/hotel_room_type_view.xml',
+             'configurations/hotel_guest_type_view.xml',
+             'configurations/hotel_bed_type_view.xml'
              # 'hotel_book_order_view.xml',
              # # 'board_hotel_view.xml',
-             # 'hotel_bed_type_view.xml',
              # 'hotel_activity_type_view.xml',
              # # 'hotel_activity_calender_view.xml',
              # 'hotel_room_view.xml',

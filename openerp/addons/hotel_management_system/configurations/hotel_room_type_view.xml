@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!--Room Type View-->
+    <record id="hotel_room_type_tree" model="ir.ui.view">
+        <field name="name">hotel.room.type.tree</field>
+        <field name="model">hotel.room.type</field>
+        <field name="arch" type="xml">
+            <tree string="Room Type">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+        <!-- Room Type Form-->
+    <record id="hotel_room_type_form" model="ir.ui.view">
+        <field name="name">hotel.room.type.form.view</field>
+        <field name="model">hotel.room.type</field>
+        <field name="arch" type="xml">
+            <form string="Room Type" version="7.0">
+                <sheet>
+                    <group col="4">
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+        <!--Room Type Search Creation-->
+    <record id="hotel_room_type_search" model="ir.ui.view">
+        <field name="name">hotel.room.type.form.search</field>
+        <field name="model">hotel.room.type</field>
+        <field name="arch" type="xml">
+            <search string="Employees">
+                <field name="name" string="Room Type"/>
+            </search>
+         </field>
+     </record>
+
+
+    <!-- Room Type Action-->
+    <record id="hotel_room_type_action" model="ir.actions.act_window">
+        <field name="name">Room Type</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hotel.room.type</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id"  eval="False"/>
+        <field name="context">{}</field>
+        <field name="help">Create new Room Type.</field>
+    </record>
+
+
+    <!--Room Type Menu Creation-->
+    <menuitem action="hotel_room_type_action"
+        id="menu_hotel_room_type_creation_action"
+        parent="submenu_hotel_config" sequence="1"/>
+
+    </data>
+</openerp>
