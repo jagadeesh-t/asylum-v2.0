@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!--Add Bed View-->
+    <record id="hotel_reduce_bed_qty_form" model="ir.ui.view">
+        <field name="name">reduce.bed.qty.form</field>
+        <field name="model">reduce.bed.qty</field>
+        <field name="arch" type="xml">
+            <form string="Reduce Bed" version="7.0">
+                <group>
+                    <field name="bed_type"/>
+                    <field name="qty"/>
+                </group>
+                <footer>
+                    <button  name="reduce_beds" string="Add" type="object" class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+            <!-- Hotel Bed Action-->
+    <record id="hotel_reduce_bed_qty_action" model="ir.actions.act_window">
+        <field name="name">Beds</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">reduce.bed.qty</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{}</field>
+        <field name="help">Create new beds for the hotel.</field>
+    </record>
+
+    </data>
+</openerp>

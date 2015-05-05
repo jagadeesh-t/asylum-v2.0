@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!--Add Bed View-->
+    <record id="hotel_add_bed_qty_form" model="ir.ui.view">
+        <field name="name">add.bed.qty.form</field>
+        <field name="model">add.bed.qty</field>
+        <field name="arch" type="xml">
+            <form string="Add Bed" version="7.0">
+                <group>
+                    <field name="bed_type"/>
+                    <field name="qty"/>
+                </group>
+                <footer>
+                    <button  name="add_bed_qty" string="Add" type="object" class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+        <!-- Hotel Bed Action-->
+    <record id="hotel_add_bed_qty_action" model="ir.actions.act_window">
+        <field name="name">Beds</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">add.bed.qty</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{}</field>
+        <field name="help">Create new beds for the hotel.</field>
+    </record>
+
+          <!--<record model="ir.values" id="hotel_add_bed_qty_values">-->
+            <!--<field name="model_id" ref="hotel_management_system.hotel_room" />-->
+            <!--<field name="name">Add Room Qty</field>-->
+            <!--<field name="key2">client_add_room_qty</field>-->
+            <!--<field name="value" eval="'ir.actions.act_window,' + str(ref('hotel_add_bed_qty_action'))" />-->
+            <!--<field name="key">action</field>-->
+            <!--<field name="model">hotel.room</field>-->
+        <!--</record>-->
+
+    </data>
+</openerp>
