@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_hotel_rooms_bed_tree" model="ir.ui.view">
+            <field name="name">hotel.room.tree</field>
+            <field name="model">hotel.room</field>
+            <field name="arch" type="xml">
+                <tree string="Beds">
+                    <field name="name"/>
+                    <field name="type_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_hotel_rooms_form" model="ir.ui.view">
+                <field name="name">hotel.room.form</field>
+                <field name="model">hotel.room</field>
+                <field name="arch" type="xml">
+                    <form string="Beds" version="7.0">
+                        <sheet>
+                            <group>
+                                <group>
+                                    <field name="name"/>
+                                    <field name="type_id"/>
+                                    <field name="total_spaces"/>
+                                </group>
+                                <group>
+                                    <button type="action"
+                                    icon="terp-accessories-archiver+"
+                                    name="%(hotel_add_bed_qty_action)d"
+                                    string="(+) ADD BED"/>
+
+                                    <button type="action"
+                                    icon="terp-accessories-archiver+"
+                                    name="%(hotel_reduce_bed_qty_action)d" string="(-) REMOVE BED"/>
+                             </group>
+                         </group>
+                        <notebook>
+                            <page string="Active Reservations">
+                                <!--<field name="cur_order" readonly="1">-->
+                                    <!--<tree string="Book Orders" >-->
+                                        <!--<field name="guest_type"/>-->
+                                        <!--<field name="guest_ref"/>-->
+                                        <!--<field name="last_name"/>-->
+                                        <!--<field name="first_name"/>-->
+                                        <!--<field name="gender"/>-->
+                                        <!--<field name="country_id"/>-->
+                                        <!--<field name="check_in_date_view"/>-->
+                                        <!--<field name="user_id" invisible="1"/>-->
+                                        <!--<field name="state"/>-->
+                                    <!--</tree>-->
+                                <!--</field>-->
+                            </page>
+                            <page string="Beds">
+                                <field name="bed_lines" readonly="1">
+                                        <tree string="Beds">
+                                             <field name="name"/>
+                                             <field name="bed_qty"/>
+                                        </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                        </sheet>
+                    </form>
+                </field>
+            </record>
+
+
+        <record id="action_hotel_rooms" model="ir.actions.act_window">
+            <field name="name">Rooms</field>
+            <field name="res_model">hotel.room</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{}</field>
+            <field name="help">Create Beds for new Room.</field>
+        </record>
+
+    <!--Hotel Rooms Menu Creation-->
+    <menuitem action="action_hotel_rooms"
+        id="menu_action_hotel_rooms_action"
+        parent="submenu_hotel_config" sequence="5"/>
+
+    </data>
+</openerp>
