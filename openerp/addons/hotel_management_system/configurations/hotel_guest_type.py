@@ -11,6 +11,9 @@ class hotel_guest_type(osv.Model):
     _columns = {
         'name': fields.char('Guest Type', size=128, required=True, select=True),
     }
+    _sql_constraints = [
+        ('name_guest_type_uniq', 'unique(name)', 'The name of the Guest Type must be unique...!'),
+    ]
 
 
 
