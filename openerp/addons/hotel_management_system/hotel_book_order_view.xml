@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!--Hotel Bed View-->
+    <record id="hotel_book_order_tree" model="ir.ui.view">
+        <field name="name">hotel.book.order.tree</field>
+        <field name="model">hotel.book.order</field>
+        <field name="arch" type="xml">
+            <tree string="Book Order">
+                <field name="guest_ref"/>
+                <field name="first_name"/>
+            </tree>
+        </field>
+    </record>
+
+        <!-- Hotel Bed Form-->
+    <record id="hotel_book_order_form" model="ir.ui.view">
+        <field name="name">hotel.book.order.form</field>
+        <field name="model">hotel.book.order</field>
+        <field name="arch" type="xml">
+            <form string="Book Order" version="7.0">
+                <sheet>
+                    <group col="4">
+                        <field name="guest_ref"/>
+                        <field name="first_name"/>
+                        <field name="last_name"/>
+                        <field name="gender"/>
+                    </group>
+                    <group col="4">
+                        <field name="guest_type"/>
+                        <field name="country_id"/>
+                        <field name="room_id"/>
+                        <field name="check_in_date"/>
+                        <field name="user_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+        <!--Hotel BedSearch Creation-->
+    <record id="hotel_book_order_search" model="ir.ui.view">
+        <field name="name">hotel.bed.form.search</field>
+        <field name="model">hotel.book.order</field>
+        <field name="arch" type="xml">
+            <search string="Book Order">
+                <field name="guest_ref"/>
+            </search>
+         </field>
+     </record>
+
+
+    <!-- Hotel Bed Action-->
+    <record id="hotel_book_order_action" model="ir.actions.act_window">
+        <field name="name">Beds</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hotel.book.order</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id"  eval="False"/>
+        <field name="context">{}</field>
+        <field name="help">Create new beds for the hotel.</field>
+    </record>
+
+
+    <!--Hotel Bed Menu Creation-->
+    <menuitem action="hotel_book_order_action"
+        id="menu_hotel_book_order_action_action"
+        parent="submenu_hotel_booking" sequence="1"/>
+
+    </data>
+</openerp>
