@@ -7,12 +7,12 @@
 {
     'name': 'Hotel Management System',
     'version': '1.0',
-    'author': 'Pradeep',
-    'category': 'Hotel',
+    'author': 'Pradeep & Ali',
+    'category': 'Hotel Management System',
     'website': 'http://www.thresholdsoft.com/',
-    'summary': 'Hotel Management',
+    'summary': 'Hotel Management System',
     'description' : """
-                    Manage Hotel
+                    Hotel Management System
                     """,
     'depends': ['base'],
     'data': ['wizard/add_bed_qty_view.xml',
