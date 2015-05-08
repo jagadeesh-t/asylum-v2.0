@@ -31,5 +31,6 @@
         <field name="help">Create new beds for the hotel.</field>
     </record>
 
+
     </data>
 </openerp>

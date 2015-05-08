@@ -57,6 +57,8 @@ class reduce_bed_qty(osv.TransientModel):
                 else:
                     pass
 
+
+
         # eeeeeeeeeeeee
         return {'type': 'ir.actions.act_window_close'}
 

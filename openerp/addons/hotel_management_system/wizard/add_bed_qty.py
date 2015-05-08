@@ -46,3 +46,6 @@ class add_bed_qty(osv.TransientModel):
 
 add_bed_qty()
 
+
+
+
