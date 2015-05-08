@@ -32,6 +32,7 @@
              # # 'wizard/change_bed_qty_view.xml',
              # 'hotel_products_category_view.xml',
              # 'hotel_product_view.xml',
+             'configurations/hotel_product_category_view.xml',
              ],
     'demo': [],
     'test': [],
