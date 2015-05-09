@@ -9,6 +9,8 @@
             <tree string="Book Order">
                 <field name="guest_ref"/>
                 <field name="first_name"/>
+                <button  string="Check Out" type="object"/>
+                <button  string="Transfer" type="object"/>
             </tree>
         </field>
     </record>
@@ -19,6 +21,10 @@
         <field name="model">hotel.book.order</field>
         <field name="arch" type="xml">
             <form string="Book Order" version="7.0">
+                <head>
+                    <button  string="Check Out" type="object"/>
+                    <button  string="Transfer" type="object"/>
+                </head>
                 <sheet>
                     <group col="4">
                         <field name="guest_ref"/>
@@ -31,6 +37,8 @@
                         <field name="country_id"/>
                         <field name="room_id"/>
                         <field name="check_in_date"/>
+                        <field name="check_out_date"/>
+                        <field name="state"/>
                         <field name="user_id"/>
                     </group>
                 </sheet>

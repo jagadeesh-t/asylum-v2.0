@@ -14,4 +14,9 @@ class hotel_book_order(osv.Model):
         # 'room_id_view':fields.function(_get_auto_room_id_view, string='Room Number', type='char',store=True),
         'check_in_date': fields.datetime('Check - In', help="Check-in Time.", required=True,),
         'user_id': fields.many2one('res.users', 'User', readonly=True),
+        'state': fields.selection([
+            ('cin', 'Check IN'),
+            ('cout', 'Check OUT'),
+            ], 'Status'),
+        'check_out_date': fields.datetime('Check - Out', help="Check-out Time.", select=True),
     }
