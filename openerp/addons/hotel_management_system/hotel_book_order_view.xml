@@ -6,11 +6,12 @@
         <field name="name">hotel.book.order.tree</field>
         <field name="model">hotel.book.order</field>
         <field name="arch" type="xml">
-            <tree string="Book Order">
+            <tree string="Book Order" colors="grey:state=='cout';blue:state=='cin'">
                 <field name="guest_ref"/>
                 <field name="first_name"/>
-                <button  string="Check Out" type="object"/>
-                <button  string="Transfer" type="object"/>
+                <field name="state"/>
+                <button  string="[Check Out]" type="object"  attrs="{'invisible': [('state','not in',('cin'))]}" icon="gtk-go-forward"  class="oe_highlight"/>
+                <button  string="[Transfer]" type="object"  attrs="{'invisible': [('state','not in',('cin'))]}" icon="terp-crm"/>
             </tree>
         </field>
     </record>
@@ -24,6 +25,7 @@
                 <head>
                     <button  string="Check Out" type="object"/>
                     <button  string="Transfer" type="object"/>
+                    <field name="state" widget="statusbar" statusbar_visible="cin,cout" statusbar_colors='{"cin":"green","cout":"red"}'/>
                 </head>
                 <sheet>
                     <group col="4">
@@ -60,7 +62,7 @@
 
     <!-- Hotel Bed Action-->
     <record id="hotel_book_order_action" model="ir.actions.act_window">
-        <field name="name">Beds</field>
+        <field name="name">New Booking Order</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">hotel.book.order</field>
         <field name="view_type">form</field>
