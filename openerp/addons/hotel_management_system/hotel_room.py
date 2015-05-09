@@ -164,7 +164,7 @@ class hotel_room(osv.osv):
         order_obj=self.pool.get('hotel.book.order')
         for room in self.browse(cr, uid, ids, context=context):
             orders = []
-            orders = order_obj.search(cr,uid, [['state', '=', 'cin'], ['room_id_view', 'ilike', room.name]], context=context)
+            orders = order_obj.search(cr,uid, [ ['room_id.name', 'ilike', room.name]], context=context)
             result[room.id] = orders
         return result
 
@@ -181,7 +181,7 @@ class hotel_room(osv.osv):
         # 'available': fields.function(_get_availability, string='Available', type='boolean', help="A Room will be show Available if it has no Sick or Family Type Guest and has space available"),
         # 'male_available': fields.function(_get_male_availability, string='Male Check', type='boolean'),
         # 'family_available': fields.function(_get_family_availability, string='Family Check', type='boolean'),
-        # 'cur_order' : fields.function(_compute_lines, relation='hotel.book.order', type="many2many", string='Current Reservations'),
+        'cur_order' : fields.function(_compute_lines, relation='hotel.book.order', type="many2many", string='Current Reservations'),
     }
     _sql_constraints = [
         ('name_room_uniq', 'unique(name)', 'The name of the Room must be unique...!'),
