@@ -1,3 +1,4 @@
+import time
 from openerp.osv import fields, osv
 
 class hotel_book_order(osv.Model):
@@ -19,4 +20,9 @@ class hotel_book_order(osv.Model):
             ('cout', 'Check OUT'),
             ], 'Status'),
         'check_out_date': fields.datetime('Check - Out', help="Check-out Time.", select=True),
+    }
+    _defaults = {
+        'state':'cin',
+        'user_id': lambda obj, cr, uid, context: uid,
+        'check_in_date': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
     }
