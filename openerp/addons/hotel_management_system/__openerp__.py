@@ -15,7 +15,8 @@
                     Hotel Management System
                     """,
     'depends': ['base'],
-    'data': ['wizard/add_bed_qty_view.xml',
+    'data': ['wizard/transfer_guest_view.xml',
+             'wizard/add_bed_qty_view.xml',
              'wizard/reduce_bed_qty_view.xml',
              'hotel_menu.xml',
              'configurations/hotel_room_type_view.xml',
