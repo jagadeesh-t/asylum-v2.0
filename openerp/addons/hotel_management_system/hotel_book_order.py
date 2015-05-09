@@ -2,6 +2,11 @@ import time
 from openerp.osv import fields, osv
 
 class hotel_book_order(osv.Model):
+
+    def call_button(self, cr, uid, ids, context=None):
+        print "Pradeep--------------------------------------"
+        pass
+
     _name = "hotel.book.order"
     _description = "Hotel Book Order"
     _columns = {

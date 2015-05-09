@@ -23,7 +23,7 @@
         <field name="arch" type="xml">
             <form string="Book Order" version="7.0">
                 <head>
-                    <button  string="Check Out" type="object"/>
+                    <button  string="Check Out" name="call_button" type="object" confirm="Do you confirm this sale?"/>
                     <button  string="Transfer" type="object"/>
                     <field name="state" widget="statusbar" statusbar_visible="cin,cout" statusbar_colors='{"cin":"green","cout":"red"}'/>
                 </head>
