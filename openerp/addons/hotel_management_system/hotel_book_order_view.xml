@@ -23,8 +23,8 @@
         <field name="arch" type="xml">
             <form string="Book Order" version="7.0">
                 <head>
-                    <button  string="Check Out" name="call_button" type="object" confirm="Do you confirm this sale?"/>
-                    <button  string="Transfer" type="action"  name="%(hotel_transfer_guest_action)d"/>
+                    <button  string="Check Out" name="call_button" type="object" confirm="Do you confirm this sale?" attrs="{'invisible': [('state','not in',('cin'))]}"/>
+                    <button  string="Transfer" type="action"  name="%(hotel_transfer_guest_action)d" attrs="{'invisible': [('state','not in',('cin'))]}"/>
                     <field name="state" widget="statusbar" statusbar_visible="cin,cout" statusbar_colors='{"cin":"green","cout":"red"}'/>
                 </head>
                 <sheet>
