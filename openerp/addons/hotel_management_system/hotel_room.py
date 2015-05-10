@@ -164,7 +164,7 @@ class hotel_room(osv.osv):
         order_obj=self.pool.get('hotel.book.order')
         for room in self.browse(cr, uid, ids, context=context):
             orders = []
-            orders = order_obj.search(cr,uid, [ ['room_id.name', 'ilike', room.name]], context=context)
+            orders = order_obj.search(cr,uid, [ ['room_id', '=', room.id]], context=context)
             result[room.id] = orders
         return result
 
