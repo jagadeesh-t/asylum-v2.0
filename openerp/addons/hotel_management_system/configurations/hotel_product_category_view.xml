@@ -44,10 +44,11 @@
                 <field name="res_model">hotel.product.category</field>
                 <field name="view_type">form</field>
                 <field name="view_mode">tree,form</field>
+                <field name="help">Create Product Category for new Product.</field>
             </record>
             
  <!--Menu Creation  -->
-   		 <menuitem id="menu_product_category_creation" parent="submenu_hotel_product" action="product_category_creation_action" />
+   		 <menuitem id="menu_product_category_creation" parent="submenu_hotel_product" action="product_category_creation_action" sequence="1"/>
 
 </data>
 </openerp>

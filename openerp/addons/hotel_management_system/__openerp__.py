@@ -34,6 +34,9 @@
              # 'hotel_products_category_view.xml',
              # 'hotel_product_view.xml',
              'configurations/hotel_product_category_view.xml',
+             'configurations/hotel_product_unit_view.xml',
+             'configurations/hotel_activity_view.xml',
+             'hotel_product_view.xml'
              ],
     'demo': [],
     'test': [],

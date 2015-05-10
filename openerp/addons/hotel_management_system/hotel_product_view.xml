@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+<!--        <menuitem id="menu_tarun_products_management" name="Products"
+            parent="base.menu_tarun_hms_root" sequence="20" />-->
+
+        <record id="view_hotel_product_filter" model="ir.ui.view">
+            <field name="name">hotel.product.select</field>
+            <field name="model">hotel.product</field>
+            <field name="arch" type="xml">
+                <search string="Search Products">
+                    <field name="name" string="Name"/>
+                    <field name="default_code" string="Reference"/>
+                    <separator/>
+                    <filter icon="terp-check" string="Alert" domain="[('alert','ilike','!!!')]"/>
+                    <separator/>
+                    <group expand="0" string="Group By...">
+                        <filter string="Category" icon="terp-personal" domain="[]" context="{'group_by':'product_category'}"/>
+                    </group>
+               </search>
+            </field>
+        </record>
+
+            
+    <record id="view_hotel_product_tree" model="ir.ui.view">
+        <field name="name">hotel.product.tree</field>
+        <field name="model">hotel.product</field>
+        <field name="arch" type="xml">
+            <tree string="Products">
+                <field name="default_code"/>
+		        <field name="name"/>
+		        <field name="unit"/> 
+		        <field name="product_unit"/>
+		        <field name="value"/>         
+		        <field name="product_category" invisible="1"/>  
+		        <!--<field name="total_stock"/>
+		        <field name="alert"/>
+		        <field name="alert_bol" invisible="1"/>         -->
+            </tree>
+        </field>
+    </record>
+    
+        <record id="view_hotel_product_form" model="ir.ui.view">
+            <field name="name">hotel.product.form.view</field>
+            <field name="model">hotel.product</field>
+            <field name="arch" type="xml">
+                <form string="Products" version="7.0">
+                	<sheet>
+                    	<div class="oe_title">
+                            <div class="oe_edit_only">
+                                <label for="name" string="Product Name"/>
+                            </div>
+                            <h1>
+                                <field name="name"/>
+                            </h1>
+                            <label for="product_category" class="oe_edit_only"/>
+                            <h2><field name="product_category" widget="selection"/></h2>
+                        </div>
+                        <div class="oe_right oe_button_box" name="buttons">
+                        </div>
+                       <group>
+                       <group>
+		        <field name="default_code"/>  
+                        <field name="barcode"/> 
+                       <label for="product_unit"/>
+                            <div>
+		                <field name="unit" class="oe_inline"/> 
+		                <field name="product_unit" class="oe_inline" widget="selection"/>
+                            </div> 
+                        </group>
+                       <group>
+		        <field name="value"/>
+		        <field name="stock_alert"/>   
+		        <field name="active"/>   
+                        </group>
+                        </group>
+					</sheet>   
+                </form>
+            </field>
+        </record>
+
+
+    <record id="action_hotel_product" model="ir.actions.act_window">
+        <field name="name">Products</field>
+        <field name="res_model">hotel.product</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id"  ref="view_hotel_product_filter"/>
+        <field name="context">{}</field>
+        <field name="help">Create new Product.</field>
+    </record>
+    
+
+
+    
+    <menuitem action="action_hotel_product"
+        id="menu_product_creation"
+        parent="submenu_hotel_product" sequence="3"/>
+
+
+<!--
+
+        <act_window
+            context="{'search_default_done': 1,'search_default_product_id': [active_id], 'default_product_id': active_id}"
+            id="act_product_stock_move_open"
+            name="Product History"
+            res_model="tarun.hotel.stock.transfer"
+            src_model="hotel.product"/>-->
+
+
+
+    </data>
+</openerp>
+

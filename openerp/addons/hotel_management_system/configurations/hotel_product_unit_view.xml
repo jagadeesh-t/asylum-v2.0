@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+<data>
+<!--Form  -->
+            <record model="ir.ui.view" id="product_unit_creation_form">
+                <field name="name">Product Unit Form</field>
+                <field name="model">hotel.product.unit</field>
+                <field name="type">form</field>
+                <field name="arch" type="xml">
+                    <form string="Product Unit Form" version="7.0">
+                    	 <sheet>
+                    	 <group col="4">
+                        <field name="name"/>
+                        </group>
+                        </sheet>
+                    </form>
+                </field>
+            </record>
+<!--Tree  -->
+            <record model="ir.ui.view" id="product_unit_creation_tree">
+                <field name="name">Product Unit Tree</field>
+                <field name="model">hotel.product.unit</field>
+                <field name="type">tree</field>
+                <field name="arch" type="xml">
+                    <tree string="Product Unit Tree" version="7.0">
+                        <field name="name" />
+                    </tree>
+                </field>
+            </record>
+    <!--Search -->
+       <record id="product_unit_creation_search" model="ir.ui.view">
+            <field name="name">Product Unit Search</field>
+            <field name="model">hotel.product.unit</field>
+            <field name="arch" type="xml">
+                <search string="Product Unit">
+                    <field name="name" string="Guest Name"/>
+                </search>
+            </field>
+        </record>
+
+<record model="ir.actions.act_window" id="product_unit_creation_action">
+                <field name="name">Product Unit</field>
+                <field name="type">ir.actions.act_window</field>
+                <field name="res_model">hotel.product.unit</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+                <field name="help">Create Product Unit for new Product.</field>
+            </record>
+            
+ <!--Menu Creation  -->
+   		 <menuitem id="menu_product_unit_creation" parent="submenu_hotel_product" action="product_unit_creation_action" sequence="2"/>
+
+</data>
+</openerp>
