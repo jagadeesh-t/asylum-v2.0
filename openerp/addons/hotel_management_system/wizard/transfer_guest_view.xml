@@ -11,7 +11,7 @@
                     <field name="room_id"/>
                 </group>
                 <footer>
-                    <button  name="ransfer_room" string="Add" type="object" class="oe_highlight"/>
+                    <button  name="transfer_room" string="Add" type="object" class="oe_highlight"/>
                     or
                     <button string="Cancel" class="oe_link" special="cancel" />
                 </footer>
