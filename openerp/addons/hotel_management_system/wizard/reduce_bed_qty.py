@@ -1,5 +1,7 @@
 __author__ = 'pradeep'
 from openerp.osv import osv, fields
+from openerp.tools.translate import _
+
 class reduce_bed_qty(osv.TransientModel):
     _name = "reduce.bed.qty"
     _description = "Reduce Bed Qty"
@@ -47,19 +49,18 @@ class reduce_bed_qty(osv.TransientModel):
                     for list_avi_bed_type in self.pool.get("hotel.room.bed").read(cr, uid, list_avi_bed,['bed_qty']):
                         list_avi_bed_qty=list_avi_bed_qty+list_avi_bed_type['bed_qty']
                         if list_avi_bed_qty == remove_beds.qty:
-                            self.pool.get("hotel.bed.type").unlink(cr, uid, list_avi_bed, context=None)
-                        elif list_avi_bed > remove_beds.qty:
+                            self.pool.get("hotel.room.bed").unlink(cr, uid, list_avi_bed, context=None)
+                        elif list_avi_bed_qty > remove_beds.qty:
                             values={}
                             values['bed_qty']=list_avi_bed_qty-remove_beds.qty
-                            self.pool.get("hotel.bed.type").write(cr, uid, list_avi_bed, values, context=None)
+                            self.pool.get("hotel.room.bed").write(cr, uid, list_avi_bed, values, context=None)
                         else:
-                            pass
+                            raise osv.except_osv(_('Processing Error!'), _('Bed Type Stock- %s has not available.') \
+                                            % (remove_beds.bed_type.name))
                 else:
-                    pass
+                    raise osv.except_osv(_('Processing Error!'), _('Bed Type - %s has not available.') \
+                                    % (remove_beds.bed_type.name))
 
-
-
-        # eeeeeeeeeeeee
         return {'type': 'ir.actions.act_window_close'}
 
 reduce_bed_qty()
