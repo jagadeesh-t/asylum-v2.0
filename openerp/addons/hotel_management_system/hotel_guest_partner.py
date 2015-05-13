@@ -87,5 +87,8 @@ class hotel_guest_partner(osv.Model):
         'user_id': lambda obj, cr, uid, context: uid,
 	    'available': True,
     }
+    _sql_constraints = [
+        ('name_guest_uniq', 'unique(guest_ref)', 'The name of the Guest Reference must be unique...!'),
+    ]
 
 hotel_guest_partner()
