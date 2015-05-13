@@ -32,6 +32,15 @@ class hotel_guest_partner(osv.Model):
             return {'value':{'country_id':country_id}}
         return {}
 
+    def _compute_lines(self, cr, uid, ids, name, args, context=None):
+        result = {}
+        order_obj=self.pool.get('hotel.book.order')
+        for guest in self.browse(cr, uid, ids, context=context):
+            orders = []
+            orders = order_obj.search(cr,uid, [ ['guest_ref', '=', guest.guest_ref]], context=context)
+            result[guest.id] = orders
+        return result
+
     _columns={
         'guest_ref': fields.char('Guest Ref.', size=128, required=True, select=True),
         'name': fields.char('First Name', size=128, required=True, select=True),
@@ -74,7 +83,7 @@ class hotel_guest_partner(osv.Model):
         'dob': fields.date('Date of Birth'),
         'cin_date': fields.date('Check-in Date'),
         'age': fields.integer('Age'),
-        # 'book_hist': fields.one2many('hotel.book.order', 'guest_id', 'Booking History', readonly=True),
+        'book_hist' : fields.function(_compute_lines, relation='hotel.book.order', type="many2many", string='Booking History'),
         'available': fields.boolean('Available'),
         'points_hist': fields.one2many('hotel.guest.points', 'guest_id', 'Points'),
         # 'points': fields.function(_get_cur_points, string='Points', type='float', readonly=True),
