@@ -16,6 +16,9 @@
     <menuitem id="submenu_hotel_product" name="Products"
         parent="menu_hotel" sequence="5"/>
 
+    <menuitem id="submenu_hotel_guests" name="Guests"
+        parent="menu_hotel" sequence="5"/>
+
     <!-- Activities Calendar's menu For Hotel-->
 
     <!--<menuitem name="Calendar"-->

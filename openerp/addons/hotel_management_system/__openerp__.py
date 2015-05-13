@@ -25,6 +25,7 @@
              'hotel_room_view.xml',
              'configurations/hotel_room_bed.xml',
              'hotel_book_order_view.xml',
+             'hotel_management_system_view.xml',
              # 'hotel_book_order_view.xml',
              # # 'board_hotel_view.xml',
              # 'hotel_activity_type_view.xml',
