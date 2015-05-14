@@ -4,3 +4,6 @@ import hotel_book_order
 import wizard
 import hotel_guest_partner
 import hotel_product
+import hotel_purchase
+import hotel_stock_statistics
+import hotel_stock

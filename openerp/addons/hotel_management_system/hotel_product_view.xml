@@ -27,16 +27,16 @@
         <field name="name">hotel.product.tree</field>
         <field name="model">hotel.product</field>
         <field name="arch" type="xml">
-            <tree string="Products">
+            <tree string="Products" colors="red:alert_bol==True;green:alert_bol==False">
                 <field name="default_code"/>
 		        <field name="name"/>
 		        <field name="unit"/> 
 		        <field name="product_unit"/>
 		        <field name="value"/>         
 		        <field name="product_category" invisible="1"/>  
-		        <!--<field name="total_stock"/>
+		        <field name="total_stock"/>
 		        <field name="alert"/>
-		        <field name="alert_bol" invisible="1"/>         -->
+		        <field name="alert_bol" invisible="1"/>
             </tree>
         </field>
     </record>
@@ -99,14 +99,13 @@
         parent="submenu_hotel_product" sequence="3"/>
 
 
-<!--
 
         <act_window
             context="{'search_default_done': 1,'search_default_product_id': [active_id], 'default_product_id': active_id}"
             id="act_product_stock_move_open"
             name="Product History"
-            res_model="tarun.hotel.stock.transfer"
-            src_model="hotel.product"/>-->
+            res_model="hotel.stock.transfer"
+            src_model="hotel.product"/>
 
 
 

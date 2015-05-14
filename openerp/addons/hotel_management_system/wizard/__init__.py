@@ -1,3 +1,4 @@
 import add_bed_qty
 import reduce_bed_qty
 import transfer_guest
+import customer_selection

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+<!--Stock Stats menu-->
+
+        <record id="hotel_stock_stats_lines_tree" model="ir.ui.view">
+            <field name="name">hotel.stock.statistics.lines.tree</field>
+            <field name="model">hotel.stock.statistics.lines</field>
+            <field name="arch" type="xml">
+                <tree string="Stock Statistics Order Lines">
+                    <field name="product_id"/>
+		            <field name="points"/>
+                    <field name="serving"/>
+                    <field name="serving_start"/>
+		            <field name="serving_end"/>
+                    <field name="serving_in"/>
+                </tree>
+            </field>
+        </record>
+        <record id="hotel_stock_stats_lines_form" model="ir.ui.view">
+            <field name="name">hotel.stock.statistics.lines.form</field>
+            <field name="model">hotel.stock.statistics.lines</field>
+            <field name="arch" type="xml">
+                <form string="Stock Statistics Order Lines" version="7.0">
+                    <group col="4">
+	                    <field name="product_id"/>
+			            <field name="points"/>
+	                    <field name="serving"/>
+	                    <field name="serving_start"/>
+			            <field name="serving_end"/>
+	                    <field name="serving_in"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="hotel_stock_stats_tree" model="ir.ui.view">
+            <field name="name">hotel.stock.statistics.tree</field>
+            <field name="model">hotel.stock.statistics</field>
+            <field name="arch" type="xml">
+                <tree string="Stock Statistics Order">
+                    <field name="date_start"/>
+                    <field name="date_end"/>
+                    <field name="total"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="hotel_stock_stats_form" model="ir.ui.view">
+            <field name="name">hotel.stock.statistics.form</field>
+            <field name="model">hotel.stock.statistics</field>
+            <field name="arch" type="xml">
+				<form string="Stock Statistics" version="7.0">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="date_start"/>
+                            <field name="id" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="date_end"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                    <button name="button_gen_stats" string="Update Statistics" type="object" class="oe_highlight"/>
+                        </group>
+                        <group>
+                    <button name="print_csv_report" string="Print Report" attrs="{'invisible': [('id','=',False)]}" type="object" class="oe_highlight"/>
+                        </group>
+                    </group>
+                    <notebook>
+                    <page string="Stock Statistics">
+                        <field name="stat_lines">
+                            <tree string="Stock Statistics" editable="bottom">
+			                    <field name="product_id"/>
+					            <field name="points"/>
+			                    <field name="serving"/>
+			                    <field name="serving_start"/>
+					            <field name="serving_end"/>
+			                    <field name="serving_in"/>
+                            </tree>
+                            <form string="Products" version="7.0">
+                                <group>
+				                    <field name="product_id"/>
+						            <field name="points"/>
+				                    <field name="serving"/>
+				                    <field name="serving_start"/>
+						            <field name="serving_end"/>
+				                    <field name="serving_in"/>
+                                </group>
+                            </form>
+                        </field>  
+                            <group>
+                        		<field name="total" readonly="1"/>
+                            </group>
+                    </page>
+                    </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_hotel_stock_statistics" model="ir.actions.act_window">
+            <field name="name">Stock Statistics</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hotel.stock.statistics</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Stock Statistics. 
+              </p><p>
+                Stock Statistics.
+              </p>
+            </field>
+        </record>
+        <menuitem action="action_hotel_stock_statistics" id="menu_action_hotel_stock_stats_form" parent="submenu_hotel_cashier_system" sequence="2"/>
+
+
+
+
+
+    </data>
+</openerp>
+

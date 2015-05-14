@@ -13,6 +13,9 @@
     <menuitem id="submenu_hotel_activities" name="Activities"
             parent="menu_hotel" sequence="3"/>
 
+    <menuitem id="submenu_hotel_cashier_system" name="Cashier System "
+            parent="menu_hotel" sequence="2"/>
+
     <menuitem id="submenu_hotel_product" name="Products"
         parent="menu_hotel" sequence="5"/>
 
