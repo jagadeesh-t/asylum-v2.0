@@ -19,6 +19,7 @@
              'wizard/add_bed_qty_view.xml',
              'wizard/reduce_bed_qty_view.xml',
              'wizard/customer_selection_view.xml',
+             'wizard/guest_points_views.xml',
              'hotel_menu.xml',
              'configurations/hotel_room_type_view.xml',
              'configurations/hotel_guest_type_view.xml',
