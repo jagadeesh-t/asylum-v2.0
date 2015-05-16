@@ -4,8 +4,9 @@ from openerp.osv import fields, osv
 class hotel_book_order(osv.Model):
 
     def call_button(self, cr, uid, ids, context=None):
-        print "Pradeep--------------------------------------"
-        pass
+        for book_order in self.browse(cr, uid, ids):
+            book_order.write({'state':'cout','check_out_date':time.strftime('%Y-%m-%d %H:%M:%S')})
+        return True
 
     _name = "hotel.book.order"
     _description = "Hotel Book Order"
