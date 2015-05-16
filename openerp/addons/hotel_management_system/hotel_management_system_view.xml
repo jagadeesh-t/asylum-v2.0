@@ -74,15 +74,19 @@
                         <notebook colspan="4">
                             <page string="Booking Order">
                                 <field name="book_hist">
-                                    <!--<field name="guest_type"/>-->
+                                    <tree string="Book Orders" >
+                                        <field name="guest_type"/>
                                         <field name="guest_ref"/>
                                         <field name="last_name"/>
                                         <field name="first_name"/>
                                         <field name="gender"/>
                                         <field name="country_id"/>
-                                        <!--<field name="check_in_date_view"/>-->
+                                        <field name="check_in_date"/>
                                         <field name="user_id" invisible="1"/>
-                                        <!--<field name="state"/>-->
+                                        <field name="state"/>
+                                        <button  string="[Check Out]" type="object"  attrs="{'invisible': [('state','not in',('cin'))]}" icon="gtk-go-forward"  class="oe_highlight"/>
+                                        <button  string="[Transfer]" type="object"  attrs="{'invisible': [('state','not in',('cin'))]}" icon="terp-crm"/>
+                                    </tree>
                                 </field>
                             </page>
                             <page string="Points">

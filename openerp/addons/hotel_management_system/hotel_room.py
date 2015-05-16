@@ -36,37 +36,54 @@ class hotel_room(osv.osv):
     #         res[room.id] = total_space
     #     return res
     #
-    # def _get_total_occupancy(self, cr, uid, ids, field_name, arg, context=None):
-    #     """
-    #     @return: Dictionary of values.
-    #     """
-    #     rooms = self.browse(cr, uid, ids, context=context)
-    #     order_obj = self.pool.get('tarun.hotel.book.order')
-    #     res = {}
-    #     for room in rooms:
-    #         count = 0
-    #         order_lines = order_obj.search(cr,uid,[('room_id.id','=',room.id)], context=context)
-    #         for lines in order_obj.browse(cr,uid,order_lines,context=context):
-    #             time_now = time.strftime('%Y-%m-%d %H:%M:%S')
-    #             if lines.state=="cin" and lines.check_in_date<time_now:
-    #                 count+=1
-    #         res[room.id] = count
-    #     return res
+    def _get_total_occupancy(self, cr, uid, ids, field_name, arg, context=None):
+        """
+        @return: Dictionary of values.
+        """
+        rooms = self.browse(cr, uid, ids, context=context)
+        order_obj = self.pool.get('hotel.book.order')
+        res = {}
+        for room in rooms:
+            count = 0
+            order_lines = order_obj.search(cr,uid,[('room_id.id','=',room.id)], context=context)
+            for lines in order_obj.browse(cr,uid,order_lines,context=context):
+                time_now = time.strftime('%Y-%m-%d %H:%M:%S')
+                if lines.state=="cin" and lines.check_in_date<time_now:
+                    count+=1
+            res[room.id] = count
+        return res
     #
-    # def _get_total_occupancy_rate(self, cr, uid, ids, field_name, arg, context=None):
-    #     """
-    #     @return: Dictionary of values.
-    #     """
-    #     rooms = self.browse(cr, uid, ids, context=context)
-    #     res = {}
-    #     for room in rooms:
-    #         rate = 0.0
-    #         try:
-    #             rate = float(room.total_occupancy)/float(room.total_spaces)*100.00
-    #         except:
-    #             rate = 0.0
-    #         res[room.id] = rate
-    #     return res
+    def _get_total_occupancy_rate(self, cr, uid, ids, field_name, arg, context=None):
+        """
+        @return: Dictionary of values.
+        """
+        #  Total Space
+        rooms = self.browse(cr, uid, ids, context=context)
+        for room in rooms:
+            total_space = 0
+            if room.bed_lines:
+                for line in room.bed_lines:
+                    total_space+=(line.bed_qty * line.name.value)
+        # Total Occupancy
+        order_obj = self.pool.get('hotel.book.order')
+        for room in rooms:
+            count = 0
+            order_lines = order_obj.search(cr,uid,[('room_id.id','=',room.id)], context=context)
+            for lines in order_obj.browse(cr,uid,order_lines,context=context):
+                time_now = time.strftime('%Y-%m-%d %H:%M:%S')
+                if lines.state=="cin" and lines.check_in_date<time_now:
+                    count+=1
+
+        # Total Occupancy  Rrate
+        res = {}
+        for room in rooms:
+            rate = 0.0
+            try:
+                rate = float(count)/float(total_space)*100.00
+            except:
+                rate = 0.0
+            res[room.id] = rate
+        return res
     #
     # def _get_availability(self, cr, uid, ids, field_name, arg, context=None):
     #     """
@@ -176,8 +193,8 @@ class hotel_room(osv.osv):
         'total_spaces': fields.function(_get_total_spaces, string='Total Capacity', type='integer'),
         # 'total_baby_spaces': fields.function(_get_total_baby_spaces, string='Baby Beds', type='integer'),
         'bed_lines': fields.one2many('hotel.room.bed', 'room_id', 'Beds'),
-        # 'total_occupancy': fields.function(_get_total_occupancy, string='Total Occupancy', type='integer'),
-        # 'occupancy_rate': fields.function(_get_total_occupancy_rate, string='Occupancy Rate', type='float'),
+        'total_occupancy': fields.function(_get_total_occupancy, string='Total Occupancy', type='integer'),
+        'occupancy_rate': fields.function(_get_total_occupancy_rate, string='Occupancy Rate', type='float'),
         # 'available': fields.function(_get_availability, string='Available', type='boolean', help="A Room will be show Available if it has no Sick or Family Type Guest and has space available"),
         # 'male_available': fields.function(_get_male_availability, string='Male Check', type='boolean'),
         # 'family_available': fields.function(_get_family_availability, string='Family Check', type='boolean'),

@@ -24,6 +24,8 @@
                                     <field name="name"/>
                                     <field name="type_id"/>
                                     <field name="total_spaces"/>
+                                    <field name="total_occupancy"/>
+                                    <field name="occupancy_rate"/>
                                 </group>
                                 <group>
                                     <button type="action"
@@ -40,15 +42,17 @@
                             <page string="Active Reservations">
                                 <field name="cur_order" readonly="1">
                                     <tree string="Book Orders" >
-                                        <!--<field name="guest_type"/>-->
+                                        <field name="guest_type"/>
                                         <field name="guest_ref"/>
                                         <field name="last_name"/>
                                         <field name="first_name"/>
                                         <field name="gender"/>
                                         <field name="country_id"/>
-                                        <!--<field name="check_in_date_view"/>-->
+                                        <field name="check_in_date"/>
                                         <field name="user_id" invisible="1"/>
-                                        <!--<field name="state"/>-->
+                                        <field name="state"/>
+                                        <button  string="[Check Out]" type="object"  attrs="{'invisible': [('state','not in',('cin'))]}" icon="gtk-go-forward"  class="oe_highlight"/>
+                                        <button  string="[Transfer]" type="object"  attrs="{'invisible': [('state','not in',('cin'))]}" icon="terp-crm"/>
                                     </tree>
                                 </field>
                             </page>
