@@ -84,7 +84,7 @@
                                         <field name="check_in_date"/>
                                         <field name="user_id" invisible="1"/>
                                         <field name="state"/>
-                                        <button  string="[Check Out]" type="object"  attrs="{'invisible': [('state','not in',('cin'))]}" icon="gtk-go-forward"  class="oe_highlight"/>
+                                        <button  string="[Check Out]" name="call_button" type="object"  confirm="Are you sure you want to checkout this Guest?" attrs="{'invisible': [('state','not in',('cin'))]}" icon="gtk-go-forward"  class="oe_highlight"/>
                                         <button type="action" name="%(hotel_management_system.hotel_transfer_guest_action)d"  string="[Transfer]"   attrs="{'invisible': [('state','not in',('cin'))]}" icon="terp-crm"/>
                                     </tree>
                                 </field>
