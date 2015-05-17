@@ -40,7 +40,7 @@
                         <div class="oe_right oe_button_box" name="points">
                              <h1>
                                 <label for="points" string="Points"/>
-                                <!--<field name="points" readonly="1"/>-->
+                                <field name="points" readonly="1"/>
                              <group>
                                     <button string="Update Points"/>
                              </group>
