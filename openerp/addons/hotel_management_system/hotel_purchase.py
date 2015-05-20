@@ -96,16 +96,16 @@ class hotel_purchase(osv.osv):
                     'Please create location name "Stock" and "Sale"! Contact Administrator'))
             if do.balance < 0.0:
                 raise osv.except_osv(
-                    _('Warning!'), _('Guest doesnot have enough points to process the order.!'))
+                    _('Warning!'), _("Guest doesn't have enough points to process the order.!"))
             for lines in do.inv_lines:
-                self.pool.get('tarun.hotel.stock.transfer').create(cr, uid, {'name': do.name,
-                                                                             'product_id': lines.product_id.id,
-                                                                             'qty': lines.qty,
-                                                                             'loc_id': stock[0],
-                                                                             'loc_des_id': sale[0],
-                                                                             'date': time_now,
-                                                                             'user_id': uid,
-                                                                             'state': 'done'}, context=context)
+                self.pool.get('hotel.stock.transfer').create(cr, uid, {'name': do.name,
+                                                                       'product_id': lines.product_id.id,
+                                                                       'qty': lines.qty,
+                                                                       'loc_id': stock[0],
+                                                                       'loc_des_id': sale[0],
+                                                                       'date': time_now,
+                                                                       'user_id': uid,
+                                                                       'state': 'done'}, context=context)
             self.pool.get('hotel.guest.points').create(cr, uid, {'guest_id': do.guest_id.id,
                                                                        'name': do.name,
                                                                        'purchase_id': do.id,
@@ -166,7 +166,7 @@ class hotel_purchase(osv.osv):
     def create(self, cr, uid, vals, context=None):
         if vals.get('name', '/') == '/':
             vals['name'] = self.pool.get('ir.sequence').get(
-                cr, uid, 'tarun.hotel.purchase') or '/'
+                cr, uid, 'hotel.purchase') or '/'
 
         return super(hotel_purchase, self).create(cr, uid, vals, context=context)
 
