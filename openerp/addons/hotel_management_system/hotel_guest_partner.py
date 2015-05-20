@@ -8,7 +8,6 @@ class res_company(osv.osv):
     _columns = {
         'max_points': fields.float('Max Points', help="Maximum Points a Guest can obtain"),
     }
-
     _defaults = {
         'max_points': 1500.00,
     }
@@ -29,9 +28,9 @@ class hotel_guest_partner(osv.Model):
             points = 0.0
             if o.points_hist:
                 for lines in o.points_hist:
-                    points+=lines.qty
+                    points += lines.qty
                     points = min(o.company_id.max_points,points)
-                    self.pool.get('hotel.guest.points').write(cr,uid,[lines.id],{'up_qty':points})
+                    self.pool.get('hotel.guest.points').write(cr, uid, [lines.id], {'up_qty': points})
             res[o.id] = points
         return res
 
