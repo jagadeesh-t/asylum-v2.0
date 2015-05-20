@@ -14,7 +14,6 @@ class hotel_stock_location(osv.osv):
         'name': fields.char('Name', size=128, required=True, select=True),  
         'description': fields.text('Description'),    
     }
-    
 hotel_stock_location()
 
 
@@ -65,7 +64,9 @@ class hotel_update_stock(osv.osv):
     _name = "hotel.update.stock"
     _description = "Stock Update"
 
-    def action_view_new_inv(self, cr, uid, ids, context=None):        
+    def action_view_new_inv(self, cr, uid, ids, context=None):
+
+        print "--------------------------------------------------------------"
         mod_obj = self.pool.get('ir.model.data')
         act_obj = self.pool.get('ir.actions.act_window')
         inv_ids =[]
