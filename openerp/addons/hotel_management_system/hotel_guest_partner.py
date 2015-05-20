@@ -2,25 +2,38 @@ __author__ = 'pradeep'
 from openerp.osv import fields, osv
 from openerp import pooler, tools
 
+
+class res_company(osv.osv):
+    _inherit = 'res.company'
+    _columns = {
+        'max_points': fields.float('Max Points', help="Maximum Points a Guest can obtain"),
+    }
+
+    _defaults = {
+        'max_points': 1500.00,
+    }
+res_company()
+
+
 class hotel_guest_partner(osv.Model):
     _name="hotel.guest.partner"
     _description="Guest"
 
-    # def _get_cur_points(self, cr, uid, ids, field_name, arg, context=None):
-    #     """
-    #     @return: Dictionary of values.
-    #     """
-    #     prod = self.browse(cr, uid, ids, context=context)
-    #     res = {}
-    #     for o in prod:
-    #         points = 0.0
-    #         if o.points_hist:
-    #             for lines in o.points_hist:
-    #                 points+=lines.qty
-    #                 points = min(o.company_id.max_points,points)
-    #                 self.pool.get('hotel.guest.points').write(cr,uid,[lines.id],{'up_qty':points})
-    #         res[o.id] = points
-    #     return res
+    def _get_cur_points(self, cr, uid, ids, field_name, arg, context=None):
+        """
+        @return: Dictionary of values.
+        """
+        prod = self.browse(cr, uid, ids, context=context)
+        res = {}
+        for o in prod:
+            points = 0.0
+            if o.points_hist:
+                for lines in o.points_hist:
+                    points+=lines.qty
+                    points = min(o.company_id.max_points,points)
+                    self.pool.get('hotel.guest.points').write(cr,uid,[lines.id],{'up_qty':points})
+            res[o.id] = points
+        return res
 
     def name_get(self, cr, uid, ids, context=None):
         if context is None:
@@ -102,7 +115,7 @@ class hotel_guest_partner(osv.Model):
         'book_hist' : fields.function(_compute_lines, relation='hotel.book.order', type="many2many", string='Booking History'),
         'available': fields.boolean('Available'),
         'points_hist': fields.one2many('hotel.guest.points', 'guest_id', 'Points'),
-        # 'points': fields.function(_get_cur_points, string='Points', type='float', readonly=True),
+        'points': fields.function(_get_cur_points, string='Points', type='float', readonly=True),
     }
     _order = "name"
     _defaults = {
