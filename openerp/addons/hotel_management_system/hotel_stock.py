@@ -94,6 +94,8 @@ class hotel_update_stock(osv.osv):
             try:
                 stock = self.pool.get('hotel.stock.location').search(cr,uid,[('name','ilike','stock')])
                 purchase = self.pool.get('hotel.stock.location').search(cr,uid,[('name','ilike','purchase')])
+                loc_id = purchase[0]
+                loc_des_id = stock[0]
             except:                
                 raise osv.except_osv(_('Location Error!'), _('Please create location name "Stock" and "Purchase"!'))
             for lines in do.inv_lines:
@@ -101,8 +103,8 @@ class hotel_update_stock(osv.osv):
                     self.pool.get('hotel.stock.transfer').create(cr,uid,{'name':do.name,
                                                                                'product_id':lines.product_id.id,
                                                                                'qty':lines.qty,
-                                                                               'loc_id':purchase[0],
-                                                                               'loc_des_id':stock[0],
+                                                                               'loc_id':loc_id,
+                                                                               'loc_des_id':loc_des_id,
                                                                                'date':time_now,
                                                                                'user_id':uid,
                                                                                'state':'done'})

@@ -164,7 +164,7 @@
             </field>
         </record>
 
-        <record id="action_hotel_update_stock_form" model="ir.actions.act_window">
+        <record id="action_hotel_update_stock" model="ir.actions.act_window">
             <field name="name">Physical Inventories</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">hotel.update.stock</field>
@@ -180,7 +180,7 @@
               </p>
             </field>
         </record>
-        <menuitem action="action_hotel_update_stock_form" id="menu_action_hotel_update_stock_form" parent="submenu_hotel_product" sequence="6"/>
+        <menuitem action="action_hotel_update_stock" id="menu_action_hotel_update_stock_form" parent="submenu_hotel_product" sequence="6"/>
 
 
 
