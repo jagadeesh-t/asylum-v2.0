@@ -6,7 +6,7 @@
         <field name="name">hotel.book.order.tree</field>
         <field name="model">hotel.book.order</field>
         <field name="arch" type="xml">
-            <tree string="Book Orders" >
+            <tree string="Book Orders" colors="grey:state=='cout';blue:state=='cin'">
                 <field name="guest_type"/>
                 <field name="guest_ref"/>
                 <field name="last_name"/>
