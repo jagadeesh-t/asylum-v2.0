@@ -5,14 +5,14 @@
 ##############################################################################
 
 {
-    'name': 'Hotel Management System',
+    'name': 'Asylum Seeker Center',
     'version': '1.0',
     'author': 'Threshold',
     'category': 'Asylum',
     'website': 'http://www.thresholdsoft.com/',
     'summary': 'Hotel Management System',
     'description' : """
-                    TSS Asylum Seeker instead of Hotel Management center
+                    TSS Asylum Seeker
                     """,
     'depends': ['base'],
     'data': [

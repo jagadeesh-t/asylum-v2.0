@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-    <menuitem name="Hotel Management System"
+    <menuitem name="Asylum Seeker Center"
             id="menu_hotel"/>
 
     <menuitem id="submenu_hotel_config" name="Configuration"
