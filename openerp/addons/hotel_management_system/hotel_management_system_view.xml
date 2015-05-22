@@ -74,7 +74,7 @@
                         <notebook colspan="4">
                             <page string="Booking Order">
                                 <field name="book_hist">
-                                    <tree string="Book Orders" >
+                                    <tree string="Book Orders" colors="grey:state=='cout';blue:state=='cin'">
                                         <field name="guest_type"/>
                                         <field name="guest_ref"/>
                                         <field name="last_name"/>
