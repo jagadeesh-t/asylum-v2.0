@@ -20,7 +20,7 @@ class add_bed_qty(osv.TransientModel):
         'qty': fields.integer('Quantity'),
     }
     _constraints = [
-        (_check_avi_bed_type, 'Error! Requested Number of Bed Are Not Avilable.', ['bed_type'])
+        (_check_avi_bed_type, 'We cant add beds more than available stock', ['bed_type'])
     ]
 
     def add_bed_qty(self, cr, uid, ids, context=None):
