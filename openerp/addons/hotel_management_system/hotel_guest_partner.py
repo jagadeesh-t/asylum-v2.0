@@ -2,18 +2,6 @@ __author__ = 'pradeep'
 from openerp.osv import fields, osv
 from openerp import pooler, tools
 
-
-class res_company(osv.osv):
-    _inherit = 'res.company'
-    _columns = {
-        'max_points': fields.float('Max Points', help="Maximum Points a Guest can obtain"),
-    }
-    _defaults = {
-        'max_points': 1500.00,
-    }
-res_company()
-
-
 class hotel_guest_partner(osv.Model):
     _name="hotel.guest.partner"
     _description="Guest"
@@ -28,9 +16,9 @@ class hotel_guest_partner(osv.Model):
             points = 0.0
             if o.points_hist:
                 for lines in o.points_hist:
-                    points += lines.qty
-                    points = min(o.company_id.max_points,points)
-                    self.pool.get('hotel.guest.points').write(cr, uid, [lines.id], {'up_qty': points})
+                    points+=lines.qty
+                    points = points
+                    self.pool.get('hotel.guest.points').write(cr,uid,[lines.id],{'up_qty':points})
             res[o.id] = points
         return res
 
@@ -65,7 +53,7 @@ class hotel_guest_partner(osv.Model):
         order_obj=self.pool.get('hotel.book.order')
         for guest in self.browse(cr, uid, ids, context=context):
             orders = []
-            orders = order_obj.search(cr,uid, [ ['guest_ref', '=', guest.guest_ref]], context=context)
+            orders = order_obj.search(cr,uid, [['state', '=', 'cin'],['guest_ref', '=', guest.guest_ref]], context=context)
             result[guest.id] = orders
         return result
 

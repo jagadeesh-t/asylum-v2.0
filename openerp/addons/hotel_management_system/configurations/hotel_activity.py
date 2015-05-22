@@ -14,7 +14,7 @@ class hotel_activity(osv.Model):
 
     _order = "name"
     _sql_constraints = [
-        ('name_unique', 'unique (name)', "With this activity, record already present..!")
+        ('name_unique', 'unique (name)', "Activity with this name already exist")
     ]
 
 

@@ -6,9 +6,17 @@
             <field name="name">hotel.room.tree</field>
             <field name="model">hotel.room</field>
             <field name="arch" type="xml">
-                <tree string="Beds">
+                <tree string="Room">
                     <field name="name"/>
-                    <field name="type_id"/>
+                    <field name="total_spaces"/>
+                    <field name="total_occupancy"/>
+                    <field name="occupancy_rate"/>
+                    <button type="action" name="%(hotel_add_bed_qty_action)d"
+                                        string="[(+) ADD BED]"
+                                        icon="STOCK_ADD"/>
+                    <button type="action" name="%(hotel_reduce_bed_qty_action)d"
+                                        string="[(-) REMOVE BED]"
+                                        icon="STOCK_DELETE"/>
                 </tree>
             </field>
         </record>

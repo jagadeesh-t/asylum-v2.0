@@ -7,12 +7,12 @@
 {
     'name': 'Hotel Management System',
     'version': '1.0',
-    'author': 'Pradeep & Ali',
-    'category': 'Hotel Management System',
+    'author': 'Threshold',
+    'category': 'Asylum',
     'website': 'http://www.thresholdsoft.com/',
     'summary': 'Hotel Management System',
     'description' : """
-                    Hotel Management System
+                    TSS Asylum Seeker instead of Hotel Management center
                     """,
     'depends': ['base'],
     'data': [
@@ -21,6 +21,7 @@
              'wizard/add_bed_qty_view.xml',
              'wizard/reduce_bed_qty_view.xml',
              'wizard/customer_selection_view.xml',
+             'wizard/guest_points_views.xml',
              'hotel_menu.xml',
              'configurations/hotel_room_type_view.xml',
              'configurations/hotel_guest_type_view.xml',
