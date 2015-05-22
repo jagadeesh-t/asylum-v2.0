@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <record id="stock" model="hotel.stock.location">
+            <field name="name">Stock</field>
+        </record>
+        <record id="purchase" model="hotel.stock.location">
+            <field name="name">Purchase</field>
+        </record>
+        <record id="sale" model="hotel.stock.location">
+            <field name="name">Sale</field>
+        </record>
+
+    </data>
+</openerp>

@@ -15,7 +15,9 @@
                     Hotel Management System
                     """,
     'depends': ['base'],
-    'data': ['wizard/transfer_guest_view.xml',
+    'data': [
+        'data/hotel_stock_location_data.xml',
+        'wizard/transfer_guest_view.xml',
              'wizard/add_bed_qty_view.xml',
              'wizard/reduce_bed_qty_view.xml',
              'wizard/customer_selection_view.xml',
@@ -39,6 +41,7 @@
              'configurations/hotel_product_unit_view.xml',
              'configurations/hotel_occupancy_view.xml',
              'configurations/hotel_activity_view.xml',
+
              'hotel_product_view.xml',
              'hotel_purchase_view.xml',
              'hotel_stock_statistics_view.xml',
