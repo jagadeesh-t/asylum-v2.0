@@ -42,7 +42,7 @@
                                 <label for="points" string="Points"/>
                                 <field name="points" readonly="1"/>
                              <group>
-                                    <button string="Update Points"/>
+                                    <button string="Update Points"  type="action" name="%(hotel_management_system.change_guest_points_action)d"/>
                              </group>
                              </h1>
                         </div>
