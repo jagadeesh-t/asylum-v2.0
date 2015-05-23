@@ -14,7 +14,7 @@
     'description' : """
                     TSS Asylum Seeker
                     """,
-    'depends': ['base'],
+    'depends': ['base', 'board'],
     'data': [
         'data/hotel_stock_location_data.xml',
         'wizard/transfer_guest_view.xml',
