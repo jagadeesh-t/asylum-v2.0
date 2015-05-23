@@ -99,7 +99,7 @@
             <field name="name">hotel.update.stock.lines.form</field>
             <field name="model">hotel.update.stock.lines</field>
             <field name="arch" type="xml">
-                <form string="Stock Update Lines" version="7.0">
+                <form string="Stock Update Lines" version="7.0" create="false">
                     <group col="4">
                     <field name="product_id"/>
                     <field name="cur_qty"/>
@@ -114,7 +114,7 @@
             <field name="name">hotel.update.stock.tree</field>
             <field name="model">hotel.update.stock</field>
             <field name="arch" type="xml">
-                <tree string="Lot Inventory" colors="grey:state == 'cancel'">
+                <tree string="Lot Inventory" create="false" colors="grey:state == 'cancel'">
                     <field name="name"/>
                     <field name="date"/>
                     <field name="state"/>
@@ -126,7 +126,7 @@
             <field name="name">hotel.update.stock.form</field>
             <field name="model">hotel.update.stock</field>
             <field name="arch" type="xml">
-                <form string="Physical Inventory" version="7.0">
+                <form string="Physical Inventory" version="7.0" create="false">
                 <header>
                     <button name="button_done" states="draft" string="Validate Inventory" type="object" class="oe_highlight"/>
                     <button name="button_cancel" states="draft" string="Cancel" type="object"/>
@@ -183,6 +183,16 @@
         <menuitem action="action_hotel_update_stock" id="menu_action_hotel_update_stock_form" parent="submenu_hotel_product" sequence="6"/>
 
 
+ <record id="hotel_update_stock_conf" model="ir.actions.server">
+            <field name="sequence" eval="5"/>
+            <field name="state">code</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="model_hotel_update_stock"/>
+            <field name="code">action = self.pool.get('hotel.update.stock').action_view_new_inv(cr, uid, [])</field>
+            <field name="condition">True</field>
+            <field name="name">Update Stock</field>
+        </record>
+        <menuitem action="hotel_update_stock_conf" id="menu_hotel_update_stock_conf" parent="submenu_hotel_product" sequence="7"/>
 
 
 
