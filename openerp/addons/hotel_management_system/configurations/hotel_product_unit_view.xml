@@ -22,7 +22,7 @@
                 <field name="model">hotel.product.unit</field>
                 <field name="type">tree</field>
                 <field name="arch" type="xml">
-                    <tree string="Product Unit Tree" version="7.0">
+                    <tree string="Product Unit Tree" editable="bottom" version="7.0">
                         <field name="name" />
                     </tree>
                 </field>
@@ -43,7 +43,7 @@
                 <field name="type">ir.actions.act_window</field>
                 <field name="res_model">hotel.product.unit</field>
                 <field name="view_type">form</field>
-                <field name="view_mode">tree,form</field>
+                <!--<field name="view_mode">tree,form</field>-->
                 <field name="help">Create Product Unit for new Product.</field>
             </record>
             

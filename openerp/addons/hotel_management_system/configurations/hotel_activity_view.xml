@@ -22,7 +22,7 @@
                 <field name="model">hotel.activity.type</field>
                 <field name="type">tree</field>
                 <field name="arch" type="xml">
-                    <tree string="Activity Tree" version="7.0">
+                    <tree string="Activity Tree" editable="bottom" version="7.0">
                         <field name="name" />
                     </tree>
                 </field>
@@ -43,7 +43,7 @@
                 <field name="type">ir.actions.act_window</field>
                 <field name="res_model">hotel.activity.type</field>
                 <field name="view_type">form</field>
-                <field name="view_mode">tree,form</field>
+                <!--<field name="view_mode">tree</field>-->
                 <field name="help">Create Activity.</field>
             </record>
             
