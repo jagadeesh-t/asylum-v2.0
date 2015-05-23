@@ -8,6 +8,27 @@ class hotel_book_order(osv.Model):
             book_order.write({'state':'cout','check_out_date':time.strftime('%Y-%m-%d %H:%M:%S')})
         return True
 
+
+    def _get_auto_room_id_view(self, cr, uid, ids, field_name, arg, context=None):
+        all_orders=self.search(cr,uid,[],context=context)
+        orders = self.browse(cr, uid, all_orders, context=context)
+        res = {}
+        for order in orders:
+            name =""
+            av_space = 0
+            av_space = order.room_id.total_spaces-order.room_id.total_occupancy
+            if order.state=="cin":
+                name = order.room_id.name + " ( "+ str(av_space)+" ) "+ order.guest_type.name
+                if order.guest_type.name == "Single":
+                    if order.gender == "m":
+                        name+= " M"
+                    else:
+                        name+= " F"
+            else:
+                name = order.room_id.name + " ( "+ str(av_space)+" )"
+            res[order.id] = name
+        return res
+
     _name = "hotel.book.order"
     _description = "Hotel Book Order"
     _columns = {
@@ -18,7 +39,7 @@ class hotel_book_order(osv.Model):
         'guest_type': fields.many2one('hotel.guest.type', 'Guest Type',required=True),
         'country_id': fields.many2one('res.country', 'Country',),
         'room_id': fields.many2one('hotel.room', 'Room Number', required=True, ondelete='cascade',),
-        # 'room_id_view':fields.function(_get_auto_room_id_view, string='Room Number', type='char',store=True),
+        'room_id_view':fields.function(_get_auto_room_id_view, string='Room Number', type='char',store=True),
         'check_in_date': fields.datetime('Check - In', help="Check-in Time.", required=True,),
         'user_id': fields.many2one('res.users', 'User', readonly=True),
         'state': fields.selection([

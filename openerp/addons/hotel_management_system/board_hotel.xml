@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- Asylum dashboard -->
+        <record id="action_board_booking_order" model="ir.actions.act_window">
+            <field name="name">Booking Orders</field>
+            <field name="res_model">hotel.book.order</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state','=','cin')]</field>
+            <field name="context">{'group_by':['room_id_view']}</field>
+            <field name="view_id" ref="hotel_management_system.hotel_book_order_tree"/>
+        </record>
+
+        <record id="board_configuration_form" model="ir.ui.view">
+            <field name="name">board.asylum.form</field>
+            <field name="model">board.board</field>
+            <field name="arch" type="xml">
+                <form string="All Bookings" version="7.0">
+                    <board style="2-1">
+                        <column>
+                            <action name="%(hotel_management_system.action_board_booking_order)d" string="Active Booking Orders"/>
+                        </column>
+                    </board>
+                </form>
+            </field>
+        </record>
+
+        <record id="main_board_hotel" model="ir.actions.act_window">
+            <field name="name">Booking Orders</field>
+            <field name="res_model">board.board</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="board_configuration_form"/>
+        </record>
+
+        <menuitem action="main_board_hotel"
+        id="menu_hotel_board_order_action"
+        parent="submenu_hotel_booking" sequence="2"/>
+
+    </data>
+</openerp>

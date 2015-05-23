@@ -30,7 +30,7 @@
              'configurations/hotel_room_bed.xml',
              'hotel_book_order_view.xml',
              'hotel_management_system_view.xml',
-             # 'hotel_book_order_view.xml',
+             'board_hotel.xml',
              # # 'board_hotel_view.xml',
              # 'hotel_activity_type_view.xml',
              # # 'hotel_activity_calender_view.xml',
@@ -42,7 +42,6 @@
              'configurations/hotel_product_unit_view.xml',
              'configurations/hotel_occupancy_view.xml',
              'configurations/hotel_activity_view.xml',
-
              'hotel_product_view.xml',
              'hotel_purchase_view.xml',
              'hotel_stock_statistics_view.xml',
