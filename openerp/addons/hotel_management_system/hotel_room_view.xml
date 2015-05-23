@@ -6,11 +6,12 @@
             <field name="name">hotel.room.tree</field>
             <field name="model">hotel.room</field>
             <field name="arch" type="xml">
-                <tree string="Room">
+                <tree string="Room"  colors="green:available==True;red:available==False">
                     <field name="name"/>
                     <field name="total_spaces"/>
                     <field name="total_occupancy"/>
                     <field name="occupancy_rate"/>
+                    <field name="available"/>
                     <button type="action" name="%(hotel_add_bed_qty_action)d"
                                         string="[(+) ADD BED]"
                                         icon="STOCK_ADD"/>
@@ -34,6 +35,7 @@
                                     <field name="total_spaces"/>
                                     <field name="total_occupancy"/>
                                     <field name="occupancy_rate"/>
+                                    <field name="available"/>
                                 </group>
                                 <group>
                                     <button type="action"
