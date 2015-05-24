@@ -47,7 +47,7 @@
                             <field name="gender" attrs="{'readonly': [('state','not in',('cin'))]}"/>
                             <field name="guest_type" attrs="{'readonly': [('state','not in',('cin'))]}"/>
                             <field name="country_id" attrs="{'readonly': [('state','not in',('cin'))]}"/>
-                            <field name="room_id" attrs="{'readonly': [('state','not in',('cin'))]}"/>
+                            <field name="room_id" domain="[('available','=',True)]" attrs="{'readonly': [('state','not in',('cin'))]}"/>
                         </group>
                         <group>
                             <field name="check_in_date" attrs="{'readonly': [('state','not in',('cin'))]}"/>
