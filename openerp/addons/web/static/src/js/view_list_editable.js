@@ -318,8 +318,6 @@ openerp.web.list_editable = function (instance) {
                 if (!self.editor.is_editing()) {
                     return $.when();
                 }
-                var status_msg = window.confirm("Conform to save this record...?");
-                if (status_msg == true) {
                         return self.with_event('save', {
                             editor: self.editor,
                             form: self.editor.form,
@@ -345,9 +343,6 @@ openerp.web.list_editable = function (instance) {
                                         return { created: created, record: record }; });
                             });
                         });
-                } else {
-
-                }
             });
         },
         /**
