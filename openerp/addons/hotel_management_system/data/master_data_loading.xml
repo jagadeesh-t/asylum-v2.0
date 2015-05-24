@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <record id="guest_1" model="hotel.guest.type">
+            <field name="name">Family</field>
+        </record>
+        <record id="guest_2" model="hotel.guest.type">
+            <field name="name">Sick</field>
+        </record>
+    </data>
+</openerp>

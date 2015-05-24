@@ -15,9 +15,9 @@
                     TSS Asylum Seeker
                     """,
     'depends': ['base'],
-    'data': [
-        'data/hotel_stock_location_data.xml',
-        'wizard/transfer_guest_view.xml',
+    'data': ['data/master_data_loading.xml',
+             'data/hotel_stock_location_data.xml',
+             'wizard/transfer_guest_view.xml',
              'wizard/add_bed_qty_view.xml',
              'wizard/reduce_bed_qty_view.xml',
              'wizard/customer_selection_view.xml',
