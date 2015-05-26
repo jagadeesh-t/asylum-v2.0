@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <record id="hotel_room_occupancy" model="hotel.occ">
+            <field name="name">Current Occupancy</field>
+        </record>
+    </data>
+</openerp>
