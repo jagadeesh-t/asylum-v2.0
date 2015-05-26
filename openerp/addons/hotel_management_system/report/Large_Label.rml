@@ -82,7 +82,7 @@
           <para style="Table_20_Contents">[[ repeatIn(o.inv_lines,'bed_lines') ]][[ bed_lines.product_id.default_code ]] [[ bed_lines.product_id.name ]]</para>
         </td>
         <td>
-          <para style="Table_20_Contents">[[ bed_lines.product_id.unit ]] [[ bed_lines.product_id.product_uom.name ]]</para>
+          <para style="Table_20_Contents">[[ bed_lines.product_id.unit ]] [[ bed_lines.product_id.product_unit.name ]]</para>
         </td>
         <td>
           <para style="Table_20_Contents_num">[[ bed_lines.qty ]]</para>

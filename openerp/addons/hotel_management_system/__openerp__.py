@@ -44,6 +44,7 @@
         'data/hotel_stock_location_data.xml',
         'data/hotel_product_unit_data.xml',
         'data/master_data_loading.xml',
+        'Large_Label_report.xml'
 
              ],
     'demo': [],
