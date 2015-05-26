@@ -84,36 +84,36 @@ class hotel_room(osv.osv):
                 rate = 0.0
             res[room.id] = rate
         return res
-    #
-    # def _get_availability(self, cr, uid, ids, field_name, arg, context=None):
-    #     """
-    #     @return: Dictionary of values.
-    #     """
-    #     rooms = self.browse(cr, uid, ids, context=context)
-    #     order_obj = self.pool.get('tarun.hotel.book.order')
-    #     res = {}
-    #     for room in rooms:
-    #         avail = True
-    #         total_space = 0
-    #         occ_space = 0
-    #         if room.bed_lines:
-    #             for bed_line in room.bed_lines:
-    #                 total_space+=(bed_line.bed_qty * bed_line.name.value)
-    #         order_lines = order_obj.search(cr,uid,[('room_id.id','=',room.id)], context=context)
-    #         for lines in order_obj.browse(cr,uid,order_lines,context=context):
-    #             time_now = time.strftime('%Y-%m-%d %H:%M:%S')
-    #             # date less than current time
-    #             if lines.state=="cin" and lines.check_in_date<time_now:
-    #                 if lines.guest_type.name in ["Family","Sick"]:
-    #                     avail = False
-    #                     break
-    #                 else:
-    #                     occ_space+=1
-    #         if total_space-occ_space<1:
-    #             avail=False
-    #
-    #         res[room.id] = avail
-    #     return res
+
+    def _get_availability(self, cr, uid, ids, field_name, arg, context=None):
+        """
+        @return: Dictionary of values.
+        """
+        rooms = self.browse(cr, uid, ids, context=context)
+        order_obj = self.pool.get('hotel.book.order')
+        res = {}
+        for room in rooms:
+            avail = True
+            total_space = 0
+            occ_space = 0
+            if room.bed_lines:
+                for bed_line in room.bed_lines:
+                    total_space+=(bed_line.bed_qty * bed_line.name.value)
+            order_lines = order_obj.search(cr,uid,[('room_id.id','=',room.id)], context=context)
+            for lines in order_obj.browse(cr,uid,order_lines,context=context):
+                time_now = time.strftime('%Y-%m-%d %H:%M:%S')
+                # date less than current time
+                if lines.state=="cin" and lines.check_in_date<time_now:
+                    if lines.guest_type.name in ["Family","Sick"]:
+                        avail = False
+                        break
+                    else:
+                        occ_space+=1
+            if total_space-occ_space<1:
+                avail=False
+
+            res[room.id] = avail
+        return res
     #
     # def _get_male_availability(self, cr, uid, ids, field_name, arg, context=None):
     #     """
@@ -195,7 +195,7 @@ class hotel_room(osv.osv):
         'bed_lines': fields.one2many('hotel.room.bed', 'room_id', 'Beds'),
         'total_occupancy': fields.function(_get_total_occupancy, string='Total Occupancy', type='integer'),
         'occupancy_rate': fields.function(_get_total_occupancy_rate, string='Occupancy Rate', type='float'),
-        # 'available': fields.function(_get_availability, string='Available', type='boolean', help="A Room will be show Available if it has no Sick or Family Type Guest and has space available"),
+        'available': fields.function(_get_availability, string='Available', type='boolean', help="A Room will be show Available if it has no Sick or Family Type Guest and has space available"),
         # 'male_available': fields.function(_get_male_availability, string='Male Check', type='boolean'),
         # 'family_available': fields.function(_get_family_availability, string='Family Check', type='boolean'),
         'cur_order' : fields.function(_compute_lines, relation='hotel.book.order', type="many2many", string='Current Reservations'),

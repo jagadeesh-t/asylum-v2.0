@@ -1,6 +1,8 @@
 __author__ = 'pradeep'
 from openerp.osv import fields, osv
 from openerp import pooler, tools
+from datetime import date
+from datetime import datetime
 
 class hotel_guest_partner(osv.Model):
     _name="hotel.guest.partner"
@@ -56,6 +58,24 @@ class hotel_guest_partner(osv.Model):
             orders = order_obj.search(cr,uid, [['state', '=', 'cin'],['guest_ref', '=', guest.guest_ref]], context=context)
             result[guest.id] = orders
         return result
+
+    def onchange_calculate_age(self, cr, uid, ids, born, context=None):
+        if born != False:
+            born=datetime.strptime(born, '%Y-%m-%d')
+            today = datetime.today()
+            try:
+                birthday = born.replace(year=today.year)
+            except ValueError: # raised when birth date is February 29 and the current year is not a leap year
+                birthday = born.replace(year=today.year, month=born.month+1, day=1)
+            if birthday > today:
+                age= today.year - born.year - 1
+                return {'value': {'age': age,}}
+            else:
+                age= today.year - born.year
+                return {'value': {'age': age,}}
+        else:
+            return {'value': {'age': False,}}
+
 
     _columns={
         'guest_ref': fields.char('Guest Ref.', size=128, required=True, select=True),

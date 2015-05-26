@@ -59,7 +59,7 @@
                                 <field name="gender"/>
                                 <field name="pref"/>
                                 <field name="user_id"/>
-                                <field name="dob"/>
+                                <field name="dob" on_change="onchange_calculate_age(dob)"/>
                                 <field name="age"/>
                                    <field name="cin_date" readonly="1"/>
                             </group>
