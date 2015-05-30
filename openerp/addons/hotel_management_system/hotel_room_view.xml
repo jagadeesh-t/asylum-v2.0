@@ -80,6 +80,19 @@
                 </field>
             </record>
 
+        <!-- Search In Room-->
+        <record id="search_hotel_rooms" model="ir.ui.view">
+            <field name="name">hotel.room.search</field>
+            <field name="model">hotel.room</field>
+            <field name="arch" type="xml">
+                <search string="Search Room Number">
+                    <field name="name" string="Room No."/>
+                    <group expand="0" string="Group By...">
+                        <filter string="Room Type" icon="terp-personal" domain="[]" context="{'group_by':'type_id'}"/>
+                    </group>
+               </search>
+            </field>
+        </record>
 
         <record id="action_hotel_rooms" model="ir.actions.act_window">
             <field name="name">Rooms</field>

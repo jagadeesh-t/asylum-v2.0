@@ -67,7 +67,22 @@
         <field name="model">hotel.book.order</field>
         <field name="arch" type="xml">
             <search string="Book Order">
-                <field name="guest_ref"/>
+                    <field name="guest_ref" string="Name/Ref"/>
+                    <field name="check_in_date"/>
+                    <separator/>
+                    <filter icon="terp-check" string="Check-in" domain="[('state','=','cin')]"/>
+                    <filter icon="terp-dolar_ok!" string="Check-out" domain="[('state','=','cout')]" help="Booking Order done"/>
+                    <separator/>
+                    <filter string="My Booking Orders" domain="[('user_id','=',uid)]" help="My Booking Orders" icon="terp-personal" name="my_booking_orders_filter"/>
+                    <field name="user_id"/>
+                    <group expand="0" string="Group By...">
+                        <filter string="Salesperson" icon="terp-personal" domain="[]" context="{'group_by':'user_id'}"/>
+                        <filter string="Room" icon="terp-stock_effects-object-colorize" domain="[]" context="{'group_by':'room_id_view'}"/>
+                        <filter string="Guest Type" icon="terp-stock_effects-object-colorize" domain="[]" context="{'group_by':'guest_type'}"/>
+                        <filter string="Gender" icon="terp-stock_effects-object-colorize" domain="[]" context="{'group_by':'gender'}"/>
+                        <filter string="Status" icon="terp-stock_effects-object-colorize" domain="[]" context="{'group_by':'state'}"/>
+                        <filter string="Check-in Date" icon="terp-go-month" domain="[]" context="{'group_by':'check_in_date'}"/>
+                    </group>
             </search>
          </field>
      </record>
