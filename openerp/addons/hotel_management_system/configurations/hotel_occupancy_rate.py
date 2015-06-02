@@ -93,7 +93,8 @@ class hotel_occ(osv.osv):
                     for line in room.bed_lines:               
                         tot+=(line.bed_qty * line.name.value)
                 
-            rate = (tot_occ/tot)*100.00
+            if tot:
+                rate = (tot_occ/tot)*100.00
             res[occup.id] = rate
         return res  
     
@@ -119,7 +120,11 @@ class hotel_occ(osv.osv):
                     for line in room.bed_lines:               
                         tot += (line.bed_qty * line.name.value)
 
-            rate = (tot_occ / tot) * 100.00
+            print "tot_occ",tot_occ
+            print "tot",tot
+
+            if tot:
+                rate = (tot_occ / tot) * 100.00
             res[occup.id] = rate
         return res  
 
