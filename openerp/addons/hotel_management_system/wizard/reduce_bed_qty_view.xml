@@ -12,7 +12,7 @@
                     <field name="qty"/>
                 </group>
                 <footer>
-                    <button  name="reduce_beds" string="Add" type="object" class="oe_highlight"/>
+                    <button  name="reduce_beds" string="Remove" type="object" class="oe_highlight"/>
                     or
                     <button string="Cancel" class="oe_link" special="cancel" />
                 </footer>
