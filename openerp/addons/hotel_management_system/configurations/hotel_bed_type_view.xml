@@ -22,14 +22,16 @@
         <field name="arch" type="xml">
             <form string="Hotel Bed" version="7.0">
                 <sheet>
-                    <group col="4">
-		                <field name="name"/>
-		                <field name="value"/>
-                    </group>
-                    <group col="4">
-		                <field name="total_stock"/>
-		                <field name="available_stock"/>
-		                <field name="used_stock"/>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="value"/>
+                            <field name="total_stock"/>
+                        </group>
+                        <group>
+                            <field name="available_stock"/>
+                            <field name="used_stock"/>
+                        </group>
                     </group>
                 </sheet>
             </form>
