@@ -244,6 +244,15 @@ class hotel_purchase_lines(osv.osv):
                     res['value']['pts_unit'] = prod.value
                     return res
 
+    def on_change_qty(self, cr, uid, ids, qty, pts_unit, context=None):
+        """ Otherwise a warning is thrown.
+        """
+        res = {'value': {}}
+        if qty:
+            res['value']['pts'] = qty * pts_unit
+        return res
+
+
 
 hotel_purchase_lines()
 

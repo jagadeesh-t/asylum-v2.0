@@ -77,19 +77,11 @@
                         <field name="inv_lines" on_change="order_lines_change(inv_lines, guest_id)">
                             <tree string="Products" editable="bottom">
                                 <field name="product_id" on_change="onchange_product_id(product_id, qty)" context="{'positive_only':True}"/>
-                                <field name="qty" on_change="onchange_product_id(product_id, qty)" context="{'positive_only':True}"/>
+                                <field name="qty" on_change="on_change_qty(qty, pts_unit)" context="{'positive_only':True}"/>
                                 <field name="pts_unit" readonly="1"/>
                                 <field name="pts"/>
                             </tree>
-                            <form string="Products" version="7.0">
-                                <group>
-				                    <field name="product_id" on_change="onchange_product_id(product_id, qty)" context="{'positive_only':True}"/>
-				                    <field name="qty" on_change="onchange_product_id(product_id, qty)" context="{'positive_only':True}"/>
-	                                <field name="pts_unit"/>
-	                                <field name="pts"/>
-                                </group>
-                            </form>
-                        </field>  
+                        </field>
                             <group>
                             <group  col="6" string="Total 'n Balance">
                         <field name="total" readonly="1" attrs="{'invisible': [('state','in',('done'))]}"/>
