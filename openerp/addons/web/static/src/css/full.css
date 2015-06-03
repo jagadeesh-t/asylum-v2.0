@@ -10,3 +10,6 @@ body {
     overflow-y: scroll;
     height: 100%;
 }
+/*Header to be on the right align for integers*/
+.oe_list_header_float,.oe_list_header_integer{text-align:right !important;}
+.oe_list_header_float>div::after,.oe_list_header_integer>div::after{border-right-width:0 !important;margin-right:0 !important;}
