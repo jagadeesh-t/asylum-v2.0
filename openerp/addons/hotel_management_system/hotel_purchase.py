@@ -168,6 +168,7 @@ class hotel_purchase(osv.osv):
         'name': lambda obj, cr, uid, context: '/',
     }
 
+
     def create(self, cr, uid, vals, context=None):
         if vals.get('name', '/') == '/':
             vals['name'] = self.pool.get('ir.sequence').get(
@@ -203,13 +204,23 @@ class hotel_purchase_lines(osv.osv):
             res[line.id] = line.product_id.value
         return res
 
+    def _constraint_product_empty(self, cr, uid, ids, context=None):
+        result = True
+        for current_record in self.browse(cr, uid, ids):
+            if not current_record.product_id:
+                result = False
+        return result
+
     _columns = {
         'inv_id': fields.many2one('hotel.purchase', 'INV'),
-        'product_id': fields.many2one('hotel.product', 'Product', required=True, select=True),
+        'product_id': fields.many2one('hotel.product', 'Product', select=True),
         'pts_unit': fields.float('Points', digits=(14, 3)),
         'pts': fields.function(_get_total_pts, string='Total Points', type='float', readonly=True),
         'qty': fields.float('Quantity', digits=(14, 3)),
     }
+    _constraints = [
+        (_constraint_product_empty, "Warning! Product won't be empty.", ['Product']),
+    ]
 
     def create(self, cr, uid, vals, context=None):
         if not vals['product_id']:
