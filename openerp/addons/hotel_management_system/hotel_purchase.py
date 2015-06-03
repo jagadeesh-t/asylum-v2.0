@@ -129,9 +129,14 @@ class hotel_purchase(osv.osv):
     def button_go_bill(self, cr, uid, ids, context=None):
         for do in self.browse(cr, uid, ids, context=context):
             tot = sum([l.pts for l in do.inv_lines])
-            pbal = do.guest_id.points
+            points_bal = do.guest_id.points
+            balance_final = points_bal - tot
+
             time_now = time.strftime('%Y-%m-%d %H:%M:%S')
-            return self.write(cr, uid, ids, {'state': 'bill', 'date': time_now, 'total_final': tot, 'total': tot, 'balance_final': do.guest_id.points - tot, 'balance': do.guest_id.points - tot, }, context=context)
+            write_value = {'state': 'bill', 'date': time_now, 'total_final': tot, 'total': tot, 'balance_final': balance_final, 'balance': balance_final}
+            if balance_final < 0:
+                write_value['state'] = 'draft'
+            return self.write(cr, uid, ids, write_value, context=context)
 
     def button_back_bill(self, cr, uid, ids, context=None):
         for do in self.browse(cr, uid, ids, context=context):
