@@ -8,7 +8,7 @@
         <field name="arch" type="xml">
             <form string="Reduce Bed" version="7.0">
                 <group>
-                    <field name="bed_type"/>
+                    <field name="bed_type" widget="selection"/>
                     <field name="qty"/>
                 </group>
                 <footer>
