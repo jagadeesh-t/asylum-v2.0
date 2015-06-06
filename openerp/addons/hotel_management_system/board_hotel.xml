@@ -22,6 +22,16 @@
             <field name="view_id" ref="hotel_management_system.view_hotel_rooms_bed_tree"/>
         </record>
 
+        <record id="action_view_active_occupancy" model="ir.actions.act_window">
+            <field name="name">Room Occupancy</field>
+            <field name="res_model">hotel.occ</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="view_id" ref="hotel_management_system.view_hotel_occ_tree"/>
+        </record>
+
         <record id="board_configuration_form" model="ir.ui.view">
             <field name="name">board.asylum.form</field>
             <field name="model">board.board</field>
@@ -31,6 +41,7 @@
                         <column>
                             <action name="%(hotel_management_system.action_board_booking_order)d" string="Active Booking Orders"/>
                             <action name="%(action_board_room_list)d" string="Rooms"/>
+                            <action name="%(action_view_active_occupancy)d" string="Room Occupancy"/>
                         </column>
                     </board>
                 </form>
