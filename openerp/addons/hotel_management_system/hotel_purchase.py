@@ -10,38 +10,47 @@ class hotel_purchase(osv.osv):
     _name = "hotel.purchase"
     _description = "Purchase Order"
 
-    def order_lines_change(self, cr, uid, ids, lines, partner_id=False, context=None):
-        context = context or {}
-        prod_obj = self.pool.get('hotel.product')
-        guest_obj = self.pool.get('hotel.guest.partner')
-        line_obj = self.pool.get('hotel.purchase.lines')
-        tot = 0.0
-        bal = 0.0
-        if not ids:
-            if lines:
-                for line in lines:
-                    if line[2]['product_id']:
-                        val = prod_obj.read(cr, uid, line[2]['product_id'], ['value'])[
-                            'value'] * line[2]['qty']
-                        tot += val
-        else:
-            for l in lines:
-                if l[1]:
-                    for x in line_obj.browse(cr, uid, [l[1]]):
-                        tot += x.pts
-                else:
-                    if l[2]['product_id']:
-                        val = prod_obj.read(cr, uid, l[2]['product_id'], ['value'])[
-                            'value'] * l[2]['qty']
-                        tot += val
-        if partner_id:
-            pbal = guest_obj.read(cr, uid, partner_id, ['points'])['points']
-        else:
-            pbal = 0.0
+    # def on_change_guest(self, cr, uid, ids, partner_id=False, context=None):
+    #     guest_obj = self.pool.get('hotel.guest.partner')
+    #
+    #     if partner_id:
+    #         pbal = guest_obj.read(cr, uid, partner_id, ['points'])['points']
+    #     else:
+    #         pbal = 0.0
+    #     return {'value': {'balance': pbal}}
 
-        bal = pbal - tot
-        return {'value': {'total': tot, 'balance': bal}}
-
+    # def order_lines_change(self, cr, uid, ids, lines, partner_id=False, context=None):
+    #     context = context or {}
+    #     prod_obj = self.pool.get('hotel.product')
+    #     guest_obj = self.pool.get('hotel.guest.partner')
+    #     line_obj = self.pool.get('hotel.purchase.lines')
+    #     tot = 0.0
+    #     bal = 0.0
+    #     if not ids:
+    #         if lines:
+    #             for line in lines:
+    #                 if line[2]['product_id']:
+    #                     val = prod_obj.read(cr, uid, line[2]['product_id'], ['value'])[
+    #                         'value'] * line[2]['qty']
+    #                     tot += val
+    #     else:
+    #         for l in lines:
+    #             if l[1]:
+    #                 for x in line_obj.browse(cr, uid, [l[1]]):
+    #                     tot += x.pts
+    #             else:
+    #                 if l[2]['product_id']:
+    #                     val = prod_obj.read(cr, uid, l[2]['product_id'], ['value'])[
+    #                         'value'] * l[2]['qty']
+    #                     tot += val
+    #     if partner_id:
+    #         pbal = guest_obj.read(cr, uid, partner_id, ['points'])['points']
+    #     else:
+    #         pbal = 0.0
+    #
+    #     bal = pbal - tot
+    #     return {'value': {'total': tot, 'balance': bal}}
+    #
     def _get_total(self, cr, uid, ids, field_name, arg, context=None):
         """
         @return: Dictionary of values.
@@ -127,15 +136,20 @@ class hotel_purchase(osv.osv):
             }
 
     def button_go_bill(self, cr, uid, ids, context=None):
+
         for do in self.browse(cr, uid, ids, context=context):
             tot = sum([l.pts for l in do.inv_lines])
             points_bal = do.guest_id.points
             balance_final = points_bal - tot
 
             time_now = time.strftime('%Y-%m-%d %H:%M:%S')
-            write_value = {'state': 'bill', 'date': time_now, 'total_final': tot, 'total': tot, 'balance_final': balance_final, 'balance': balance_final}
+            write_value = {'date': time_now, 'total_final': tot, 'total': tot, 'balance_final': balance_final, 'balance': balance_final}
             if balance_final < 0:
-                write_value['state'] = 'draft'
+
+                raise osv.except_osv(
+                    _('Warning!'), _("Guest doesn't have enough points to process the order.!"))
+            else:
+                write_value['state'] = 'bill'
             return self.write(cr, uid, ids, write_value, context=context)
 
     def button_back_bill(self, cr, uid, ids, context=None):

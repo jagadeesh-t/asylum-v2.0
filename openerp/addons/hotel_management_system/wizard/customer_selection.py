@@ -62,13 +62,21 @@ class customer_selection(osv.osv_memory):
                 raise osv.except_osv(_('Warning!'), _('Guest Code or Guest Ref not Found. Please Scan again or type-in manually.!!!'))
             else:
                 p_id = wiz_qty.guest_id.id
+
+        guest_obj = self.pool.get('hotel.guest.partner')
+
+        if p_id:
+            bal_points = guest_obj.read(cr, uid, p_id, ['points'])['points']
+        else:
+            bal_points = 0.0
+
         mod_obj = self.pool.get('ir.model.data')
         act_obj = self.pool.get('ir.actions.act_window')
         inv_ids =[]
         result = mod_obj.get_object_reference(cr, uid, 'hotel_management_system', 'action_hotel_purchase')
         id = result and result[1] or False
         result = act_obj.read(cr, uid, [id], context=context)[0]
-        test_id = self.pool.get('hotel.purchase').create(cr,uid,{'name':'/','date':time.strftime('%Y-%m-%d %H:%M:%S'),'user_id':uid,'guest_id':p_id,'state':'draft'})
+        test_id = self.pool.get('hotel.purchase').create(cr,uid,{'name':'/','date':time.strftime('%Y-%m-%d %H:%M:%S'),'user_id':uid,'guest_id':p_id,'state':'draft', 'balance': bal_points})
         inv_ids.append(test_id)
         res = mod_obj.get_object_reference(cr, uid, 'hotel_management_system', 'hotel_purchase_form')
         result['views'] = [(res and res[1] or False, 'form')]
