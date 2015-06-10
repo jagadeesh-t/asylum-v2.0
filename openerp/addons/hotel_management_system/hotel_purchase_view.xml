@@ -44,7 +44,7 @@
             <field name="name">hotel.purchase.tree</field>
             <field name="model">hotel.purchase</field>
             <field name="arch" type="xml">
-                <tree string="Purchase Order" colors="grey:state == 'cancel'">
+                <tree string="Purchase Order" colors="grey:state == 'cancel'"  create="false">
                     <field name="name"/>
                     <field name="date"/>
                     <field name="state"/>
@@ -56,7 +56,7 @@
             <field name="name">hotel.purchase.form</field>
             <field name="model">hotel.purchase</field>
             <field name="arch" type="xml">
-            <form string="Purchase Order" version="7.0">
+            <form string="Purchase Order" version="7.0" create="false">
                 <header>
                     <!--<button name="button_cancel" states="draft" string="Cancel" type="object"/>-->
                     <field name="state" widget="statusbar" statusbar_visible="draft,bill,done"/>
