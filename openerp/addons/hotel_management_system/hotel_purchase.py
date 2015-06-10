@@ -150,8 +150,9 @@ class hotel_purchase(osv.osv):
             write_value = {'date': time_now, 'total_final': tot, 'total': tot, 'balance_final': balance_final, 'balance': balance_final}
             if balance_final < 0:
 
-                raise osv.except_osv(
-                    _('Warning!'), _("Guest doesn't have enough points to process the order.!"))
+                raise osv.except_osv(_('Warning!'), _("Guest doesn't have enough points to process the order.!\n " +
+                                                      "Balance Points = Current Balance - Total used \n" +
+                                                      str(balance_final) + " = " + str(points_bal) + " - " + str(tot)))
             else:
                 write_value['state'] = 'bill'
             return self.write(cr, uid, ids, write_value, context=context)
@@ -160,6 +161,19 @@ class hotel_purchase(osv.osv):
         for do in self.browse(cr, uid, ids, context=context):
             return self.write(cr, uid, ids, {'state': 'draft'}, context=context)
 
+    def _get_balance_pts(self, cr, uid, ids, field_name, arg, context=None):
+        """
+        @return: Dictionary of values.
+        """
+        lst_current_records = self.browse(cr, uid, ids, context=context)
+        res = {}
+        for current_record in lst_current_records:
+            tot = sum([l.pts for l in current_record.inv_lines])
+            points_bal = current_record.guest_id.points
+            balance_final = points_bal - tot
+            res[current_record.id] = balance_final
+        return res
+
     _columns = {
         'guest_id': fields.many2one('hotel.guest.partner', 'Guest Billing', select=True),
         'name': fields.char('Name', size=128, required=True, select=True),
@@ -167,7 +181,9 @@ class hotel_purchase(osv.osv):
         #'balance': fields.function(_get_balance, string='Balance', type='float'),
         'total_final': fields.float('Total'),
         'balance_final': fields.float('Balance'),
-        'balance': fields.float('Balance'),
+        'balance': fields.function(_get_balance_pts, string='Balance', type='float', readonly=True),
+        # 'balance': fields.float('Balance'),
+        # 'balance': fields.float('Balance'),
         'date': fields.datetime('Date', help="Date.", required=True, select=True, readonly=True),
         'state': fields.selection([
             ('draft', 'Draft'),
@@ -278,11 +294,20 @@ class hotel_purchase_lines(osv.osv):
                     res['value']['pts_unit'] = prod.value
                     return res
 
-    def on_change_qty(self, cr, uid, ids, qty, pts_unit, context=None):
+    def on_change_qty(self, cr, uid, ids, product_id, qty, pts_unit, context=None):
         """ Otherwise a warning is thrown.
         """
+        if product_id and qty:
+            product_obj = self.pool.get("hotel.product")
+            current_record = product_obj.browse(cr, uid, product_id)
+            if current_record.total_stock < qty:
+                raise \
+                    osv.except_osv(_('Warning'),
+                                   _('Product %s has low stock ...!') % (current_record.name))
+
         res = {'value': {}}
         if qty:
+
             res['value']['pts'] = qty * pts_unit
         return res
 

@@ -65,7 +65,7 @@ class hotel_stock_statistics(osv.osv):
         contents = ""
         pick_ids = []
         cr.execute(
-            """DELETE FROM ir_attachment WHERE res_model ='tarun.hotel.stock.stats'""")
+            """DELETE FROM ir_attachment WHERE res_model ='hotel.stock.stats'""")
         for wiz in self.browse(cr, uid, ids, context=context):
             fname = "Statistics from %s to %s.csv" % (
                 wiz.date_start[5:], wiz.date_end[5:])

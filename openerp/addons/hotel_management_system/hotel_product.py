@@ -78,6 +78,9 @@ class hotel_product(osv.osv):
     _defaults = {
         'active': lambda *a: 1,
     }
+    _sql_constraints = [
+        ('name_product_uniq', 'unique(name)', 'The name of the Product must be unique...!'),
+    ]
 
 
     def name_get(self, cr, uid, ids, context=None):
