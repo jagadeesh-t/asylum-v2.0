@@ -138,6 +138,10 @@ class hotel_purchase(osv.osv):
     def button_go_bill(self, cr, uid, ids, context=None):
 
         for do in self.browse(cr, uid, ids, context=context):
+            product_lines = do.inv_lines
+            if len(do.inv_lines) == 0:
+                raise osv.except_osv(
+                    _('Warning!'), _("Select atleast one product to process the order.!"))
             tot = sum([l.pts for l in do.inv_lines])
             points_bal = do.guest_id.points
             balance_final = points_bal - tot
@@ -282,7 +286,4 @@ class hotel_purchase_lines(osv.osv):
             res['value']['pts'] = qty * pts_unit
         return res
 
-
-
 hotel_purchase_lines()
-
