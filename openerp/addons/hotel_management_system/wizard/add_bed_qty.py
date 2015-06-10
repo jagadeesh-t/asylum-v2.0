@@ -14,13 +14,21 @@ class add_bed_qty(osv.TransientModel):
         else:
             return False
 
+    def _constraints_quantity_nonzero(self, cr, uid, ids, context=None):
+        result =True
+        for current_rec in self.browse(cr, uid, ids):
+            if current_rec.qty <= 0:
+                result = False
+        return result
+
 
     _columns = {
         'bed_type': fields.many2one('hotel.bed.type', 'Bed Type', required=True),
         'qty': fields.integer('Quantity'),
     }
     _constraints = [
-        (_check_avi_bed_type, 'We cant add beds more than available stock', ['bed_type'])
+        (_check_avi_bed_type, 'We cant add beds more than available stock', ['bed_type']),
+        (_constraints_quantity_nonzero, 'Quantity must be greater than zero.', ['Quantity']),
     ]
 
     def add_bed_qty(self, cr, uid, ids, context=None):
