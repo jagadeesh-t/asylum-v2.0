@@ -9,6 +9,24 @@ import base64
 class hotel_purchase(osv.osv):
     _name = "hotel.purchase"
     _description = "Purchase Order"
+    #
+    # def write(self, cr, uid, ids, dict_val, context):
+    #     print "dict_val",dict_val
+    #     donot_delete = []
+    #     if 'inv_lines' in dict_val:
+    #         for inv_line in dict_val['inv_lines']:
+    #             if inv_line[0] == 1:
+    #                 donot_delete.append(inv_line[1])
+    #
+    #         purchase_lines_obj = self.pool.get("hotel.purchase.lines")
+    #         purchase_lines_ids = purchase_lines_obj.search(cr, uid, [('inv_id', 'in', ids)])
+    #
+    #         purchase_lines_obj.unlink(cr, uid, purchase_lines_ids, context=context)
+    #         cr.commit()
+    #         print "purchase_lines_ids",purchase_lines_ids
+    #     # if len(purchase_lines_ids) != 0:
+    #     #     cr.execute("delete from hotel_purchase_lines where inv_id in %s", (tuple(purchase_lines_ids),))
+    #     return super(hotel_purchase, self).write(cr, uid, ids, dict_val, context=context)
 
     # def on_change_guest(self, cr, uid, ids, partner_id=False, context=None):
     #     guest_obj = self.pool.get('hotel.guest.partner')
@@ -139,6 +157,7 @@ class hotel_purchase(osv.osv):
 
         for do in self.browse(cr, uid, ids, context=context):
             product_lines = do.inv_lines
+            print "product_lines", product_lines
             if len(do.inv_lines) == 0:
                 raise osv.except_osv(
                     _('Warning!'), _("Select atleast one product to process the order.!"))
@@ -148,13 +167,7 @@ class hotel_purchase(osv.osv):
 
             time_now = time.strftime('%Y-%m-%d %H:%M:%S')
             write_value = {'date': time_now, 'total_final': tot, 'total': tot, 'balance_final': balance_final, 'balance': balance_final}
-            if balance_final < 0:
-
-                raise osv.except_osv(_('Warning!'), _("Guest doesn't have enough points to process the order.!\n " +
-                                                      "Balance Points = Current Balance - Total used \n" +
-                                                      str(balance_final) + " = " + str(points_bal) + " - " + str(tot)))
-            else:
-                write_value['state'] = 'bill'
+            write_value['state'] = 'bill'
             return self.write(cr, uid, ids, write_value, context=context)
 
     def button_back_bill(self, cr, uid, ids, context=None):
@@ -173,6 +186,14 @@ class hotel_purchase(osv.osv):
             balance_final = points_bal - tot
             res[current_record.id] = balance_final
         return res
+
+    def _constraints_balance_points_zero(self, cr, uid, ids, context=None):
+        result =True
+        for current_rec in self.browse(cr, uid, ids):
+            print "current_rec.balance",current_rec.balance
+            if current_rec.balance <= 0:
+                result = False
+        return result
 
     _columns = {
         'guest_id': fields.many2one('hotel.guest.partner', 'Guest Billing', select=True),
@@ -201,6 +222,9 @@ class hotel_purchase(osv.osv):
         'user_id': lambda obj, cr, uid, context: uid,
         'name': lambda obj, cr, uid, context: '/',
     }
+    _constraints = [
+        (_constraints_balance_points_zero, "Guest doesn't have enough points to process the order.!", ['Balance']),
+    ]
 
 
     def create(self, cr, uid, vals, context=None):
@@ -257,6 +281,7 @@ class hotel_purchase_lines(osv.osv):
     ]
 
     def create(self, cr, uid, vals, context=None):
+        print "valshotel_purchase_lines",vals
         if not vals['product_id']:
             return True
         if not vals.get('pts_unit', None):
