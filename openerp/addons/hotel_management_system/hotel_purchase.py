@@ -190,8 +190,7 @@ class hotel_purchase(osv.osv):
     def _constraints_balance_points_zero(self, cr, uid, ids, context=None):
         result =True
         for current_rec in self.browse(cr, uid, ids):
-            print "current_rec.balance",current_rec.balance
-            if current_rec.balance <= 0:
+            if current_rec.balance < 0 and current_rec.state == "draft":
                 result = False
         return result
 
