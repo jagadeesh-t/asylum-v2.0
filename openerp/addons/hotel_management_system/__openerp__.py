@@ -16,9 +16,9 @@
                     """,
     'depends': ['base', 'board', 'web_printscreen_zb'],
     'data': [
-        'hotel_menu.xml',
         'security/hotel_security.xml',
         'security/ir.model.access.csv',
+        'hotel_menu.xml',
         'wizard/transfer_guest_view.xml',
         'wizard/add_bed_qty_view.xml',
         'wizard/reduce_bed_qty_view.xml',
