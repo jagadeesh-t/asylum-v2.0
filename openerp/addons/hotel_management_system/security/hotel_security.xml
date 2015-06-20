@@ -9,5 +9,10 @@
         <field name="category_id" ref="module_hotel_management_access"/>
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
 	</record>
+    <record model="res.groups" id="module_hotel_management_group_admin_access">
+	    <field name="name">Hotel Management Admin</field>
+        <field name="category_id" ref="module_hotel_management_access"/>
+        <field name="implied_ids" eval="[(4, ref('module_hotel_management_group_access'))]"/>
+	</record>
 </data>
 </openerp>

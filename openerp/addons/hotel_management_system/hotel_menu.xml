@@ -2,10 +2,10 @@
 <openerp>
     <data>
     <menuitem name="Asylum Seeker Center"
-            id="menu_hotel" groups="module_hotel_management_group_access"/>
+            id="menu_hotel" groups="module_hotel_management_group_access,module_hotel_management_group_admin_access"/>
 
     <menuitem id="submenu_hotel_config" name="Configuration"
-            parent="menu_hotel" sequence="6"  groups="module_hotel_management_group_access"/>
+            parent="menu_hotel" sequence="6"  groups="module_hotel_management_group_access,module_hotel_management_group_admin_access"/>
 
     <menuitem id="submenu_hotel_booking" name="Booking"
             parent="menu_hotel" sequence="1"  />
