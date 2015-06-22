@@ -72,7 +72,7 @@
                         </group>
 
                         <notebook colspan="4">
-                            <page string="Booking Order">
+                            <page string="Booking Order" invisible="1">
                                 <field name="book_hist">
                                     <tree string="Book Orders" colors="grey:state=='cout';blue:state=='cin'">
                                         <field name="guest_type"/>
