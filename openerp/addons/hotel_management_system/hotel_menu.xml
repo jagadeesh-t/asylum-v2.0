@@ -17,7 +17,7 @@
             parent="menu_hotel" sequence="2"   />
 
     <menuitem id="submenu_hotel_product" name="Products"
-        parent="menu_hotel" sequence="5"   />
+        parent="menu_hotel" sequence="4"   />
 
     <menuitem id="submenu_hotel_guests" name="Guests"
         parent="menu_hotel" sequence="5"  />
