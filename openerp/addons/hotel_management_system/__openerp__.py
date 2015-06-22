@@ -43,7 +43,9 @@
         'hotel_stock_statistics_view.xml',
         'hotel_stock_view.xml',
         'hotel_seq_view.xml',
+        'hotel_guest_weekly_presence_view.xml',
 
+        'data/hotel_guest_weekly_presence_cron.xml',
         'data/hotel_stock_location_data.xml',
         'data/hotel_product_unit_data.xml',
         'data/master_data_loading.xml',
