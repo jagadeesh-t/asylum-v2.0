@@ -76,8 +76,10 @@ class hotel_update_stock(osv.osv):
         test_id = self.create(cr,uid,{'name':'Today Inv','date':time.strftime('%Y-%m-%d %H:%M:%S')})
         print test_id
         prod_ids= self.pool.get('hotel.product').search(cr,uid,[])
-        for prod in prod_ids:
-            self.pool.get('hotel.update.stock.lines').create(cr,uid,{'inv_id':test_id,'product_id':prod})
+        for prod in self.pool.get('hotel.product').browse(cr, uid, prod_ids):
+            self.pool.get('hotel.update.stock.lines').create(cr,uid,{'inv_id': test_id,
+                                                                     'product_id': prod['id'],
+                                                                     'product_category': prod['product_category']['id']})
         inv_ids.append(test_id)
         res = mod_obj.get_object_reference(cr, uid, 'hotel_management_system', 'hotel_update_stock_form')
         result['views'] = [(res and res[1] or False, 'form')]
@@ -144,7 +146,6 @@ class hotel_update_stock(osv.osv):
         'user_id': lambda obj, cr, uid, context: uid,
     }
 
-
 hotel_update_stock()
 
 
@@ -155,6 +156,7 @@ class hotel_update_stock_lines(osv.osv):
     _columns = {
         'inv_id': fields.many2one('hotel.update.stock', 'INV'),
         'product_id': fields.many2one('hotel.product', 'Product', required=True),
+        'product_category': fields.many2one('hotel.product.category', 'Category'),
         'cur_qty': fields.related('product_id','total_stock',type='float', digits=(14,3),string='Current Stock',
             readonly=True, store=True),
         'qty': fields.float('Quantity', digits=(14,3)),
