@@ -74,7 +74,7 @@
                     </group>
                     <notebook>
                     <page string="General Information">
-                        <field name="inv_lines" ><!--on_change="order_lines_change(inv_lines, guest_id)"-->
+                        <field name="inv_lines" on_change="order_lines_change(inv_lines, guest_id)"><!--on_change="order_lines_change(inv_lines, guest_id)"-->
                             <tree string="Products" editable="bottom">
                                 <field name="product_id" required="1" on_change="onchange_product_id(product_id, qty)" context="{'positive_only':True}"/>
                                 <field name="qty" on_change="on_change_qty(product_id, qty, pts_unit)" context="{'positive_only':True}"/>
@@ -84,9 +84,9 @@
                         </field>
                             <group>
                             <group  col="8" string="Total 'n Balance">
-                                <field name="total" readonly="1" attrs="{'invisible': [('state','in',('draft', 'done'))]}"/>
+                                <field name="total" readonly="1" attrs="{'invisible': [('state','in',('done'))]}"/>
                                 <field name="total_final" attrs="{'invisible': [('state','not in',('done'))]}" readonly="1"/>
-                                <field name="balance" readonly="1" attrs="{'invisible': [('state','in',('done'))]}"/>
+                                <field name="balance" readonly="1" attrs="{'invisible': [('state','in',('done'))]}" on_change="onchange_balance(balance)"/>
                                 <field name="balance_final" attrs="{'invisible': [('state','not in',('done'))]}" readonly="1"/>
                             </group>
                             <group>
