@@ -1,3 +1,12 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_admin_hotel_room_type,hotel.room.type,model_hotel_room_type,module_hotel_management_group_admin_access,1,1,1,1
 access_group_hotel_room_type,hotel.room.type,model_hotel_room_type,module_hotel_management_group_access,1,0,0,0
+access_admin_hotel_room_bed,hotel.room.bed,model_hotel_room_bed,module_hotel_management_group_admin_access,1,1,1,1
+access_admin_hotel_product_unit,hotel.product.unit,model_hotel_product_unit,module_hotel_management_group_admin_access,1,1,1,1
+access_admin_hotel_product_category,hotel.product.category,model_hotel_product_category,module_hotel_management_group_admin_access,1,1,1,1
+access_admin_hotel_occ,hotel.occ,model_hotel_occ,module_hotel_management_group_admin_access,1,1,1,1
+access_admin_hotel_guest_type,hotel.guest.type,model_hotel_guest_type,module_hotel_management_group_admin_access,1,1,1,1
+access_admin_hotel_guest_points,hotel.guest.points,model_hotel_guest_points,module_hotel_management_group_admin_access,1,1,1,1
+access_admin_hotel_bed_type,hotel.bed.type,model_hotel_bed_type,module_hotel_management_group_admin_access,1,1,1,1
+access_admin_hote_lactivity_type,hotel.activity.type,model_hotel_activity_type,module_hotel_management_group_admin_access,1,1,1,1
+
