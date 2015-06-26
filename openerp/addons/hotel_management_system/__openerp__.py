@@ -15,6 +15,9 @@
                     TSS Asylum Seeker
                     """,
     'depends': ['base', 'board', 'web_printscreen_zb'],
+    'js' : [
+        "static/src/js/view_form.js"
+    ],
     'data': [
         'security/hotel_security.xml',
         'security/ir.model.access.csv',

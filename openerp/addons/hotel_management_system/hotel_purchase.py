@@ -67,7 +67,7 @@ class hotel_purchase(osv.osv):
             pbal = 0.0
 
         bal = pbal - tot
-        return {'value': {'total': tot, 'balance': bal}}
+        return {'value': {'tss_cs_total': tot, 'tss_cs_balance': bal}}
 
     def onchange_balance(self, cr, uid, ids, balance, context=None):
         """ Otherwise a warning is thrown.
@@ -133,7 +133,7 @@ class hotel_purchase(osv.osv):
             except:
                 raise osv.except_osv(_('Location Error!'), _(
                     'Please create location name "Stock" and "Sale"! Contact Administrator'))
-            if do.balance < 0.0:
+            if do.tss_cs_balance < 0.0:
                 raise osv.except_osv(
                     _('Warning!'), _("Guest doesn't have enough points to process the order.!"))
             for lines in do.inv_lines:
@@ -148,7 +148,7 @@ class hotel_purchase(osv.osv):
             self.pool.get('hotel.guest.points').create(cr, uid, {'guest_id': do.guest_id.id,
                                                                        'name': do.name,
                                                                        'purchase_id': do.id,
-                                                                       'qty': -do.total,
+                                                                       'qty': -do.tss_cs_total,
                                                                        'date': time_now,
                                                                        }, context=context)
             self.write(
@@ -180,7 +180,7 @@ class hotel_purchase(osv.osv):
                 raise osv.except_osv(_('Warning!'), _("Guest doesn't have enough points to process the order.!"))
 
             time_now = time.strftime('%Y-%m-%d %H:%M:%S')
-            write_value = {'date': time_now, 'total_final': tot, 'total': tot, 'balance_final': balance_final, 'balance': balance_final}
+            write_value = {'date': time_now, 'total_final': tot, 'tss_cs_total': tot, 'balance_final': balance_final, 'tss_cs_balance': balance_final}
             write_value['state'] = 'bill'
             return self.write(cr, uid, ids, write_value, context=context)
 
@@ -204,19 +204,19 @@ class hotel_purchase(osv.osv):
     def _constraints_balance_points_zero(self, cr, uid, ids, context=None):
         result =True
         for current_rec in self.browse(cr, uid, ids):
-            if current_rec.balance < 0 and current_rec.state == "draft":
+            if current_rec.tss_cs_balance < 0 and current_rec.state == "draft":
                 result = False
         return result
 
     _columns = {
         'guest_id': fields.many2one('hotel.guest.partner', 'Guest Billing', select=True),
         'name': fields.char('Name', size=128, required=True, select=True),
-        'total': fields.function(_get_total, string='Total', type='float'),
+        'tss_cs_total': fields.function(_get_total, string='Total', type='float'),
         #'balance': fields.function(_get_balance, string='Balance', type='float'),
         'total_final': fields.float('Total'),
         'balance_final': fields.float('Balance'),
         # 'balance': fields.function(_get_balance_pts, string='Balance', type='float', readonly=True),
-        'balance': fields.float('Balance'),
+        'tss_cs_balance': fields.float('Balance'),
         # 'balance': fields.float('Balance'),
         'date': fields.datetime('Date', help="Date.", required=True, select=True, readonly=True),
         'state': fields.selection([

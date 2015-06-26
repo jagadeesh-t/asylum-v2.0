@@ -84,9 +84,9 @@
                         </field>
                             <group>
                             <group  col="8" string="Total 'n Balance">
-                                <field name="total" readonly="1" attrs="{'invisible': [('state','in',('done'))]}"/>
+                                <field name="tss_cs_total" readonly="1" attrs="{'invisible': [('state','in',('done'))]}"/>
                                 <field name="total_final" attrs="{'invisible': [('state','not in',('done'))]}" readonly="1"/>
-                                <field name="balance" readonly="1" attrs="{'invisible': [('state','in',('done'))]}" on_change="onchange_balance(balance)"/>
+                                <field name="tss_cs_balance" readonly="1" attrs="{'invisible': [('state','in',('done'))]}" on_change="onchange_balance(tss_cs_balance)"/>
                                 <field name="balance_final" attrs="{'invisible': [('state','not in',('done'))]}" readonly="1"/>
                             </group>
                             <group>

@@ -76,7 +76,7 @@ class customer_selection(osv.osv_memory):
         result = mod_obj.get_object_reference(cr, uid, 'hotel_management_system', 'action_hotel_purchase')
         id = result and result[1] or False
         result = act_obj.read(cr, uid, [id], context=context)[0]
-        test_id = self.pool.get('hotel.purchase').create(cr,uid,{'name':'/','date':time.strftime('%Y-%m-%d %H:%M:%S'),'user_id':uid,'guest_id':p_id,'state':'draft', 'balance': bal_points})
+        test_id = self.pool.get('hotel.purchase').create(cr,uid,{'name':'/','date':time.strftime('%Y-%m-%d %H:%M:%S'),'user_id':uid,'guest_id':p_id,'state':'draft', 'tss_cs_balance': bal_points})
         inv_ids.append(test_id)
         res = mod_obj.get_object_reference(cr, uid, 'hotel_management_system', 'hotel_purchase_form')
         result['views'] = [(res and res[1] or False, 'form')]
