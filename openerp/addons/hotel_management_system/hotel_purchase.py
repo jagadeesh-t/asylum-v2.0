@@ -9,24 +9,22 @@ import base64
 class hotel_purchase(osv.osv):
     _name = "hotel.purchase"
     _description = "Purchase Order"
-    #
-    # def write(self, cr, uid, ids, dict_val, context):
-    #     print "dict_val",dict_val
-    #     donot_delete = []
-    #     if 'inv_lines' in dict_val:
-    #         for inv_line in dict_val['inv_lines']:
-    #             if inv_line[0] == 1:
-    #                 donot_delete.append(inv_line[1])
-    #
-    #         purchase_lines_obj = self.pool.get("hotel.purchase.lines")
-    #         purchase_lines_ids = purchase_lines_obj.search(cr, uid, [('inv_id', 'in', ids)])
-    #
-    #         purchase_lines_obj.unlink(cr, uid, purchase_lines_ids, context=context)
-    #         cr.commit()
-    #         print "purchase_lines_ids",purchase_lines_ids
-    #     # if len(purchase_lines_ids) != 0:
-    #     #     cr.execute("delete from hotel_purchase_lines where inv_id in %s", (tuple(purchase_lines_ids),))
-    #     return super(hotel_purchase, self).write(cr, uid, ids, dict_val, context=context)
+
+    def write(self, cr, uid, ids, dict_val, context):
+        donot_delete = []
+        if 'inv_lines' in dict_val:
+            for inv_line in dict_val['inv_lines']:
+                if inv_line[0] == 1:
+                    donot_delete.append(inv_line[1])
+
+            purchase_lines_obj = self.pool.get("hotel.purchase.lines")
+            purchase_lines_ids = purchase_lines_obj.search(cr, uid, [('inv_id', 'in', ids)])
+
+            purchase_lines_obj.unlink(cr, uid, purchase_lines_ids, context=context)
+            cr.commit()
+        # if len(purchase_lines_ids) != 0:
+        #     cr.execute("delete from hotel_purchase_lines where inv_id in %s", (tuple(purchase_lines_ids),))
+        return super(hotel_purchase, self).write(cr, uid, ids, dict_val, context=context)
 
     # def on_change_guest(self, cr, uid, ids, partner_id=False, context=None):
     #     guest_obj = self.pool.get('hotel.guest.partner')
@@ -67,6 +65,8 @@ class hotel_purchase(osv.osv):
             pbal = 0.0
 
         bal = pbal - tot
+        if bal < 0:
+            raise osv.except_osv('Warning!', "Guest doesn't have enough points to process the order.!")
         return {'value': {'tss_cs_total': tot, 'tss_cs_balance': bal}}
 
     def onchange_balance(self, cr, uid, ids, balance, context=None):
