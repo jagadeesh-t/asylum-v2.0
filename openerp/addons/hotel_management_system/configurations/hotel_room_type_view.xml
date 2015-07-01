@@ -54,7 +54,7 @@
     <!--Room Type Menu Creation-->
     <menuitem action="hotel_room_type_action"
         id="menu_hotel_room_type_creation_action"
-        parent="submenu_hotel_config" sequence="2" groups="module_hotel_management_group_access,module_hotel_management_group_admin_access"/>
+        parent="submenu_hotel_config" sequence="2" groups="module_hotel_management_group_admin_access"/>
 
     </data>
 </openerp>

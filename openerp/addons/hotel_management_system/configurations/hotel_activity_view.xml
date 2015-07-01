@@ -48,7 +48,7 @@
             </record>
             
  <!--Menu Creation  -->
-   		 <menuitem id="menu_activity_creation" parent="submenu_hotel_config" action="activity_creation_action" sequence="7"/>
+   		 <menuitem id="menu_activity_creation" parent="submenu_hotel_config" action="activity_creation_action" groups="module_hotel_management_group_admin_access" sequence="7"/>
 
 </data>
 </openerp>
