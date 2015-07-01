@@ -48,7 +48,7 @@
 
     <menuitem action="action_customer_selection"
         id="menu_action_customer_selection"
-        parent="submenu_hotel_product" sequence="5"/>
+        parent="submenu_hotel_product" groups="module_hotel_management_group_access,module_hotel_management_group_admin_access" sequence="5"/>
 
     </data>
 </openerp> 
