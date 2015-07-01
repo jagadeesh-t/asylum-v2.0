@@ -106,7 +106,7 @@
     <!--Hotel Rooms Menu Creation-->
     <menuitem action="action_hotel_rooms"
         id="menu_action_hotel_rooms_action"
-        parent="submenu_hotel_config" sequence="3"/>
+        parent="submenu_hotel_config" groups="module_hotel_management_group_admin_access" sequence="3"/>
 
     </data>
 </openerp>

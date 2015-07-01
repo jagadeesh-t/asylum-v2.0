@@ -117,7 +117,7 @@
               </p>
             </field>
         </record>
-        <menuitem action="action_hotel_purchase" id="menu_action_tarun_hotel_purchase_form" parent="submenu_hotel_cashier_system" sequence="1"/>
+        <menuitem action="action_hotel_purchase" id="menu_action_tarun_hotel_purchase_form" parent="submenu_hotel_cashier_system" groups="module_hotel_management_group_admin_access" sequence="1"/>
 
 
 

@@ -79,7 +79,7 @@
     
     <menuitem action="action_hotel_stock_transfer"
         id="menu_action_hotel_stock_transfer"
-        parent="submenu_hotel_product" sequence="5"/>
+        parent="submenu_hotel_product" groups="module_hotel_management_group_admin_access" sequence="5"/>
 
 <!--inv trial-->
 
@@ -182,7 +182,7 @@
               </p>
             </field>
         </record>
-        <menuitem action="action_hotel_update_stock" id="menu_action_hotel_update_stock_form" parent="submenu_hotel_product" sequence="6"/>
+        <menuitem action="action_hotel_update_stock" id="menu_action_hotel_update_stock_form" parent="submenu_hotel_product" groups="module_hotel_management_group_admin_access" sequence="6"/>
 
 
  <record id="hotel_update_stock_conf" model="ir.actions.server">
@@ -194,7 +194,7 @@
             <field name="condition">True</field>
             <field name="name">Update Stock</field>
         </record>
-        <menuitem action="hotel_update_stock_conf" id="menu_hotel_update_stock_conf" parent="submenu_hotel_product" sequence="7"/>
+        <menuitem action="hotel_update_stock_conf" id="menu_hotel_update_stock_conf" parent="submenu_hotel_product" groups="module_hotel_management_group_admin_access" sequence="7"/>
 
 
 

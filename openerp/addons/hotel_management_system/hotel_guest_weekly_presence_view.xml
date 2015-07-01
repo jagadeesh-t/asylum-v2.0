@@ -46,7 +46,7 @@
     
     <menuitem action="action_hotel_guest_weekly_presence"
         id="menu_action_hotel_guest_weekly_presence"
-        parent="submenu_hotel_guests" sequence="2"/>
+        parent="submenu_hotel_guests" groups="module_hotel_management_group_admin_access" sequence="2"/>
 
 
 

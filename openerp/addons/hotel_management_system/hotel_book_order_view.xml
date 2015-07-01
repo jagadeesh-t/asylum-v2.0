@@ -114,11 +114,11 @@
     <!--Hotel Bed Menu Creation-->
     <menuitem action="hotel_book_order_action"
         id="menu_hotel_book_order_action_action"
-        parent="submenu_hotel_booking" sequence="1"/>
+        parent="submenu_hotel_booking" groups="module_hotel_management_group_admin_access" sequence="1"/>
 
     <menuitem action="hotel_book_order_same_action"
         id="menu_hotel_book_order_action_same_action"
-        parent="submenu_hotel_booking" sequence="3"/>
+        parent="submenu_hotel_booking" groups="module_hotel_management_group_admin_access" sequence="3"/>
 
     </data>
 </openerp>

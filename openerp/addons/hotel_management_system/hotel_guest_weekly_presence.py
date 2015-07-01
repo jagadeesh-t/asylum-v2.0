@@ -34,7 +34,7 @@ class hotel_guest_weekly_presence(osv.osv):
         return self.write(cr,uid,ids,{'state': 'done'},context=context)
 
 
-    def _generate_guest_attendance(self, cr, uid, ids, context=None):
+    def _generate_guest_attendance(self, cr, uid,context=None):
         """
         @return: Dictionary of values.
         """
@@ -42,6 +42,8 @@ class hotel_guest_weekly_presence(osv.osv):
         guests = guest_obj.search(cr,uid,[('available','=',True)])
         for guest in guest_obj.browse(cr, uid, guests):
             # default format is yyyy-mm-dd
+            print "-----------------------------"
+            print guest.cin_date
             diff = (datetime.datetime.now() - datetime.datetime.strptime(guest.cin_date,'%Y-%m-%d')).days
             date_end = datetime.datetime.now().strftime('%Y-%m-%d')
             date_end2 = datetime.datetime.now().strftime('%Y-%d-%m')[5:10]
@@ -62,7 +64,7 @@ class hotel_guest_weekly_presence(osv.osv):
         return True
 
 
-    def _approve_guest_attendance(self, cr, uid, ids, context=None):
+    def _approve_guest_attendance(self, cr, uid, context=None):
         """
         @return: Dictionary of values.
         """

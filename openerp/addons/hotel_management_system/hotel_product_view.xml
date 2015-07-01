@@ -96,7 +96,7 @@
     
     <menuitem action="action_hotel_product"
         id="menu_product_creation"
-        parent="submenu_hotel_product" sequence="3"/>
+        parent="submenu_hotel_product" groups="module_hotel_management_group_admin_access" sequence="3"/>
 
 
 

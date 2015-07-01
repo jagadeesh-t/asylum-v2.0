@@ -5,22 +5,22 @@
             id="menu_hotel" groups="module_hotel_management_group_access,module_hotel_management_group_admin_access"/>
 
     <menuitem id="submenu_hotel_config" name="Configuration"
-            parent="menu_hotel" sequence="6"  groups="module_hotel_management_group_access,module_hotel_management_group_admin_access"/>
+            parent="menu_hotel" sequence="6"  groups="module_hotel_management_group_admin_access"/>
 
     <menuitem id="submenu_hotel_booking" name="Booking"
-            parent="menu_hotel" sequence="1"  />
+            parent="menu_hotel" sequence="1"  groups="module_hotel_management_group_admin_access"/>
 
     <menuitem id="submenu_hotel_activities" name="Activities"
-            parent="menu_hotel" sequence="3"  />
+            parent="menu_hotel" sequence="3"  groups="module_hotel_management_group_admin_access"/>
 
     <menuitem id="submenu_hotel_cashier_system" name="Cashier System "
-            parent="menu_hotel" sequence="2"   />
+            parent="menu_hotel" sequence="2"   groups="module_hotel_management_group_admin_access"/>
 
     <menuitem id="submenu_hotel_product" name="Products"
-        parent="menu_hotel" sequence="4"   />
+        parent="menu_hotel" sequence="4"   groups="module_hotel_management_group_admin_access,module_hotel_management_group_access"/>
 
     <menuitem id="submenu_hotel_guests" name="Guests"
-        parent="menu_hotel" sequence="5"  />
+        parent="menu_hotel" sequence="5"  groups="module_hotel_management_group_admin_access"/>
 
     <!-- Activities Calendar's menu For Hotel-->
 

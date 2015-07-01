@@ -56,9 +56,9 @@
             <field name="view_id" ref="board_configuration_form"/>
         </record>
 
-        <menuitem action="main_board_hotel"
-        id="menu_hotel_board_order_action"
-        parent="submenu_hotel_booking" sequence="2"/>
+        <!--<menuitem action="main_board_hotel"-->
+        <!--id="menu_hotel_board_order_action"-->
+        <!--parent="submenu_hotel_booking" sequence="2"/>-->
 
     </data>
 </openerp>
