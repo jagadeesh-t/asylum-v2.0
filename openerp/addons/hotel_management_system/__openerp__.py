@@ -52,7 +52,9 @@
         'data/hotel_product_unit_data.xml',
         'data/master_data_loading.xml',
         'data/hotel_room_occupancy_data.xml',
-        'Large_Label_report.xml'
+        'Large_Label_report.xml',
+
+        'register/hotel_stock_register_view.xml'
 
              ],
     'demo': [],

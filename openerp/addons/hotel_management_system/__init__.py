@@ -9,3 +9,4 @@ import hotel_product
 import hotel_purchase
 import hotel_stock_statistics
 import hotel_stock
+import register

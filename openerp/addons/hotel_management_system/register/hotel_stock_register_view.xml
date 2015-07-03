@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+<data>
+<!--Form  -->
+        <record model="ir.ui.view" id="activity_stock_register_statistics_form">
+            <field name="name">Stock Register Form View</field>
+            <field name="model">hotel.stock.register</field>
+            <field name="arch" type="xml">
+                <form string="Stock Register" version="7.0">
+                     <sheet>
+                         <group col="4">
+                            <field name="to_date"/>
+                            <field name="from_date"/>
+                        </group>
+                        <group>
+                            <field name="inv_lines" nolabel="1" readonly="1">
+                                <tree string="Purchase Stock History">
+                                    <field name="product_category"/>
+                                    <field name="qty"/>
+                                    <field name="pts"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="activity_stock_register_action">
+                        <field name="name">Stock Statistics</field>
+                        <field name="res_model">hotel.stock.register</field>
+                        <field name="view_type">form</field>
+                        <field name="view_mode">form</field>
+                        <field name="target">new</field>
+        </record>
+
+ <!--Menu Creation  -->
+   		 <menuitem id="menu_activity_stock_register_action" parent="submenu_hotel_product" action="activity_stock_register_action" groups="module_hotel_management_group_admin_access" sequence="8"/>
+
+</data>
+</openerp>
