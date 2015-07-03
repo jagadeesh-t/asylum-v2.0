@@ -13,10 +13,6 @@ class hotel_guest_point(osv.Model):
         'up_qty': fields.float('Updated Points'),
         'date': fields.datetime('Date', help="Date.", required=True, select=True, readonly=True),
         'user_id': fields.many2one('res.users', 'Approved By', readonly=True),
-        'state': fields.selection([
-            ('draft', 'To Approve'),
-            ('done', 'Approved'),
-            ], 'Status', readonly=True, select=True),
     }
     _defaults = {
         'date': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
