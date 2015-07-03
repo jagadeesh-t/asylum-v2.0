@@ -117,7 +117,7 @@ class hotel_guest_partner(osv.Model):
         'gender': fields.selection([('m', 'Male'), ('f', 'Female')], 'Gender',),
         'pref': fields.selection([('veg', 'Veg'), ('nveg', 'Non-Veg')], 'Diet',),
         'dob': fields.date('Date of Birth'),
-        'cin_date': fields.date('Check-in Date'),
+        'points_updated_date': fields.date('Points Updated'),
         'age': fields.integer('Age'),
         'book_hist' : fields.function(_compute_lines, relation='hotel.book.order', type="many2many", string='Booking History'),
         'available': fields.boolean('Available'),

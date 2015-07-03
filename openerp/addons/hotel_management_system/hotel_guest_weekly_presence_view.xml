@@ -7,38 +7,57 @@
         <field name="model">hotel.guest.weekly.presence</field>
         <field name="arch" type="xml">
             <tree string="Guest Weekly Presence List" editable="bottom" create="false" delete="false">
-                <field name="name" readonly="1"/>
-                <field name="guest_rel_related" readonly="1"/>
-                <field name="guest_id" readonly="1"/>
-                <field name="date_start" readonly="1"/>
-                <field name="date_end" readonly="1"/>
-                <field name="qty"/>
-                <field name="user_id" invisible="1"/>
-                <field name="state"/>
-                <button name="button_approve" states="draft" string="Approve" type="object" class="oe_highlight" icon="gtk-go-forward"/>
+                <field name="name"/>
+                <field name="guest_id"/>
             </tree>
         </field>
     </record>
     
-        <record id="view_hotel_guest_weekly_presence_form" model="ir.ui.view">
-            <field name="name">hotel.guest.weekly.presence.form.view</field>
-            <field name="model">hotel.guest.weekly.presence</field>
-            <field name="arch" type="xml">
-                <form string="Guest Weekly Presence" version="7.0">
-                    <group col="4">
-		                <field name="name"/>          
-                    </group> 
-                </form>
-            </field>
-        </record>
+    <record id="view_hotel_guest_weekly_presence_form" model="ir.ui.view">
+        <field name="name">hotel.guest.weekly.presence.form.view</field>
+        <field name="model">hotel.guest.weekly.presence</field>
+        <field name="arch" type="xml">
+            <form string="Guest Weekly Presence" version="7.0">
+                <group col="2">
+                    <field name="guest_id"/>
+                    <field name="name"/>
+                </group>
+                <footer>
+                    <button name="button_approve"  string="Ok" type="object"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Gest Points Form View-->
+    <record id="hotel_guest_points_tree" model="ir.ui.view">
+        <field name="name">hotel.guest.points.tree</field>
+        <field name="model">hotel.guest.points</field>
+        <field name="arch" type="xml">
+            <tree string="Guest Points" create="false" edit="false" version="7.0">
+                    <field name="name"/>
+                    <field name="qty"/>
+                    <field name="up_qty"/>
+                    <field name="date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_hotel_guest_points" model="ir.actions.act_window">
+        <field name="name">Guest Points</field>
+        <field name="res_model">hotel.guest.points</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="target">inline</field>
+    </record>
 
 
     <record id="action_hotel_guest_weekly_presence" model="ir.actions.act_window">
         <field name="name">Guest Weekly Presence</field>
         <field name="res_model">hotel.guest.weekly.presence</field>
         <field name="view_type">form</field>
-        <field name="view_mode">tree</field>
-        <field name="search_view_id"  eval="False"/>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
         <field name="context">{}</field>
         <field name="help">Create new Weekly Presence.</field>
     </record>

@@ -13,7 +13,7 @@
                     <field name="pref"/>
                     <field name="dob"/>
                     <field name="age"/>
-                    <field name="cin_date"/>
+                    <field name="points_updated_date"/>
                     <field name="user_id" invisible="1"/>
                     <field name="country" invisible="1"/>
                     <field name="country_id" invisible="1"/>
@@ -61,7 +61,7 @@
                                 <field name="user_id"/>
                                 <field name="dob" on_change="onchange_calculate_age(dob)"/>
                                 <field name="age"/>
-                                   <field name="cin_date" readonly="1"/>
+                                   <field name="points_updated_date" readonly="1"/>
                             </group>
                             <group>
                                 <field name="phone" placeholder="e.g. +32.81.81.37.00"/>
