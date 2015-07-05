@@ -1,10 +1,28 @@
 __author__ = 'pradeep'
 from openerp.osv import fields, osv
+from openerp.tools.translate import _
+import openerp.addons.decimal_precision as dp
 
 class hotel_stock_register(osv.Model):
     """
     This Model Represent The Stock Duration Creation
     """
+    def onchange_stock_statistics(self, cr, uid, ids, to_date,from_date, context=None ):
+        res = {}
+        if to_date != False and from_date != False:
+            line=[]
+            cr.execute('select hpl.product_id,sum(hpl.qty) as qty,sum(hpl.qty*hpl.pts_unit) as pts from hotel_purchase hp inner join hotel_purchase_lines hpl on hp.id = inv_id where hp.state  = \'done\' group by hpl.product_id',())
+            for t in cr.dictfetchall():
+                line.append([0, False, {'product_category': t['product_id'], 'pts': t['pts'], 'qty': t['qty']}])
+            res['inv_lines']= line
+            return {'value': res}
+        else:
+            warning = {
+                    'title': _('Warning!'),
+                    'message': _('The selected unit of measure is not compatible with the unit of measure of the product.')
+                }
+            return {'warning': warning}
+
     _name = "hotel.stock.register"
     _description = "Stock Registeer"
 
