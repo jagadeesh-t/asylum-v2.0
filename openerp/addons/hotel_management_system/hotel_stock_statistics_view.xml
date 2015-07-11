@@ -78,9 +78,9 @@
 			                    <field name="product_id"/>
 					            <field name="points"/>
 			                    <field name="serving"/>
-			                    <field name="serving_start"/>
-					            <field name="serving_end"/>
-			                    <field name="serving_in"/>
+			                    <field name="serving_start" invisible="1"/>
+					            <field name="serving_end" invisible="1"/>
+			                    <field name="serving_in" invisible="1"/>
                             </tree>
                             <form string="Products" version="7.0">
                                 <group>
