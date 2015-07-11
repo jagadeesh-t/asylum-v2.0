@@ -36,7 +36,7 @@
         </record>
 
  <!--Menu Creation  -->
-   		 <menuitem id="menu_activity_stock_register_action" parent="submenu_hotel_product" action="activity_stock_register_action" groups="module_hotel_management_group_admin_access" sequence="8"/>
+   		 <!--<menuitem id="menu_activity_stock_register_action" parent="submenu_hotel_product" action="activity_stock_register_action" groups="module_hotel_management_group_admin_access" sequence="8" />-->
 
 </data>
 </openerp>
