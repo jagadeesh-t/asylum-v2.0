@@ -139,7 +139,7 @@
     <!--Hotel Bed Menu Creation-->
     <menuitem action="hotel_guest_partner_action"
         id="menu_hotel_guest_partner_action"
-        parent="submenu_hotel_guests" groups="module_hotel_management_group_admin_access" sequence="1"/>
+        parent="submenu_hotel_guests" groups="module_hotel_management_group_admin_access,module_hotel_management_group_access" sequence="1"/>
 
     </data>
 </openerp>

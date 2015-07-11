@@ -17,10 +17,10 @@
             parent="menu_hotel" sequence="2"   groups="module_hotel_management_group_admin_access"/>
 
     <menuitem id="submenu_hotel_product" name="Products"
-        parent="menu_hotel" sequence="4"   groups="module_hotel_management_group_admin_access,module_hotel_management_group_access"/>
+        parent="menu_hotel" sequence="4"   groups="module_hotel_management_group_admin_access"/>
 
     <menuitem id="submenu_hotel_guests" name="Guests"
-        parent="menu_hotel" sequence="5"  groups="module_hotel_management_group_admin_access"/>
+        parent="menu_hotel" sequence="5"  groups="module_hotel_management_group_admin_access,module_hotel_management_group_access"/>
 
     <!-- Activities Calendar's menu For Hotel-->
 
