@@ -10,9 +10,11 @@ class hotel_guest_weekly_presence(osv.TransientModel):
 
     def button_approve(self, cr, uid, ids, context=None):
         time_now = time.strftime('%Y-%m-%d %H:%M:%S')
-        time_cmp = time.strftime('%Y-%m-%d')
+        time_cmp = time.strftime('%m-%d-%Y')
+        time_check = time.strftime('%Y-%m-%d')
         for do in self.browse(cr, uid, ids, context=context):
-            if do.guest_id.points_updated_date != time_cmp:
+            if do.guest_id.points_updated_date != time_check:
+                print do.guest_id.points_updated_date
                 ids=self.pool.get('hotel.guest.points').create(cr,uid,{'guest_id':do.guest_id.id,
                                                                          'name':do.name,
                                                                          'qty':525.00,
@@ -20,7 +22,7 @@ class hotel_guest_weekly_presence(osv.TransientModel):
                                                                          'date':time_now,
                                                                          'user_id':uid,
                                                                          },context=context)
-                self.pool.get('hotel.guest.partner').write(cr,uid,[do.guest_id.id],{'points_updated_date':time_now})
+                self.pool.get('hotel.guest.partner').write(cr,uid,[do.guest_id.id],{'points_updated_date':time_cmp})
                 return {
                     'name': 'Guest Points',
                     'view_type': 'form',
