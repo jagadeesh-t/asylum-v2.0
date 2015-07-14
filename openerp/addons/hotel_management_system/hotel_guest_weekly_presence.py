@@ -36,7 +36,10 @@ class hotel_guest_weekly_presence(osv.TransientModel):
 
     _columns = {
         'guest_id': fields.many2one('hotel.guest.partner', 'Guest Name', required=True),
-        'name': fields.char('Gest Token'),
+        'name': fields.datetime('Points Update Date'),
+    }
+    _defaults = {
+        'name': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
     }
 
 

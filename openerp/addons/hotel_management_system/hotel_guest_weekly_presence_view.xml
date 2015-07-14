@@ -20,7 +20,7 @@
             <form string="Guest Weekly Presence" version="7.0">
                 <group col="2">
                     <field name="guest_id"/>
-                    <field name="name"/>
+                    <field name="name" attrs="{'readonly': [('name','!=',False)]}"/>
                 </group>
                 <footer>
                     <button name="button_approve"  string="Ok" type="object"/>
