@@ -31,7 +31,7 @@ class hotel_guest_weekly_presence(osv.TransientModel):
                     'target':'inline',
                 }
         else:
-            raise osv.except_osv(_('This is the error title'), _('This is the error message'))
+            raise osv.except_osv(_('Guest already scanned'), _('You cannot scan the same guest twice in a day'))
 
 
     _columns = {
