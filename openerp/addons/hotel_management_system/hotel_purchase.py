@@ -292,6 +292,9 @@ class hotel_purchase_lines(osv.osv):
     _constraints = [
         (_constraint_product_empty, "Warning! Product won't be empty.", ['Product']),
     ]
+    _defaults = {
+        'qty': 1.00,
+    }
 
     def create(self, cr, uid, vals, context=None):
         print "valshotel_purchase_lines",vals
