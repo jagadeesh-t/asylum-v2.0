@@ -329,11 +329,13 @@ class hotel_purchase_lines(osv.osv):
                             'message': warning_msg,
                         }
                         })
-                    return res
-                else:
-                    res['value']['qty'] = 1.00
-                    res['value']['pts_unit'] = prod.value
-                    return res
+                        res['value']['qty'] = qty
+                        res['value']['pts_unit'] = prod.value
+                        return res
+                    else:
+                        res['value']['qty'] = qty
+                        res['value']['pts_unit'] = prod.value
+                        return res
 
     def on_change_qty(self, cr, uid, ids, product_id, qty, pts_unit, context=None):
         """ Otherwise a warning is thrown.
