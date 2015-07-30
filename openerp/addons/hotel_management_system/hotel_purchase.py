@@ -331,10 +331,12 @@ class hotel_purchase_lines(osv.osv):
                         })
                         res['value']['qty'] = qty
                         res['value']['pts_unit'] = prod.value
+                        res['value']['pts'] = qty * prod.value
                         return res
                     else:
                         res['value']['qty'] = qty
                         res['value']['pts_unit'] = prod.value
+                        res['value']['pts'] = qty * prod.value
                         return res
 
     def on_change_qty(self, cr, uid, ids, product_id, qty, pts_unit, context=None):
