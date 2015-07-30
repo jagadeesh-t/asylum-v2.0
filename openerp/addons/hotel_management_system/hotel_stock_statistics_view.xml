@@ -117,7 +117,7 @@
               </p>
             </field>
         </record>
-        <menuitem action="action_hotel_stock_statistics" id="menu_action_hotel_stock_stats_form" parent="submenu_hotel_cashier_system" groups="module_hotel_management_group_admin_access" sequence="2"/>
+        <!--<menuitem action="action_hotel_stock_statistics" id="menu_action_hotel_stock_stats_form" parent="submenu_hotel_cashier_system" groups="module_hotel_management_group_admin_access" sequence="2"/>-->
 
 
 
