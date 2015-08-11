@@ -14,7 +14,7 @@
     'description' : """
                     TSS Asylum Seeker
                     """,
-    'depends': ['base', 'board', 'web_printscreen_zb'],
+    'depends': ['base', 'board', 'web_printscreen_zb', 'auto_backup'],
     'js' : [
         "static/src/js/view_form.js"
     ],
