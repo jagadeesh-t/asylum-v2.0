@@ -13,7 +13,7 @@
         </field>
     </record>
     
-    <record id="view_hotel_guest_weekly_presence_form" model="ir.ui.view">
+    <record id="view_hotel_guest_point_presence_form" model="ir.ui.view">
         <field name="name">hotel.guest.weekly.presence.form.view</field>
         <field name="model">hotel.guest.weekly.presence</field>
         <field name="arch" type="xml">
@@ -30,12 +30,38 @@
     </record>
 
     <!-- Gest Points Form View-->
+            <record id="view_hotel_guest_weekly_points_search" model="ir.ui.view">
+            <field name="name">hotel.guest.points.search</field>
+            <field name="model">hotel.guest.points</field>
+            <field name="arch" type="xml">
+                <search string="Guest Points">
+                    <field name="date" string="Points gained on"/>
+                    <field name="guest_id" string="Guest name"/>
+                </search>
+            </field>
+        </record>
+
+    <record id="view_hotel_guest_weekly_presence_form" model="ir.ui.view">
+        <field name="name">hotel.guest.points.form.view</field>
+        <field name="model">hotel.guest.points</field>
+        <field name="arch" type="xml">
+            <form string="Guest Weekly Presence" create="false" edit="false" delete="false" version="7.0">
+                <group col="2">
+                    <field name="guest_id"/>
+                    <field name="qty"/>
+                    <field name="up_qty"/>
+                    <field name="date"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
     <record id="hotel_guest_points_tree" model="ir.ui.view">
         <field name="name">hotel.guest.points.tree</field>
         <field name="model">hotel.guest.points</field>
         <field name="arch" type="xml">
-            <tree string="Guest Points" create="false" edit="false" version="7.0">
-                    <field name="name"/>
+            <tree string="Guest Points"  create="false" edit="false" version="7.0">
+                    <field name="guest_id"/>
                     <field name="qty"/>
                     <field name="up_qty"/>
                     <field name="date"/>
@@ -45,11 +71,17 @@
 
     <record id="action_hotel_guest_points" model="ir.actions.act_window">
         <field name="name">Guest Points</field>
+        <field name="type">ir.actions.act_window</field>
         <field name="res_model">hotel.guest.points</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
-        <field name="target">inline</field>
+        <field name="context">{}</field>
+        <field name="help">Create new Guest for the hotel.</field>
     </record>
+
+
+    <menuitem id="menu_action_hotel_guest_points_presence" action="action_hotel_guest_points"
+        parent="submenu_hotel_guests" groups="module_hotel_management_group_admin_access,module_hotel_management_group_access" sequence="3"/>
 
 
     <record id="action_hotel_guest_weekly_presence" model="ir.actions.act_window">

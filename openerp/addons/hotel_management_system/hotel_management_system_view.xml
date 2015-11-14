@@ -91,7 +91,7 @@
                             </page>
                             <page string="Points">
                                 <field name="points_hist">
-                                    <tree string="Points Transaction" editable="bottom" colors="red:qty&lt;=0;green:qty&gt;=0">
+                                    <tree string="Points Transaction" editable="bottom" create="false" edit="false" delete="false" colors="red:qty&lt;=0;green:qty&gt;=0">
                                         <field name="name"/>
                                         <!--<button name="purchase_open" type="object" icon="STOCK_INDEX" attrs="{'invisible':[('purchase_id','=',False)]}"/>-->
                                         <field name="qty"/>
