@@ -24,6 +24,18 @@ class hotel_guest_partner(osv.Model):
             res[o.id] = points
         return res
 
+    def name_search(self, cr, user, name='', args=None, operator='like', context=None, limit=None):
+        if not args:
+            args=[]
+        if not context:
+            context={}
+        ids = self.pool.get('hotel.guest.partner').search(cr, user, [('name', operator, name)] + args,limit=limit, context=context)
+        if not ids:
+            ids = self.pool.get('hotel.guest.partner').search(cr, user, [('guest_ref', operator, name)] + args,limit=limit, context=context)
+        else:
+            ids = self.pool.get('hotel.guest.partner').search(cr, user, [('last_name', operator, name)] + args,limit=limit, context=context)
+        return self.name_get(cr, user, ids, context)
+
     def name_get(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
