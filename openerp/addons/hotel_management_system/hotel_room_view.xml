@@ -53,9 +53,7 @@
                                 <field name="cur_order" readonly="1">
                                     <tree string="Book Orders" colors="grey:state=='cout';blue:state=='cin'">
                                         <field name="guest_type"/>
-                                        <field name="guest_ref"/>
-                                        <field name="last_name"/>
-                                        <field name="first_name"/>
+                                        <field name="guest_id"/>
                                         <field name="gender"/>
                                         <field name="country_id"/>
                                         <field name="check_in_date"/>
