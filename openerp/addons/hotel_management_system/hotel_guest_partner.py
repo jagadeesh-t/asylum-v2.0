@@ -67,7 +67,7 @@ class hotel_guest_partner(osv.Model):
         order_obj=self.pool.get('hotel.book.order')
         for guest in self.browse(cr, uid, ids, context=context):
             orders = []
-            orders = order_obj.search(cr,uid, [['state', '=', 'cin'],['guest_ref', '=', guest.guest_ref]], context=context)
+            orders = order_obj.search(cr,uid, [['state', '=', 'cin'],['guest_id', '=', guest.guest_ref]], context=context)
             result[guest.id] = orders
         return result
 
