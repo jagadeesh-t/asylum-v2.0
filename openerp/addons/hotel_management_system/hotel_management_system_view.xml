@@ -77,7 +77,6 @@
                                     <tree string="Book Orders" colors="grey:state=='cout';blue:state=='cin'">
                                         <field name="guest_type"/>
                                         <field name="guest_id"/>
-                                        <field name="gender"/>
                                         <field name="country_id"/>
                                         <field name="check_in_date"/>
                                         <field name="user_id" invisible="1"/>

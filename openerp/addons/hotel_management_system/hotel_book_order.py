@@ -33,7 +33,6 @@ class hotel_book_order(osv.Model):
     _description = "Hotel Book Order"
     _columns = {
         'guest_id': fields.many2one('hotel.guest.partner', 'Guest Name', required=True),
-        'gender': fields.selection([('m', 'Male'), ('f', 'Female')], 'Gender', ),
         'guest_type': fields.many2one('hotel.guest.type', 'Guest Type',required=True),
         'country_id': fields.many2one('res.country', 'Country',),
         'room_id': fields.many2one('hotel.room', 'Room Number', required=True, ondelete='cascade',),
