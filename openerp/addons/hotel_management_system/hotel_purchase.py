@@ -169,7 +169,6 @@ class hotel_purchase(osv.osv):
 
         for do in self.browse(cr, uid, ids, context=context):
             product_lines = do.inv_lines
-            print "product_lines", product_lines
             if len(do.inv_lines) == 0:
                 raise osv.except_osv(
                     _('Warning!'), _("Select atleast one product to process the order.!"))
