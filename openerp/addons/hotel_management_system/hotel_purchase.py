@@ -234,6 +234,7 @@ class hotel_purchase(osv.osv):
         'state': 'draft',
         'user_id': lambda obj, cr, uid, context: uid,
         'name': lambda obj, cr, uid, context: '/',
+        'guest_id': lambda obj, cr, uid, context: context.get('guest_id', False),
     }
     _constraints = [
         (_constraints_balance_points_zero, "Guest doesn't have enough points to process the order.!", ['Balance']),
@@ -241,6 +242,27 @@ class hotel_purchase(osv.osv):
 
 
     def create(self, cr, uid, vals, context=None):
+
+        if context.get('guest_id', False):
+            vals['guest_id'] = context.get('guest_id', False)
+        product_lines = vals['inv_lines']
+        if len(vals['inv_lines']) == 0:
+            raise osv.except_osv(
+                _('Warning!'), _("Select atleast one product to process the order.!"))
+        lst_pts = []
+        for l in vals['inv_lines']:
+            product_rec = self.pool.get('hotel.product').browse(cr, uid, l[2]['product_id'])
+            lst_pts.append(product_rec['value'] * l[2]['qty'])
+
+        tot = sum(lst_pts)
+        # tot = sum([l['pts'] for l in vals['inv_lines']])
+        guest_rec = self.pool.get('hotel.guest.partner').browse(cr, uid, vals['guest_id'])
+
+        points_bal = guest_rec['points']
+        balance_final = points_bal - tot
+        if balance_final < 0:
+            raise osv.except_osv(_('Warning!'), _("Guest doesn't have enough points to process the order.!"))
+
         if vals.get('name', '/') == '/':
             vals['name'] = self.pool.get('ir.sequence').get(
                 cr, uid, 'hotel.purchase') or '/'
