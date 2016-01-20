@@ -13,7 +13,7 @@ class customer_selection(osv.osv_memory):
     _columns = {
         'user_id': fields.many2one('res.users', 'User', readonly=True),        
         'guest_id': fields.many2one('hotel.guest.partner', 'Guest Billing', select=True),
-        'b_code': fields.char('Scan', size=128, required=True, select=True),
+        'b_code':  fields.many2one('hotel.guest.partner', 'Scan', required=True,select=True),
     }
 
     _defaults = {
@@ -26,15 +26,7 @@ class customer_selection(osv.osv_memory):
         if not code:
             return {'value': {'b_code': False, 'guest_id': False}}
         else:
-            part = self.pool.get('hotel.guest.partner').search(cr,uid,[('guest_ref','=',code)])
-            if not part:
-                warning_msg = _('Guest Code or Guest Ref not Found. Please Scan again or type-in manually.!!!')
-                return {'warning': {
-                    'title': _('Warning'),
-                    'message': warning_msg,
-                    'value': {'b_code': False, 'guest_id': False},
-                    }
-                }
+            part = self.pool.get('hotel.guest.partner').search(cr,uid,[('id','=',code)])
             return {'value': {'b_code': code,  'guest_id': part[0]}}
 
     
@@ -51,14 +43,14 @@ class customer_selection(osv.osv_memory):
         dict = {}
         for wiz_qty in self.browse(cr, uid, ids, context=context):
             if not wiz_qty.guest_id:                
-                if not wiz_qty.b_code:
+                if not wiz_qty.b_code.id:
                     raise osv.except_osv(_('Warning!'), _('Guest Code or Guest Ref not Found. Please Scan again or type-in manually.!!!'))
                 else:
-                    part = self.pool.get('hotel.guest.partner').search(cr,uid,[('guest_ref','=',wiz_qty.b_code)])
+                    part = self.pool.get('hotel.guest.partner').search(cr,uid,[('id','=',wiz_qty.b_code.id)])
                     if not part:
                         raise osv.except_osv(_('Warning!'), _('Guest Code or Guest Ref not Found. Please Scan again or type-in manually.!!!'))
                     p_id = part[0]
-            elif not wiz_qty.b_code and  not wiz_qty.guest_id:
+            elif not wiz_qty.b_code.id and  not wiz_qty.guest_id:
                 raise osv.except_osv(_('Warning!'), _('Guest Code or Guest Ref not Found. Please Scan again or type-in manually.!!!'))
             else:
                 p_id = wiz_qty.guest_id.id
