@@ -11,20 +11,14 @@ class hotel_purchase(osv.osv):
     _description = "Purchase Order"
 
     def write(self, cr, uid, ids, dict_val, context):
-        donot_delete = []
-        if 'inv_lines' in dict_val:
-            for inv_line in dict_val['inv_lines']:
-                if inv_line[0] == 1:
-                    donot_delete.append(inv_line[1])
-
-            purchase_lines_obj = self.pool.get("hotel.purchase.lines")
-            purchase_lines_ids = purchase_lines_obj.search(cr, uid, [('inv_id', 'in', ids)])
-
-            purchase_lines_obj.unlink(cr, uid, purchase_lines_ids, context=context)
-            cr.commit()
-        # if len(purchase_lines_ids) != 0:
-        #     cr.execute("delete from hotel_purchase_lines where inv_id in %s", (tuple(purchase_lines_ids),))
-        return super(hotel_purchase, self).write(cr, uid, ids, dict_val, context=context)
+        super(hotel_purchase, self).write(cr, uid, ids, dict_val, context=context)
+        for do in self.browse(cr, uid, ids, context=context):
+            tot = sum([l.pts for l in do.inv_lines])
+            points_bal = do.guest_id.points
+            balance_final = points_bal - tot
+            if balance_final < 0:
+                raise osv.except_osv(_('Warning!'), _("Guest doesn't have enough points to process the order.!"))
+        return True
 
     # def on_change_guest(self, cr, uid, ids, partner_id=False, context=None):
     #     guest_obj = self.pool.get('hotel.guest.partner')
