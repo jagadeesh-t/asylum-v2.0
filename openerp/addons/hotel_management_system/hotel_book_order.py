@@ -20,10 +20,11 @@ class hotel_book_order(osv.Model):
             if order.state=="cin":
                 name = order.room_id.name + " ( "+ str(av_space)+" ) "+ order.guest_type.name
                 if order.guest_type.name == "Single":
-                    if order.guest_id.gender == "m":
-                        name+= " M"
-                    else:
-                        name+= " F"
+                    if order.guest_id.gender:
+                        if order.guest_id.gender == "m":
+                            name+= " M"
+                        else:
+                            name+= " F"
             else:
                 name = order.room_id.name + " ( "+ str(av_space)+" )"
             res[order.id] = name
