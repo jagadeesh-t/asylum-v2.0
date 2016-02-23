@@ -59,8 +59,8 @@ class hotel_purchase(osv.osv):
             pbal = 0.0
 
         bal = pbal - tot
-        if bal < 0:
-            raise osv.except_osv('Warning!', "Guest doesn't have enough points to process the order.!")
+        # if bal < 0:
+        #     raise osv.except_osv('Warning!', "Guest doesn't have enough points to process the order.!")
         return {'value': {'tss_cs_total': tot, 'tss_cs_balance': bal}}
 
     def onchange_balance(self, cr, uid, ids, balance, context=None):
