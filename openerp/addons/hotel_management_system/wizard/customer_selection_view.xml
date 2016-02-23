@@ -46,9 +46,9 @@
        
 <!--wizard menu-->
 
-    <menuitem action="action_customer_selection"
+            <menuitem action="action_customer_selection"
         id="menu_action_customer_selection"
-        parent="submenu_hotel_product" groups="module_hotel_management_group_admin_access" sequence="5"/>
+        parent="submenu_hotel_cashier_system" groups="module_hotel_management_group_admin_access" sequence="10"/>
 
     </data>
 </openerp> 
