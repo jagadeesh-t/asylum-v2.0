@@ -361,9 +361,7 @@ class hotel_purchase_lines(osv.osv):
             product_obj = self.pool.get("hotel.product")
             current_record = product_obj.browse(cr, uid, product_id)
             if current_record.total_stock < qty:
-                raise \
-                    osv.except_osv(_('Warning'),
-                                   _('Product %s has low stock ...!') % (current_record.name))
+                return True
 
         res = {'value': {}}
         if qty:
