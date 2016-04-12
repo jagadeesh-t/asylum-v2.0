@@ -11,7 +11,7 @@
                     <field name="points"/>
                 </group>
                 <footer>
-                    <button  name="change_points" string="Add" type="object" class="oe_highlight"/>
+                    <button  name="change_points" string="Add" type="object" class="oe_highlight button_close"/>
                     or
                     <button string="Cancel" class="oe_link" special="cancel" />
                 </footer>

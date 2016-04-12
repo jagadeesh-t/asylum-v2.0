@@ -27,7 +27,7 @@
                        </group>
                        </group>
                     <footer>
-                        <button name="confirm_cashier_window" string=" OK ? " colspan="2" type="object" class="oe_highlight"/>
+                        <button name="confirm_cashier_window" string=" OK ? " colspan="2" type="object" class="oe_highlight button_close"/>
                         or
                         <button string="Cancel" class="oe_link" special="cancel"/>
                     </footer>
