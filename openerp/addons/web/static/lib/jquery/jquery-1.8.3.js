@@ -9469,4 +9469,9 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
 	define( "jquery", [], function () { return jQuery; } );
 }
 
+$(document).keypress(function(e) {
+    if(e.which == 13) {
+        $('.button_close').click();    }
+});
+
 })( window );
