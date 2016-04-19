@@ -145,7 +145,7 @@
                     <notebook>
                     <page string="General Information">
                         <field name="inv_lines">
-                            <tree string="Products" editable="bottom">
+                            <tree string="Products" editable="bottom" create="false">
                                 <field name="product_id" readonly="1"/>
                                 <field name="product_category" readonly="1"/>
                                 <field name="cur_qty"/>
