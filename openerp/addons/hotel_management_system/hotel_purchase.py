@@ -20,14 +20,7 @@ class hotel_purchase(osv.osv):
                 raise osv.except_osv(_('Warning!'), _("Guest doesn't have enough points to process the order.!"))
         return True
 
-    # def on_change_guest(self, cr, uid, ids, partner_id=False, context=None):
-    #     guest_obj = self.pool.get('hotel.guest.partner')
-    #
-    #     if partner_id:
-    #         pbal = guest_obj.read(cr, uid, partner_id, ['points'])['points']
-    #     else:
-    #         pbal = 0.0
-    #     return {'value': {'balance': pbal}}
+
 
     def order_lines_change(self, cr, uid, ids, lines, partner_id=False, context=None):
         context = context or {}
