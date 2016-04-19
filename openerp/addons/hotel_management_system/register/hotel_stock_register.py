@@ -19,12 +19,9 @@ class hotel_stock_register(osv.Model):
             res['inv_lines']= line
             res['total_points']= total_points
             return {'value': res}
-        # else:
-        #     warning = {
-        #             'title': _('Warning!'),
-        #             'message': _('The selected unit of measure is not compatible with the unit of measure of the product.')
-        #         }
-        #     return {'warning': warning}
+        res['inv_lines']= False
+        res['total_points']= 0.0
+        return {'value': res}
 
     _name = "hotel.stock.register"
     _description = "Stock Registeer"
