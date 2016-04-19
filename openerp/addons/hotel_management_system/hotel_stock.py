@@ -66,7 +66,6 @@ class hotel_update_stock(osv.osv):
 
     def action_view_new_inv(self, cr, uid, ids, context=None):
 
-        print "--------------------------------------------------------------"
         mod_obj = self.pool.get('ir.model.data')
         act_obj = self.pool.get('ir.actions.act_window')
         inv_ids =[]
@@ -101,7 +100,7 @@ class hotel_update_stock(osv.osv):
             except:                
                 raise osv.except_osv(_('Location Error!'), _('Please create location name "Stock" and "Purchase"!'))
             for lines in do.inv_lines:
-                if lines.qty and lines.qty>0.0:
+                if lines.qty and lines.qty != 0.0:
                     self.pool.get('hotel.stock.transfer').create(cr,uid,{'name':do.name,
                                                                                'product_id':lines.product_id.id,
                                                                                'qty':lines.qty,
