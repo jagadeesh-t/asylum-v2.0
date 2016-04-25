@@ -211,6 +211,7 @@ class hotel_purchase(osv.osv):
         'user_id': lambda obj, cr, uid, context: uid,
         'name': lambda obj, cr, uid, context: '/',
         'guest_id': lambda obj, cr, uid, context: context.get('guest_id', False),
+        'tss_cs_balance': lambda obj, cr, uid, context: context.get('tss_cs_balance', False),
     }
     _constraints = [
         (_constraints_balance_points_zero, "Guest doesn't have enough points to process the order.!", ['Balance']),
