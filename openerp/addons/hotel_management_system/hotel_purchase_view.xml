@@ -77,7 +77,7 @@
                         <field name="inv_lines" on_change="order_lines_change(inv_lines, guest_id)"><!--on_change="order_lines_change(inv_lines, guest_id)"-->
                             <tree string="Products" editable="bottom">
                                 <field name="product_id" required="1" on_change="onchange_product_id(product_id, qty)" context="{'positive_only':True}"/>
-                                <field name="qty" on_change="on_change_qty(product_id, qty, pts_unit)" context="{'positive_only':True}"/>
+                                <field name="qty" on_change="on_change_qty(product_id, qty, pts_unit,parent.tss_cs_balance,parent.tss_cs_total)" context="{'positive_only':True}"/>
                                 <field name="pts_unit" readonly="1"/>
                                 <field name="pts"/>
                             </tree>
