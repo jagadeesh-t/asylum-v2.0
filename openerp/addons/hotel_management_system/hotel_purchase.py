@@ -33,7 +33,7 @@ class hotel_purchase(osv.osv):
 
 
         for item in  order_line_ids:
-            tot=tot+ prod_obj.browse(cr, uid,item['product_id']).value   *item['qty']
+            tot=tot+ prod_obj.browse(cr, uid,item['product_id'][0]).value*item['qty']
 
         if partner_id:
             pbal = guest_obj.read(cr, uid, partner_id, ['points'])['points']
@@ -338,24 +338,35 @@ class hotel_purchase_lines(osv.osv):
                         res['value']['pts'] = qty * prod.value
                         return res
 
-    def on_change_qty(self, cr, uid, ids, product_id, qty, pts_unit, context=None):
+    def on_change_qty(self, cr, uid, ids, product_id, qty, pts_unit,tss_cs_balance, tss_cs_total, context=None):
         """ Otherwise a warning is thrown.
         """
         res = {'value': {}}
         if product_id and qty:
             product_obj = self.pool.get("hotel.product")
             current_record = product_obj.browse(cr, uid, product_id)
+            warning_msg_points=''
+            status=False
+            if tss_cs_balance <= tss_cs_total+qty * pts_unit:
+                status=True
+                warning_msg_points="Guest doesn't have enough points to process the order.!\n"
+
             if current_record.total_stock < qty:
+                status=True
+                warning_msg_points+'Product %s has low stock.' % (current_record.name)
+
+            if status:
+                qty=0
                 warning_msg = _(
-                    'Product %s has low stock. Are you sure you want to select this Product!!') % (current_record.name)
+                    warning_msg_points+'Product %s has low stock.') % (current_record.name)
                 res.update({'warning': {
                     'title': _('Warning'),
                     'message': warning_msg,
                 }
                 })
-                res['value']['qty'] = qty
-                res['value']['pts'] = qty * pts_unit
-                return res
+            res['value']['qty'] = qty
+            res['value']['pts'] = qty * pts_unit
+            return res
 
         if qty:
             res['value']['pts'] = qty * pts_unit
