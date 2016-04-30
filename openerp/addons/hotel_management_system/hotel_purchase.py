@@ -33,7 +33,10 @@ class hotel_purchase(osv.osv):
 
 
         for item in  order_line_ids:
-            tot=tot+ prod_obj.browse(cr, uid,item['product_id'][0]).value*item['qty']
+            if int == type(item['product_id']):
+                tot=tot+ prod_obj.browse(cr, uid,item['product_id']).value*item['qty']
+            else:
+                tot=tot+ prod_obj.browse(cr, uid,item['product_id'][0]).value*item['qty']
 
         if partner_id:
             pbal = guest_obj.read(cr, uid, partner_id, ['points'])['points']
