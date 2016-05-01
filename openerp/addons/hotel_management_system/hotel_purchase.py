@@ -359,10 +359,6 @@ class hotel_purchase_lines(osv.osv):
                 status=True
                 warning_msg_points="Guest doesn't have enough points to process the order.!\n"
 
-            print current_record.total_stock < qty
-            print current_record.total_stock
-            print qty
-            print
             if current_record.total_stock < qty:
                 status=True
                 warning_msg_points+'Product %s has low stock.' % (current_record.name)
