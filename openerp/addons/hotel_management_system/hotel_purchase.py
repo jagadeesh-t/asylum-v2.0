@@ -354,7 +354,8 @@ class hotel_purchase_lines(osv.osv):
             current_record = product_obj.browse(cr, uid, product_id)
             warning_msg_points=''
             status=False
-            if tss_cs_balance <= tss_cs_total+qty * pts_unit:
+
+            if tss_cs_balance < tss_cs_total+qty * pts_unit:
                 status=True
                 warning_msg_points="Guest doesn't have enough points to process the order.!\n"
 
