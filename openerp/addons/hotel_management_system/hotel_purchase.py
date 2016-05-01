@@ -295,7 +295,7 @@ class hotel_purchase_lines(osv.osv):
         (_constraint_product_empty, "Warning! Product won't be empty.", ['Product']),
     ]
     _defaults = {
-        'qty': 1.00,
+        'qty': 0.00,
     }
 
     def create(self, cr, uid, vals, context=None):
@@ -340,6 +340,9 @@ class hotel_purchase_lines(osv.osv):
                         res['value']['pts_unit'] = prod.value
                         res['value']['pts'] = qty * prod.value
                         return res
+                else:
+                    return res
+
 
     def on_change_qty(self, cr, uid, ids, product_id, qty, pts_unit,tss_cs_balance, tss_cs_total, context=None):
         """ Otherwise a warning is thrown.
