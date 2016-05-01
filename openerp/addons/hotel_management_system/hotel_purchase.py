@@ -341,6 +341,7 @@ class hotel_purchase_lines(osv.osv):
                         res['value']['pts'] = qty * prod.value
                         return res
                 else:
+                    res['value']['pts_unit'] = prod.value
                     return res
 
 
