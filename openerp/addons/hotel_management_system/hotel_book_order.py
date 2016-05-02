@@ -43,14 +43,32 @@ class hotel_book_order(osv.Model):
             res[order.id] = name
         return res
 
+    def onchange_guest_ref(self, cr, uid, ids, guest_ref, context=None):
+        if guest_ref:
+            guest_id=self.pool.get("hotel.guest.partner").search(cr, uid, [('guest_ref', '=', guest_ref)], context=context)
+            if guest_id:
+                res = {'value': {}}
+                guest_data=self.pool.get("hotel.guest.partner").browse(cr, uid, guest_id[0])
+                res['value']['first_name'] = guest_data.name
+                res['value']['last_name'] = guest_data.last_name
+                res['value']['gender'] = guest_data.gender
+                return res
+            else:
+                return True
+        else:
+            return True
+
+
     _name = "hotel.book.order"
     _description = "Hotel Book Order"
     _order = "name"
     _columns = {
+        'guest_ref': fields.char('Guest Ref.', size=128, required=True, select=True,states={'cin': [('readonly', False)]}),
         'name':fields.function(_get_auto_name, string='Name', type='char',store=True),
         'first_name': fields.char('First Name', size=128, required=True, select=True, readonly=True, states={'cin': [('readonly', False)]}),
         'last_name': fields.char('Last Name', size=128, required=True, select=True, readonly=True, states={'cin': [('readonly', False)]}),
-        'guest_id': fields.many2one('hotel.guest.partner', 'Guest Name', required=True),
+        'gender': fields.selection([('m', 'Male'), ('f', 'Female')], 'Gender',required=True,states={'cin': [('readonly', False)]}),
+        'guest_id': fields.many2one('hotel.guest.partner', 'Guest Name'),
         'guest_type': fields.many2one('hotel.guest.type', 'Guest Type',required=True),
         'country_id': fields.many2one('res.country', 'Country',),
         'room_id': fields.many2one('hotel.room', 'Room Number', required=True, ondelete='cascade',),
