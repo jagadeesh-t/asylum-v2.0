@@ -101,3 +101,36 @@ class hotel_book_order(osv.Model):
                 }
                 vals['guest_id']=self.pool.get("hotel.guest.partner").create(cr, user, guest_create, context)
         return super(hotel_book_order, self).create(cr, user, vals, context=context)
+
+    def write(self, cr, uid, ids, vals, context=None):
+        if vals.get('guest_ref'):
+            guest_id=self.pool.get("hotel.guest.partner").search(cr, uid, [('guest_ref', '=', vals.get('guest_ref'))], context=context)
+            if guest_id:
+               vals['guest_id']=guest_id[0]
+            else:
+                for record in  self.browse(cr, uid,ids):
+                    if vals.get('guest_ref'):
+                        guest_ref=vals.get('guest_ref')
+                    else:
+                        guest_ref=record.guest_ref
+                    if vals.get('first_name'):
+                        first_name=vals.get('first_name')
+                    else:
+                        first_name=record.first_name
+                    if vals.get('guest_ref'):
+                        gender=vals.get('gender')
+                    else:
+                        gender=record.gender
+                    if vals.get('last_name'):
+                        last_name=vals.get('last_name')
+                    else:
+                        last_name=record.last_name
+                    guest_create={
+                        'guest_ref':guest_ref,
+                        'name':first_name,
+                        'last_name':last_name,
+                        'gender':gender,
+                    }
+                vals['guest_id']=self.pool.get("hotel.guest.partner").create(cr, uid, guest_create, context)
+
+        return super(hotel_book_order, self).write(cr, uid, ids, vals, context=context)
