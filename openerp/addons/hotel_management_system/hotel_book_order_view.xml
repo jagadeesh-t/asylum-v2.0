@@ -34,10 +34,13 @@
                 <sheet>
                     <h1>
                         <label string="Guest Ref. "/>
-                        <field name="guest_id" class="oe_inline" placeholder="88-A" attrs="{'readonly': [('state','not in',('cin'))]}"/>
+                        <field name="guest_ref" class="oe_inline" placeholder="88-A" attrs="{'readonly': [('state','not in',('cin'))]}" on_change="onchange_guest_ref(guest_ref)"/>
                     </h1>
                     <group>
                         <group>
+                            <field name="last_name"/>
+                            <field name="first_name"/>
+                            <field name="gender"/>
                             <field name="guest_type" attrs="{'readonly': [('state','not in',('cin'))]}"/>
                             <field name="country_id" attrs="{'readonly': [('state','not in',('cin'))]}"/>
                             <field name="room_id" domain="[('available','=',True)]" attrs="{'readonly': [('state','not in',('cin'))]}"/>
