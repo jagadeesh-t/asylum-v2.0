@@ -86,3 +86,18 @@ class hotel_book_order(osv.Model):
         'user_id': lambda obj, cr, uid, context: uid,
         'check_in_date': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
     }
+
+    def create(self, cr, user, vals, context=None):
+        if vals.get('guest_ref'):
+            guest_id=self.pool.get("hotel.guest.partner").search(cr, user, [('guest_ref', '=', vals.get('guest_ref'))], context=context)
+            if guest_id:
+               vals['guest_id']=guest_id[0]
+            else:
+                guest_create={
+                    'guest_ref':vals['guest_ref'],
+                    'name':vals['first_name'],
+                    'last_name':vals['last_name'],
+                    'gender':vals['gender'],
+                }
+                vals['guest_id']=self.pool.get("hotel.guest.partner").create(cr, user, guest_create, context)
+        return super(hotel_book_order, self).create(cr, user, vals, context=context)
