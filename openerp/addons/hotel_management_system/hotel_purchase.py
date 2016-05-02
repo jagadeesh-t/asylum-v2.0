@@ -299,7 +299,6 @@ class hotel_purchase_lines(osv.osv):
     }
 
     def create(self, cr, uid, vals, context=None):
-        print "valshotel_purchase_lines",vals
         if not vals['product_id']:
             return True
         if not vals.get('pts_unit', None):
@@ -354,8 +353,8 @@ class hotel_purchase_lines(osv.osv):
             current_record = product_obj.browse(cr, uid, product_id)
             warning_msg_points=''
             status=False
-
-            if tss_cs_balance < tss_cs_total+qty * pts_unit:
+            if tss_cs_balance < qty * pts_unit:
+                qty=0
                 status=True
                 warning_msg_points="Guest doesn't have enough points to process the order.!\n"
 
@@ -364,7 +363,6 @@ class hotel_purchase_lines(osv.osv):
                 warning_msg_points+'Product %s has low stock.' % (current_record.name)
 
             if status:
-                qty=0
                 warning_msg = _(
                     warning_msg_points)
                 res.update({'warning': {
