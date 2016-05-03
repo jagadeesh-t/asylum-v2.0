@@ -160,7 +160,10 @@ class hotel_book_order(osv.Model):
             values['country_id ']=vals.get('country_id')
 
         if values:
-            for record in  self.browse(cr, uid,ids):
-                self.pool.get("hotel.guest.partner").write(cr, uid, [record.guest_id.id],values)
+            if vals.get('guest_ref'):
+                self.pool.get("hotel.guest.partner").write(cr, uid, [vals['guest_id']],values)
+            else:
+                for record in  self.browse(cr, uid,ids):
+                    self.pool.get("hotel.guest.partner").write(cr, uid, [record.guest_id.id],values)
 
         return super(hotel_book_order, self).write(cr, uid, ids, vals, context=context)
