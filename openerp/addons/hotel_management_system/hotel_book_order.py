@@ -52,6 +52,7 @@ class hotel_book_order(osv.Model):
                 res['value']['first_name'] = guest_data.name
                 res['value']['last_name'] = guest_data.last_name
                 res['value']['gender'] = guest_data.gender
+                res['value']['country_id'] = guest_data.country_id.id
                 return res
             else:
                 return True
@@ -91,18 +92,28 @@ class hotel_book_order(osv.Model):
         if vals.get('guest_ref'):
             guest_id=self.pool.get("hotel.guest.partner").search(cr, user, [('guest_ref', '=', vals.get('guest_ref'))], context=context)
             if guest_id:
-               vals['guest_id']=guest_id[0]
+                vals['guest_id']=guest_id[0]
+                guest_create={
+                    'guest_ref':vals['guest_ref'],
+                    'name':vals['first_name'],
+                    'last_name':vals['last_name'],
+                    'gender':vals['gender'],
+                    'country_id':vals['country_id']
+                }
+                self.pool.get("hotel.guest.partner").write(cr, user,[guest_id[0]],guest_create)
             else:
                 guest_create={
                     'guest_ref':vals['guest_ref'],
                     'name':vals['first_name'],
                     'last_name':vals['last_name'],
                     'gender':vals['gender'],
+                    'country_id':vals['country_id']
                 }
                 vals['guest_id']=self.pool.get("hotel.guest.partner").create(cr, user, guest_create, context)
         return super(hotel_book_order, self).create(cr, user, vals, context=context)
 
     def write(self, cr, uid, ids, vals, context=None):
+        values={}
         if vals.get('guest_ref'):
             guest_id=self.pool.get("hotel.guest.partner").search(cr, uid, [('guest_ref', '=', vals.get('guest_ref'))], context=context)
             if guest_id:
@@ -125,12 +136,31 @@ class hotel_book_order(osv.Model):
                         last_name=vals.get('last_name')
                     else:
                         last_name=record.last_name
+                    if vals.get('country_id'):
+                        country=vals.get('country_id')
+                    else:
+                        country=record.country_id
+
                     guest_create={
                         'guest_ref':guest_ref,
                         'name':first_name,
                         'last_name':last_name,
                         'gender':gender,
+                        'country_id':country
                     }
                 vals['guest_id']=self.pool.get("hotel.guest.partner").create(cr, uid, guest_create, context)
+
+        if vals.get('first_name'):
+            values['name'] =vals.get('first_name')
+        if vals.get('last_name'):
+            values['last_name'] =vals.get('last_name')
+        if vals.get('gender'):
+            values['gender']=vals.get('gender')
+        if vals.get('country_id'):
+            values['country_id ']=vals.get('country_id')
+
+        if values:
+            for record in  self.browse(cr, uid,ids):
+                self.pool.get("hotel.guest.partner").write(cr, uid, [record.guest_id.id],values)
 
         return super(hotel_book_order, self).write(cr, uid, ids, vals, context=context)
