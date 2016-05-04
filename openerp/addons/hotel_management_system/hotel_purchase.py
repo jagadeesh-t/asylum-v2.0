@@ -10,44 +10,64 @@ class hotel_purchase(osv.osv):
     _name = "hotel.purchase"
     _description = "Purchase Order"
 
-    def write(self, cr, uid, ids, dict_val, context):
-        super(hotel_purchase, self).write(cr, uid, ids, dict_val, context=context)
-        for do in self.browse(cr, uid, ids, context=context):
-            tot = sum([l.pts for l in do.inv_lines])
-            points_bal = do.guest_id.points
-            balance_final = points_bal - tot
-            if balance_final < 0:
-                raise osv.except_osv(_('Warning!'), _("Guest doesn't have enough points to process the order.!"))
-        return True
-
-
-
-    def order_lines_change(self, cr, uid, ids, lines, partner_id=False, context=None):
-        context = context or {}
+    def order_lines_change(self, cr, uid, ids, lines, partner_id, onchage_control, context=None):
+        res = {'value': {}}
+        warning_msg_points=''
         prod_obj = self.pool.get('hotel.product')
         guest_obj = self.pool.get('hotel.guest.partner')
-        line_obj = self.pool.get('hotel.purchase.lines')
         tot = 0.0
-        bal = 0.0
         order_line_ids = self.resolve_o2m_commands_to_record_dicts(cr, uid, "inv_lines", lines, ["pts_unit","qty","product_id"], context=context)
-
-
+        dict_qty={}
         for item in  order_line_ids:
             if int == type(item['product_id']):
+                if dict_qty.get(item['product_id']):
+                    dict_qty[item['product_id']]=item['qty']+dict_qty[item['product_id']]
+                else:
+                    dict_qty[item['product_id']]=item['qty']
                 tot=tot+ prod_obj.browse(cr, uid,item['product_id']).value*item['qty']
             else:
+                if dict_qty.get(item['product_id'][0]):
+                    dict_qty[item['product_id'][0]]=item['qty']+dict_qty[item['product_id'][0]]
+                else:
+                    dict_qty[item['product_id'][0]]=item['qty']
                 tot=tot+ prod_obj.browse(cr, uid,item['product_id'][0]).value*item['qty']
+
+        # Stock Validation
+        for item, val in dict_qty.items():
+            product_obj = self.pool.get("hotel.product")
+            current_record = product_obj.browse(cr, uid, item)
+            print current_record.total_stock
+            if current_record.total_stock < val:
+                warning_msg_points=warning_msg_points+'Product %s has low stock.\n' % (current_record.name)
+                break
 
         if partner_id:
             pbal = guest_obj.read(cr, uid, partner_id, ['points'])['points']
         else:
             pbal = 0.0
 
-        bal = pbal - tot
+        bal = pbal-tot
+        if bal < 0:
+            warning_msg_points=warning_msg_points+"Guest doesn't have enough points to process the order.!\n"
 
-        print tot
-        print bal
-        return {'value': {'tss_cs_total': tot, 'tss_cs_balance': bal}}
+        if onchage_control == False:
+            res['value']['onchage_control']=True
+            if warning_msg_points != '':
+                    warning_msg = _(
+                        warning_msg_points)
+                    res.update({'warning': {
+                        'title': _('Warning'),
+                        'message': warning_msg,
+                    }
+                    })
+        else:
+            res['value']['onchage_control']=False
+
+
+        res['value']['tss_cs_total']=tot
+        res['value']['tss_cs_balance']=bal
+        return res
+
 
     def onchange_balance(self, cr, uid, ids, balance, context=None):
         """ Otherwise a warning is thrown.
@@ -60,11 +80,7 @@ class hotel_purchase(osv.osv):
         return res
 
 
-    #
     def _get_total(self, cr, uid, ids, field_name, arg, context=None):
-        """
-        @return: Dictionary of values.
-        """
         ords = self.browse(cr, uid, ids, context=context)
         res = {}
         for ord in ords:
@@ -75,23 +91,7 @@ class hotel_purchase(osv.osv):
             res[ord.id] = val
         return res
 
-    def _get_balance(self, cr, uid, ids, field_name, arg, context=None):
-        """
-        @return: Dictionary of values.
-        """
-        ords = self.browse(cr, uid, ids, context=context)
-        res = {}
-        for ord in ords:
-            val = 0.0
-            if ord.guest_id:
-                bal = ord.guest_id.points
-            else:
-                bal = 0.0
-            if ord.inv_lines:
-                for lines in ord.inv_lines:
-                    val += lines.pts
-            res[ord.id] = bal - val
-        return res
+
 
     def button_update(self, cr, uid, ids, context=None):
         return True
@@ -148,18 +148,17 @@ class hotel_purchase(osv.osv):
     def button_go_bill(self, cr, uid, ids, context=None):
 
         for do in self.browse(cr, uid, ids, context=context):
-            product_lines = do.inv_lines
             if len(do.inv_lines) == 0:
                 raise osv.except_osv(
                     _('Warning!'), _("Select atleast one product to process the order.!"))
-            tot = sum([l.pts for l in do.inv_lines])
+            tot=do.tss_cs_total
             points_bal = do.guest_id.points
-            balance_final = points_bal - tot
+            balance_final = points_bal - do.tss_cs_total
             if balance_final < 0:
                 raise osv.except_osv(_('Warning!'), _("Guest doesn't have enough points to process the order.!"))
 
             time_now = time.strftime('%Y-%m-%d %H:%M:%S')
-            write_value = {'date': time_now, 'total_final': tot, 'tss_cs_total': tot, 'balance_final': balance_final, 'tss_cs_balance': balance_final}
+            write_value = {'date': time_now, 'total_final': tot, 'tss_cs_total': tot, 'balance_final': balance_final}
             write_value['state'] = 'bill'
             return self.write(cr, uid, ids, write_value, context=context)
 
@@ -167,18 +166,6 @@ class hotel_purchase(osv.osv):
         for do in self.browse(cr, uid, ids, context=context):
             return self.write(cr, uid, ids, {'state': 'draft'}, context=context)
 
-    def _get_balance_pts(self, cr, uid, ids, field_name, arg, context=None):
-        """
-        @return: Dictionary of values.
-        """
-        lst_current_records = self.browse(cr, uid, ids, context=context)
-        res = {}
-        for current_record in lst_current_records:
-            tot = sum([l.pts for l in current_record.inv_lines])
-            points_bal = current_record.guest_id.points
-            balance_final = points_bal - tot
-            res[current_record.id] = balance_final
-        return res
 
     def _constraints_balance_points_zero(self, cr, uid, ids, context=None):
         result =True
@@ -191,12 +178,9 @@ class hotel_purchase(osv.osv):
         'guest_id': fields.many2one('hotel.guest.partner', 'Guest Billing', select=True),
         'name': fields.char('Name', size=128, required=True, select=True),
         'tss_cs_total': fields.function(_get_total, string='Total', type='float'),
-        #'balance': fields.function(_get_balance, string='Balance', type='float'),
         'total_final': fields.float('Total'),
         'balance_final': fields.float('Balance'),
-        # 'balance': fields.function(_get_balance_pts, string='Balance', type='float', readonly=True),
         'tss_cs_balance': fields.float('Balance'),
-        # 'balance': fields.float('Balance'),
         'date': fields.datetime('Date', help="Date.", required=True, select=True, readonly=True),
         'state': fields.selection([
             ('draft', 'Draft'),
@@ -206,6 +190,7 @@ class hotel_purchase(osv.osv):
         ], 'Status', readonly=True, select=True),
         'user_id': fields.many2one('res.users', 'User', readonly=True),
         'inv_lines': fields.one2many('hotel.purchase.lines', 'inv_id', 'Purchase Order Lines', readonly=True, states={'draft': [('readonly', False)]}),
+        'onchage_control':fields.boolean('Pop-up Control')
     }
 
     _defaults = {
@@ -222,13 +207,14 @@ class hotel_purchase(osv.osv):
 
 
     def create(self, cr, uid, vals, context=None):
-
         if context.get('guest_id', False):
             vals['guest_id'] = context.get('guest_id', False)
         product_lines = vals['inv_lines']
+
         if len(vals['inv_lines']) == 0:
             raise osv.except_osv(
                 _('Warning!'), _("Select atleast one product to process the order.!"))
+
         lst_pts = []
         for l in vals['inv_lines']:
             product_rec = self.pool.get('hotel.product').browse(cr, uid, l[2]['product_id'])
@@ -257,25 +243,20 @@ class hotel_purchase_lines(osv.osv):
     _name = "hotel.purchase.lines"
     _description = "Purchase Order Lines"
 
+    def create(self, cr, uid, vals, context=None):
+        if not vals.get('pts_unit', None):
+            vals['pts_unit'] = self.pool.get('hotel.product').read(
+                cr, uid, vals['product_id'], ['value'])['value']
+        return super(hotel_purchase_lines, self).create(cr, uid, vals, context=context)
+
+
     def _get_total_pts(self, cr, uid, ids, field_name, arg, context=None):
-        """
-        @return: Dictionary of values.
-        """
         lines = self.browse(cr, uid, ids, context=context)
         res = {}
         for line in lines:
             res[line.id] = line.product_id.value * line.qty
         return res
 
-    def _get_pts_unit(self, cr, uid, ids, field_name, arg, context=None):
-        """
-        @return: Dictionary of values.
-        """
-        lines = self.browse(cr, uid, ids, context=context)
-        res = {}
-        for line in lines:
-            res[line.id] = line.product_id.value
-        return res
 
     def _constraint_product_empty(self, cr, uid, ids, context=None):
         result = True
@@ -298,79 +279,20 @@ class hotel_purchase_lines(osv.osv):
         'qty': 0.00,
     }
 
-    def create(self, cr, uid, vals, context=None):
-        if not vals['product_id']:
-            return True
-        if not vals.get('pts_unit', None):
-            vals['pts_unit'] = self.pool.get('hotel.product').read(
-                cr, uid, vals['product_id'], ['value'])['value']
-        return super(hotel_purchase_lines, self).create(cr, uid, vals, context=context)
-
-    def product_id_change(self, cr, uid, ids, product, partner_id=False, flag=False, context=None):
-        context = context or {}
-        if not partner_id:
-            raise osv.except_osv(_('No Customer Defined !'), _(
-                'Please use Cashier Page,\n to initiate the order.'))
-        return {'value': {'qty': 1.00, 'product_id': product}}
-
     def onchange_product_id(self, cr, uid, ids, product_id, qty, context=None):
-        """ Otherwise a warning is thrown.
-        """
         res = {'value': {}}
         if not product_id:
             return res
         else:
             for prod in self.pool.get('hotel.product').browse(cr, uid, [product_id]):
-                if qty:
-                    if prod.total_stock < qty:
-                        warning_msg = _(
-                            'Product %s has low stock. Are you sure you want to select this Product!!') % (prod.name)
-                        res.update({'warning': {
-                            'title': _('Warning'),
-                            'message': warning_msg,
-                        }
-                        })
-                        res['value']['qty'] = qty
-                        res['value']['pts_unit'] = prod.value
-                        res['value']['pts'] = qty * prod.value
-                        return res
-                    else:
-                        res['value']['qty'] = qty
-                        res['value']['pts_unit'] = prod.value
-                        res['value']['pts'] = qty * prod.value
-                        return res
-                else:
-                    res['value']['pts_unit'] = prod.value
-                    return res
+                res['value']['qty'] = qty
+                res['value']['pts_unit'] = prod.value
+                res['value']['pts'] = qty * prod.value
+                return res
 
-
-    def on_change_qty(self, cr, uid, ids, product_id, qty, pts_unit,tss_cs_balance, tss_cs_total, context=None):
-        """ Otherwise a warning is thrown.
-        """
+    def on_change_qty(self, cr, uid, ids, product_id, qty, pts_unit, context=None):
         res = {'value': {}}
         if product_id and qty:
-            product_obj = self.pool.get("hotel.product")
-            current_record = product_obj.browse(cr, uid, product_id)
-            warning_msg_points=''
-            status=False
-            if tss_cs_balance < qty * pts_unit:
-                qty=0
-                status=True
-                warning_msg_points="Guest doesn't have enough points to process the order.!\n"
-
-            if current_record.total_stock < qty:
-                status=True
-                warning_msg_points+'Product %s has low stock.' % (current_record.name)
-
-            if status:
-                warning_msg = _(
-                    warning_msg_points)
-                res.update({'warning': {
-                    'title': _('Warning'),
-                    'message': warning_msg,
-                }
-                })
-            res['value']['qty'] = qty
             res['value']['pts'] = qty * pts_unit
             return res
 
