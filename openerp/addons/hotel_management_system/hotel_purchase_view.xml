@@ -70,15 +70,16 @@
                         <group>
                             <field name="date" readonly="1"/>
                             <field name="user_id" readonly="1"/>
+                            <field name="onchage_control" invisible="1"/>
                         </group>
                     </group>
                     <notebook>
                     <page string="General Information">
-                        <field name="inv_lines" on_change="order_lines_change(inv_lines, guest_id)"><!--on_change="order_lines_change(inv_lines, guest_id)"-->
-                            <tree string="Products" editable="bottom">
+                        <field name="inv_lines" on_change="order_lines_change(inv_lines, guest_id,onchage_control)"><!--on_change="order_lines_change(inv_lines, guest_id)"-->
+                            <tree string="Products" editable="bottom" class="editable_item">
                                 <field name="product_id" required="1" on_change="onchange_product_id(product_id, qty)" context="{'positive_only':True}"/>
-                                <field name="qty" on_change="on_change_qty(product_id, qty, pts_unit,parent.tss_cs_balance,parent.tss_cs_total)" context="{'positive_only':True}"/>
-                                <field name="pts_unit" readonly="1"/>
+                                <field name="qty" class="pts_qty" on_change="on_change_qty(product_id, qty, pts_unit)" context="{'positive_only':True}"/>
+                                <field name="pts_unit" readonly="1" class="pts_units"/>
                                 <field name="pts"/>
                             </tree>
                         </field>
@@ -118,132 +119,6 @@
             </field>
         </record>
         <menuitem action="action_hotel_purchase" id="menu_action_tarun_hotel_purchase_form" parent="submenu_hotel_cashier_system" groups="module_hotel_management_group_admin_access" sequence="1"/>
-
-
-
-
-
-<!--
-&lt;!&ndash;Stock Stats menu&ndash;&gt;
-
-        <record id="tarun_hotel_stock_stats_lines_tree" model="ir.ui.view">
-            <field name="name">tarun.hotel.stock.stats.lines.tree</field>
-            <field name="model">tarun.hotel.stock.stats.lines</field>
-            <field name="arch" type="xml">
-                <tree string="Stock Statistics Order Lines">
-                    <field name="product_id"/>
-		            <field name="points"/>
-                    <field name="serving"/>
-                    <field name="serving_start"/>
-		            <field name="serving_end"/>
-                    <field name="serving_in"/>
-                </tree>
-            </field>
-        </record>
-        <record id="tarun_hotel_stock_stats_lines_form" model="ir.ui.view">
-            <field name="name">tarun.hotel.stock.stats.lines.form</field>
-            <field name="model">tarun.hotel.stock.stats.lines</field>
-            <field name="arch" type="xml">
-                <form string="Stock Statistics Order Lines" version="7.0">
-                    <group col="4">
-	                    <field name="product_id"/>
-			            <field name="points"/>
-	                    <field name="serving"/>
-	                    <field name="serving_start"/>
-			            <field name="serving_end"/>
-	                    <field name="serving_in"/>
-                    </group>
-                </form>
-            </field>
-        </record>
-
-
-        <record id="tarun_hotel_stock_stats_tree" model="ir.ui.view">
-            <field name="name">tarun.hotel.stock.stats.tree</field>
-            <field name="model">tarun.hotel.stock.stats</field>
-            <field name="arch" type="xml">
-                <tree string="Stock Statistics Order">
-                    <field name="date_start"/>
-                    <field name="date_end"/>
-                    <field name="total"/>
-                </tree>
-            </field>
-        </record>
-
-        <record id="tarun_hotel_stock_stats_form" model="ir.ui.view">
-            <field name="name">tarun.hotel.stock.stats.form</field>
-            <field name="model">tarun.hotel.stock.stats</field>
-            <field name="arch" type="xml">
-				<form string="Stock Statistics" version="7.0">
-                <sheet>
-                    <group>
-                        <group>
-                            <field name="date_start"/>
-                            <field name="id" invisible="1"/>
-                        </group>
-                        <group>
-                            <field name="date_end"/>
-                        </group>
-                    </group>
-                    <group>
-                        <group>
-                    <button name="button_gen_stats" string="Update Statistics" type="object" class="oe_highlight"/>
-                        </group>
-                        <group>
-                    <button name="print_csv_report" string="Print Report" attrs="{'invisible': [('id','=',False)]}" type="object" class="oe_highlight"/>
-                        </group>
-                    </group>
-                    <notebook>
-                    <page string="Stock Statistics">
-                        <field name="stat_lines">
-                            <tree string="Stock Statistics" editable="bottom">
-			                    <field name="product_id"/>
-					            <field name="points"/>
-			                    <field name="serving"/>
-			                    <field name="serving_start"/>
-					            <field name="serving_end"/>
-			                    <field name="serving_in"/>
-                            </tree>
-                            <form string="Products" version="7.0">
-                                <group>
-				                    <field name="product_id"/>
-						            <field name="points"/>
-				                    <field name="serving"/>
-				                    <field name="serving_start"/>
-						            <field name="serving_end"/>
-				                    <field name="serving_in"/>
-                                </group>
-                            </form>
-                        </field>  
-                            <group>
-                        		<field name="total" readonly="1"/>
-                            </group>
-                    </page>
-                    </notebook>
-                    </sheet>
-                </form>
-            </field>
-        </record>
-
-        <record id="action_tarun_hotel_stock_stats_form" model="ir.actions.act_window">
-            <field name="name">Stock Statistics</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">tarun.hotel.stock.stats</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">form</field>
-            <field name="help" type="html">
-              <p class="oe_view_nocontent_create">
-                Stock Statistics. 
-              </p><p>
-                Stock Statistics.
-              </p>
-            </field>
-        </record>
-        <menuitem action="action_tarun_hotel_stock_stats_form" id="menu_action_tarun_hotel_stock_stats_form" parent="tarun_hotel_ms.menu_tarun_purchase_management" sequence="30"/>
-
-
-
--->
 
 
     </data>
