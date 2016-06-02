@@ -276,7 +276,7 @@ class hotel_purchase_lines(osv.osv):
         (_constraint_product_empty, "Warning! Product won't be empty.", ['Product']),
     ]
     _defaults = {
-        'qty': 0.00,
+        'qty': 1.00,
     }
 
     def onchange_product_id(self, cr, uid, ids, product_id, qty, context=None):

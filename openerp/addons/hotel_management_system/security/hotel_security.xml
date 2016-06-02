@@ -1,18 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-<data>
+<data noupdate="0">
     <record model="ir.module.category" id="module_hotel_management_access">
             <field name="name">Hotel Management</field>
         </record>
     <record model="res.groups" id="module_hotel_management_group_access">
-	    <field name="name">Hotel Management Group</field>
+	    <field name="name">CR</field>
         <field name="category_id" ref="module_hotel_management_access"/>
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
 	</record>
-    <record model="res.groups" id="module_hotel_management_group_admin_access">
-	    <field name="name">Hotel Management Admin</field>
+    <record model="res.groups" id="module_hotel_management_dcr_access">
+	    <field name="name">DCR</field>
         <field name="category_id" ref="module_hotel_management_access"/>
         <field name="implied_ids" eval="[(4, ref('module_hotel_management_group_access'))]"/>
 	</record>
+
+    <record model="res.groups" id="module_hotel_management_group_admin_access">
+	    <field name="name">Caisse</field>
+        <field name="category_id" ref="module_hotel_management_access"/>
+        <field name="implied_ids" eval="[(4, ref('module_hotel_management_dcr_access'))]"/>
+	</record>
+    <record model="res.groups" id="module_hotel_management_super_Admin_access">
+	    <field name="name">Admin</field>
+        <field name="category_id" ref="module_hotel_management_access"/>
+        <field name="implied_ids" eval="[(4, ref('module_hotel_management_group_admin_access')),(4, ref('base.group_system'))]"/>
+	</record>
+
 </data>
 </openerp>
