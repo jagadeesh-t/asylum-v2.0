@@ -3,10 +3,16 @@ from openerp.osv import fields, osv
 from openerp import pooler, tools
 from datetime import date
 from datetime import datetime
+import time
 
 class hotel_guest_partner(osv.Model):
     _name="hotel.guest.partner"
     _description="Guest"
+    
+    def create(self, cr, user, vals, context=None):
+        time_now = time.strftime('%Y-%m-%d %H:%M:%S')
+        vals['points_hist'] = [[0, False, {'up_qty': 3675.00, 'name': time_now, 'qty': 3675.00, 'date':time_now }]]
+        return super(hotel_guest_partner, self).create(cr, user, vals, context=context)
 
     def _get_cur_points(self, cr, uid, ids, field_name, arg, context=None):
         """
