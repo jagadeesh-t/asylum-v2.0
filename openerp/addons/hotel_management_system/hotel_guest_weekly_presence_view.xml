@@ -18,6 +18,7 @@
         <field name="model">hotel.guest.weekly.presence</field>
         <field name="arch" type="xml">
             <form string="Guest Weekly Presence" version="7.0">
+                <h4 style="margin-left: 81%%" invisible="context.get('previous_guest_id', True)"> Points added successfully</h4>
                 <group col="2">
                     <field name="guest_id"/>
                     <field name="name" attrs="{'readonly': [('name','!=',False)]}"/>
@@ -103,3 +104,4 @@
 
     </data>
 </openerp>
+

@@ -38,7 +38,7 @@ class hotel_guest_partner(osv.Model):
         ids = self.pool.get('hotel.guest.partner').search(cr, user, [('name', operator, name)] + args,limit=limit, context=context)
         if not ids:
             ids = self.pool.get('hotel.guest.partner').search(cr, user, [('guest_ref', operator, name)] + args,limit=limit, context=context)
-        else:
+        if not ids:
             ids = self.pool.get('hotel.guest.partner').search(cr, user, [('last_name', operator, name)] + args,limit=limit, context=context)
         return self.name_get(cr, user, ids, context)
 

@@ -24,19 +24,21 @@ class hotel_guest_weekly_presence(osv.TransientModel):
                                                                          },context=context)
                 self.pool.get('hotel.guest.partner').write(cr,uid,[do.guest_id.id],{'points_updated_date':time_cmp})
                 return {
-                    'name': 'Guest Points',
+                    'name': 'Guest Weekly Presence',
                     'view_type': 'form',
                     'view_mode': 'form',
-                    'res_model': 'hotel.guest.points',
-                    'views': [(False,'tree')],
+                    'res_model': 'hotel.guest.weekly.presence',
+                    'views': [(False,'form')],
                     'type': 'ir.actions.act_window',
-                    'target':'inline',
+                    'target':'new',
+                    'context':{'previous_guest_id':False}
                 }
         else:
             raise osv.except_osv(_('Guest already scanned'), _('You cannot scan the same guest twice in a day'))
 
 
     _columns = {
+#         'previous_guest_id': fields.many2one('hotel.guest.partner', 'Previous Guest Name', required=True),
         'guest_id': fields.many2one('hotel.guest.partner', 'Guest Name', required=True),
         'name': fields.datetime('Points Update Date'),
     }
@@ -46,3 +48,4 @@ class hotel_guest_weekly_presence(osv.TransientModel):
 
 
 hotel_guest_weekly_presence()
+# invisible="context.get('to_invoice', False)"
