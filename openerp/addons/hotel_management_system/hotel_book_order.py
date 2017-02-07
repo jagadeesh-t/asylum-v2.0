@@ -39,7 +39,15 @@ class hotel_book_order(osv.Model):
         res = {}
         for order in orders:
             name =""
-            name = order.guest_id.name + " " + order.guest_id.last_name +" ["+ order.guest_id.guest_ref +"]"
+	    print order.guest_id.name 
+	    print order.guest_id.last_name
+            print order.guest_id.guest_ref
+            print order.id 
+	    if  order.guest_id.name==None:
+            	name =""
+	    else:
+		name = order.guest_id.name+" "+order.guest_id.last_name+" ["+order.guest_id.guest_ref+"]"
+ 	    print name
             res[order.id] = name
         return res
 
